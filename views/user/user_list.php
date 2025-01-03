@@ -1,8 +1,8 @@
 <?php
-//require_once "/laragon/www/project_akhir/model/modelUser.php";
-require_once "/laragon/www/project_akhir/init.php";
+//require_once "/laragon/www/laundry_shoes/model/modelUser.php";
+require_once "/laragon/www/laundry_shoes/init.php";
 
-include "/laragon/www/project_akhir/auth_check.php"; 
+include "/laragon/www/laundry_shoes/auth_check.php"; 
 
 
 $obj_user = $modelUser->getAllUser();
@@ -27,12 +27,12 @@ $obj_user = $modelUser->getAllUser();
 <body class="bg-gray-100 font-sans leading-normal tracking-normal overflow-hidden">
 
     <!-- Navbar -->
-    <?php include_once '/laragon/www/project_akhir/views/includes/navbar.php'; ?>
+    <?php include_once '/laragon/www/laundry_shoes/views/includes/navbar.php'; ?>
 
     <!-- Main container -->
     <div class="flex">
         <!-- Sidebar -->
-        <?php include_once "/laragon/www/project_akhir/views/includes/sidebar.php"; ?>
+        <?php include_once "/laragon/www/laundry_shoes/views/includes/sidebar.php"; ?>
 
         <!-- Main Content -->
         <div class="flex-1 p-8">
@@ -44,7 +44,7 @@ $obj_user = $modelUser->getAllUser();
                 <div class="mb-4">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         <i class="fa-solid fa-plus"></i>
-                        <a href="/project_akhir/views/user/user_input.php"> Add New User</a>
+                        <a href="/laundry_shoes/views/user/user_input.php"> Add New User</a>
                     </button>
                 </div>
 
@@ -60,7 +60,7 @@ $obj_user = $modelUser->getAllUser();
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Username</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Password</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Role</th>
-                                <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Salary</th>
+                                <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">No Telp</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Actions</th>
                             </tr>
                         </thead>
@@ -76,20 +76,18 @@ $obj_user = $modelUser->getAllUser();
                                 <td class="w-1/12 py-3 px-4 text-blue-600"><?= $user->user_id ?></td>
                                 <td class="w-1/6 py-3 px-4"><?= $user->user_username ?></td>
                                 <td class="w-1/6 py-3 px-4"><?= $user->user_password ?></td>
-                                <td class="w-1/6 py-3 px-4"><?= $user_role->role_name ?></td>
-                                <td class="w-1/6 py-3 px-4">
-                                    RP. <?=   number_format($user_role->role_gaji) ?></td>
-                                <td class="w-1/6 py-3 px-4">
-                                    <button
-                                        class="bg-violet-500 hover:bg-violet-700 text-white font-bold py-1 px-2 rounded mr-2">
-                                        <a href="/project_akhir/views/user/user_update.php?id=<?= $user->user_id ?>"><i
-                                                class="fa-regular fa-pen-to-square"></i></a>
-                                    </button>
-                                    <button
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
-                                        onclick="return confirmDelete(<?= $user->user_id ?>)">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
+                                <td class="w-1/6 py-3 px-4"><?= $user_role->role_nama ?></td>
+                                <td class="w-1/6 py-3 px-4"><?= $user->no_telp ?></td>
+
+                                <button
+                                    class="bg-violet-500 hover:bg-violet-700 text-white font-bold py-1 px-2 rounded mr-2">
+                                    <a href="/laundry_shoes/views/user/user_update.php?id=<?= $user->user_id ?>"><i
+                                            class="fa-regular fa-pen-to-square"></i></a>
+                                </button>
+                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
+                                    onclick="return confirmDelete(<?= $user->user_id ?>)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                                 </td>
                             </tr>
                             <?php } ?>
@@ -104,7 +102,7 @@ $obj_user = $modelUser->getAllUser();
     function confirmDelete(userId) {
         if (confirm('Apakah Anda yakin ingin menghapus user ini?')) {
             // Redirect ke halaman delete dengan fitur=delete
-            window.location.href = "/project_akhir/response_input.php?modul=user&fitur=delete&id=" + userId;
+            window.location.href = "/laundry_shoes/response_input.php?modul=user&fitur=delete&id=" + userId;
         } else {
             // Batalkan penghapusan
             alert("Gagal menghapus data");

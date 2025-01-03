@@ -1,5 +1,5 @@
 <?php
-include_once "/laragon/www/project_akhir/init.php";
+include_once "/laragon/www/laundry_shoes/init.php";
 
 $user_name = unserialize($_SESSION['user_login'])->user_username;
 
@@ -19,7 +19,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                     <?=  $user_name ?>,
                 </p>
                 <span class="italic text-slate-400">
-                    <?= $user_role->role_name ?>
+                    <?= $user_role->role_nama ?>
                 </span>
             </div>
         </h5>
@@ -29,7 +29,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
         
         ?>
     <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-        <a href="/project_akhir/views/dashboard/dashboard.php">
+        <a href="/laundry_shoes/views/dashboard/dashboard.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="ml-1 grid mr-4 place-items-center">
@@ -39,7 +39,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 Dashboard
             </div>
         </a>
-        <a href="/project_akhir/views/role/role_list.php">
+        <a href="/laundry_shoes/views/role/role_list.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="ml-1 grid mr-4 place-items-center">
@@ -49,7 +49,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 Master Data Role
             </div>
         </a>
-        <!-- <a href="/project_akhir/views/user/user_list.php">
+        <!-- <a href="/laundry_shoes/views/user/user_list.php">
                 <div role="button"
                     class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                     <div class="grid mr-4 place-items-center"> -->
@@ -60,7 +60,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 </div>
             </a> -->
 
-        <a href="/project_akhir/views/member/member_list.php">
+        <a href="/laundry_shoes/views/member/member_list.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="grid mr-4 place-items-center">
@@ -70,7 +70,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
             </div>
         </a>
 
-        <a href="/project_akhir/views/item/item_list.php">
+        <a href="/laundry_shoes/views/item/item_list.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="grid mr-4 place-items-center">
@@ -80,7 +80,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 Master Data Item
             </div>
         </a>
-        <a href="/project_akhir/views/cart/cart_list.php">
+        <a href="/laundry_shoes/views/cart/cart_list.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="grid mr-4 place-items-center">
@@ -113,7 +113,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 <div class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
                     <nav
                         class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
-                        <!-- <a href="/project_akhir/views/sale/sale_input.php">
+                        <!-- <a href="/laundry_shoes/views/sale/sale_input.php">
                                 <div role="button"
                                     class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                                     <div class="grid mr-4 place-items-center">
@@ -122,7 +122,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                                     Insert Transaksi
                                 </div>
                             </a> -->
-                        <a href="/project_akhir/views/sale/sale_list.php">
+                        <a href="/laundry_shoes/views/sale/sale_list.php">
                             <div role="button"
                                 class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                                 <div class="grid mr-4 place-items-center">
@@ -139,7 +139,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
     <?php }else if($user_role->role_id == 3){ ?>
 
     <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-        <a href="/project_akhir/views/dashboard/dashboard.php">
+        <a href="/laundry_shoes/views/dashboard/dashboard.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="ml-1 grid mr-4 place-items-center">
@@ -149,7 +149,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 Dashboard
             </div>
         </a>
-        <a href="/project_akhir/views/role/role_list.php">
+        <a href="/laundry_shoes/views/role/role_list.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="ml-1 grid mr-4 place-items-center">
@@ -159,7 +159,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 Master Data Role
             </div>
         </a>
-        <a href="/project_akhir/views/user/user_list.php">
+        <a href="/laundry_shoes/views/user/user_list.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="grid mr-4 place-items-center">
@@ -170,7 +170,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
             </div>
         </a>
 
-        <a href="/project_akhir/views/member/member_list.php">
+        <a href="/laundry_shoes/views/member/member_list.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="grid mr-4 place-items-center">
@@ -180,7 +180,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
             </div>
         </a>
 
-        <a href="/project_akhir/views/item/item_list.php">
+        <a href="/laundry_shoes/views/item/item_list.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="grid mr-4 place-items-center">
@@ -190,7 +190,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 Master Data Item
             </div>
         </a>
-        <a href="/project_akhir/views/cart/cart_list.php">
+        <a href="/laundry_shoes/views/cart/cart_list.php">
             <div role="button"
                 class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                 <div class="grid mr-4 place-items-center">
@@ -223,7 +223,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 <div class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
                     <nav
                         class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
-                        <a href="/project_akhir/views/sale/sale_input.php">
+                        <a href="/laundry_shoes/views/sale/sale_input.php">
                             <div role="button"
                                 class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                                 <div class="grid mr-4 place-items-center">
@@ -232,7 +232,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                                 Insert Transaksi
                             </div>
                         </a>
-                        <a href="/project_akhir/views/sale/sale_list.php">
+                        <a href="/laundry_shoes/views/sale/sale_list.php">
                             <div role="button"
                                 class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                                 <div class="grid mr-4 place-items-center">
@@ -272,7 +272,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 <div class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
                     <nav
                         class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
-                        <a href="/project_akhir/views/sale/sale_input.php">
+                        <a href="/laundry_shoes/views/sale/sale_input.php">
                             <div role="button"
                                 class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                                 <div class="grid mr-4 place-items-center">
@@ -281,7 +281,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                                 Insert Transaksi
                             </div>
                         </a>
-                        <a href="/project_akhir/views/sale/sale_list.php">
+                        <a href="/laundry_shoes/views/sale/sale_list.php">
                             <div role="button"
                                 class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                                 <div class="grid mr-4 place-items-center">

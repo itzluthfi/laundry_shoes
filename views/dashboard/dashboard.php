@@ -2,13 +2,78 @@
 //require_once "/laragon/www/laundry_shoes/model/modelRole.php"; 
 require_once "/laragon/www/laundry_shoes/init.php";   
 include "/laragon/www/laundry_shoes/auth_check.php";    
-$obj_role = $modelRole->getAllRole(); 
+$obj_role = $modelRole->getAllRoleFromDB(); 
 // $obj_member = $modelMember->getAllMembers(); 
 // $obj_item = $modelItem->getAllItem(); 
 // $obj_sale = $modelSale->getAllSales(); 
 
 
 // Ambil tanggal dan total penjualan dari setiap objek penjualan
+$obj_sale = [
+    (object)[
+        'sale_id' => 1,
+        'sale_date' => '2025-01-02',
+        'sale_totalPrice' => 150000,
+        'sale_pay' => 200000,
+        'sale_change' => 50000,
+        'id_user' => 1,
+        'id_member' => 1,
+        'detailSale' => [
+            (object)[
+                'item_id' => 101,
+                'item_name' => 'Cuci Mobil',
+                'item_price' => 50000,
+                'item_qty' => 1,
+                'subtotal' => 50000,
+            ],
+            (object)[
+                'item_id' => 102,
+                'item_name' => 'Ganti Oli',
+                'item_price' => 100000,
+                'item_qty' => 1,
+                'subtotal' => 100000,
+            ],
+        ],
+    ],
+    (object)[
+        'sale_id' => 2,
+        'sale_date' => '2025-01-03',
+        'sale_totalPrice' => 75000,
+        'sale_pay' => 100000,
+        'sale_change' => 25000,
+        'id_user' => 2,
+        'id_member' => 2,
+        'detailSale' => [
+            (object)[
+                'item_id' => 103,
+                'item_name' => 'Salon Mobil',
+                'item_price' => 75000,
+                'item_qty' => 1,
+                'subtotal' => 75000,
+            ],
+        ],
+    ],
+    (object)[
+        'sale_id' => 3,
+        'sale_date' => '2025-01-04',
+        'sale_totalPrice' => 200000,
+        'sale_pay' => 250000,
+        'sale_change' => 50000,
+        'id_user' => 3,
+        'id_member' => 3,
+        'detailSale' => [
+            (object)[
+                'item_id' => 104,
+                'item_name' => 'Paket Lengkap Cuci + Salon',
+                'item_price' => 200000,
+                'item_qty' => 1,
+                'subtotal' => 200000,
+            ],
+        ],
+    ],
+];
+
+
 $sales_dates = [];
 $sales_totals = [];
 foreach ($obj_sale as $sale) {
@@ -30,19 +95,19 @@ foreach ($obj_role as $role) {
     }
 }
 
-$Out_of_stock_items = [];
-foreach ($obj_item as $item) {
-    if ($item->item_stock == 0) {
-        $Out_of_stock_items[] = $item;
-    }
-}
+$layanan = [
+    ['id' => 1, 'nama' => 'Layanan Cuci Mobil', 'harga' => 50000],
+    ['id' => 2, 'nama' => 'Layanan Salon Mobil', 'harga' => 150000],
+    ['id' => 3, 'nama' => 'Layanan Ganti Oli', 'harga' => 75000],
+];
 
-$zero_point_members = [];   
-foreach ($obj_member as $member) {
-    if ($member->point == 0) {
-        $zero_point_members[] = $member;
-    }
-}
+// Data dummy untuk reservasi
+$reservasi = [
+    ['id' => 1, 'nama_pelanggan' => 'John Doe', 'layanan' => 'Cuci Mobil', 'jadwal' => '2025-01-03 10:00:00'],
+    ['id' => 2, 'nama_pelanggan' => 'Jane Smith', 'layanan' => 'Salon Mobil', 'jadwal' => '2025-01-03 14:00:00'],
+    ['id' => 3, 'nama_pelanggan' => 'Michael Brown', 'layanan' => 'Ganti Oli', 'jadwal' => '2025-01-04 09:30:00'],
+];
+
 
 // Encode data untuk digunakan di JavaScript
 $sales_dates_json = json_encode($sales_dates);
@@ -83,45 +148,40 @@ $sales_totals_json = json_encode($sales_totals);
         <div class="flex-1 p-8 overflow-y-auto h-[calc(100vh-4rem)]">
             <div class="container mx-auto">
                 <h1 class="text-4xl font-bold mb-5 pb-2 text-gray-800 italic">Dashboard Page</h1>
-
-                <!-- item start -->
+                <!-- Cards Section -->
                 <div class="mx-6 mb-6 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 xl:grid-cols-4">
-                    <!-- User Card -->
+                    <!-- Layanan Card -->
                     <div class="card bg-blue-50 shadow-lg rounded-lg p-8">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
-                                <h4 class="text-2xl font-semibold text-gray-700">Member</h4>
+                                <h4 class="text-2xl font-semibold text-gray-700">Layanan</h4>
                                 <div
                                     class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-indigo-600">
                                     <i class="fa-solid fa-users"></i>
                                 </div>
                             </div>
                             <div class="mt-6 flex flex-col gap-0">
-                                <h2 class="text-3xl font-bold text-gray-800"><?= count($obj_member) ?></h2>
-                                <p><span class="text-gray-600">
-                                        <?= count($zero_point_members) ?></span> <span class="text-indigo-500">Zero
-                                        Point</span>
+                                <h2 class="text-3xl font-bold text-gray-800"><?= count($layanan) ?></h2>
+                                <p><span class="text-gray-600"><?= count($layanan) ?></span> <span
+                                        class="text-indigo-500">Jumlah Layanan</span>
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <!-- Item Card -->
+                    <!-- Reservasi Card -->
                     <div class="card bg-green-50 shadow-lg rounded-lg p-6">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
-                                <h4 class="text-2xl font-semibold text-gray-700">Item</h4>
+                                <h4 class="text-2xl font-semibold text-gray-700">Reservasi</h4>
                                 <div
                                     class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-indigo-600">
-                                    <i class="fa-solid fa-cube"></i>
+                                    <i class="fa-solid fa-calendar-check"></i>
                                 </div>
                             </div>
                             <div class="mt-6 flex flex-col gap-0">
-                                <h2 class="text-3xl font-bold text-gray-800"><?= count($obj_item) ?>
-                                </h2>
-                                <p><span class="text-gray-600">
-                                        <?= count($Out_of_stock_items) ?></span> <span class="text-yellow-500">Out
-                                        Of
-                                        Stock</span>
+                                <h2 class="text-3xl font-bold text-gray-800"><?= count($reservasi) ?></h2>
+                                <p><span class="text-gray-600"><?= count($reservasi) ?></span> <span
+                                        class="text-yellow-500">Total Reservasi</span>
                                 </p>
                             </div>
                         </div>
@@ -206,7 +266,7 @@ $sales_totals_json = json_encode($sales_totals);
                                         <?php echo htmlspecialchars($sale->sale_id); ?></td>
                                     <!-- <td class="w-1/4 py-3 px-4"><?php echo htmlspecialchars($sale->sale_date); ?></td> -->
                                     <td class="w-1/4 py-3 px-4">
-                                        <?php $user = $modelUser->getUserById($sale->id_user);$role = $modelRole->getRoleById($sale->id_user); echo htmlspecialchars("{$user->user_username} - [{$role->role_name}]"); ?>
+                                        <?php $user = $modelUser->getUserById($sale->id_user);$role = $modelRole->getRoleById($sale->id_user); echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); ?>
                                     </td>
                                     <td class="w-1/4 py-3 px-4">
                                         <?php $member = $modelMember->getMemberById($sale->id_member); echo htmlspecialchars($member->name); ?>

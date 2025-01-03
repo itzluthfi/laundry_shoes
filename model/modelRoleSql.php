@@ -22,12 +22,12 @@ class modelRole {
     }
 
    
-    public function addRole($role_name, $role_description, $role_status) {
+    public function addRole($role_nama, $role_deskripsi, $role_status) {
        
         $role_status = (int)$role_status;
 
-        $query = "INSERT INTO roles (name, description, status) 
-                  VALUES ('$role_name', '$role_description', $role_status)";
+        $query = "INSERT INTO roles (nama, deskripsi, status) 
+                  VALUES ('$role_nama', '$role_deskripsi', $role_status)";
         try {
             $this->db->execute($query);
             // Perbarui data dalam sesi
@@ -39,20 +39,18 @@ class modelRole {
         }
     }
 
-    private function getAllRoleFromDB() {
+    public function getAllRoleFromDB() {
         $query = "SELECT * FROM roles";
         $result = $this->db->select($query);
 
         $roles = [];
         foreach ($result as $row) {
-            $roles[] = new Role($row['id'], $row['name'], $row['description'], $row['status']);
+            $roles[] = new Role($row['id'], $row['nama'], $row['deskripsi'], $row['status']);
         }
         return $roles;
     }
 
-    public function getAllRole() {
-        return $this->roles;
-    }
+   
 
     public function getRoleById($role_id) {
         $role_id = (int)$role_id;
@@ -61,19 +59,19 @@ class modelRole {
 
         if (count($result) > 0) {
             $row = $result[0];
-            $role = new Role($row['id'], $row['name'], $row['description'], $row['status']);
+            $role = new Role($row['id'], $row['nama'], $row['deskripsi'], $row['status']);
             return $role;
         }
 
         return null;
     }
 
-    public function updateRole($id, $role_name, $role_description, $role_status) {
+    public function updateRole($id, $role_nama, $role_deskripsi, $role_status) {
         $id = (int)$id;
         $role_status = (int)$role_status;
 
         $query = "UPDATE roles 
-                  SET name = '$role_name', description = '$role_description', status = $role_status 
+                  SET nama = '$role_nama', deskripsi = '$role_deskripsi', status = $role_status 
                   WHERE id = $id";
         try {
             $this->db->execute($query);

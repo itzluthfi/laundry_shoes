@@ -3,7 +3,6 @@
 require_once "/laragon/www/laundry_shoes/domain_object/node_user.php";  
 include_once "/laragon/www/laundry_shoes/model/dbConnect.php";
 
-
 class modelUser {
     private $db;
 
@@ -17,22 +16,23 @@ class modelUser {
     public function initializeDefaultUser() {
         // Cek apakah ada user yang terdaftar di database
         if (empty($this->getAllUser())) {
-            $this->addUser("maul", "maul123", 1);
-            $this->addUser("habib", "habib123", 3);
-            $this->addUser("adam", "adam123", 4);
+            $this->addUser("maul", "maul123", 1, "081234567890");
+            $this->addUser("habib", "habib123", 3, "081234567891");
+            $this->addUser("adam", "adam123", 4, "081234567892");
         }
     }
 
-    public function addUser($user_username, $user_password, $id_role) {
+    public function addUser($user_username, $user_password, $id_role, $no_telp) {
         // Escape input untuk mencegah SQL Injection
         $user_username = mysqli_real_escape_string($this->db->conn, $user_username);
         $user_password = mysqli_real_escape_string($this->db->conn, $user_password);
+        $no_telp = mysqli_real_escape_string($this->db->conn, $no_telp);
         $id_role = (int)$id_role;
 
         // Hash password sebelum disimpan
         $hashed_password = password_hash($user_password, PASSWORD_BCRYPT);
 
-        $query = "INSERT INTO users (username, password, role_id) VALUES ('$user_username', '$hashed_password', $id_role)";
+        $query = "INSERT INTO users (username, password, role_id, no_telp) VALUES ('$user_username', '$hashed_password', $id_role, '$no_telp')";
         try {
             $this->db->execute($query);
             return true;
@@ -49,7 +49,7 @@ class modelUser {
         $users = [];
         foreach ($result as $row) {
             // Membuat objek User dan menyimpannya ke array
-            $users[] = new User($row['id'], $row['username'], $row['password'], $row['role_id']);
+            $users[] = new User($row['id'], $row['username'], $row['password'], $row['role_id'], $row['no_telp']);
         }
 
         // Simpan semua user ke dalam sesi
@@ -64,7 +64,7 @@ class modelUser {
         
         if (count($result) > 0) {
             $row = $result[0];
-            $user = new User($row['id'], $row['username'], $row['password'], $row['role_id']);
+            $user = new User($row['id'], $row['username'], $row['password'], $row['role_id'], $row['no_telp']);
             
             // Simpan ke sesi
             $_SESSION['user'] = $user;
@@ -75,16 +75,17 @@ class modelUser {
         return null;
     }
 
-    public function updateUser($id, $user_username, $user_password, $id_role) {
+    public function updateUser($id, $user_username, $user_password, $id_role, $no_telp) {
         // Escape input untuk mencegah SQL Injection
         $user_username = mysqli_real_escape_string($this->db->conn, $user_username);
         $user_password = mysqli_real_escape_string($this->db->conn, $user_password);
+        $no_telp = mysqli_real_escape_string($this->db->conn, $no_telp);
         $id_role = (int)$id_role;
 
         // Hash password sebelum disimpan
         $hashed_password = password_hash($user_password, PASSWORD_BCRYPT);
 
-        $query = "UPDATE users SET username = '$user_username', password = '$hashed_password', role_id = $id_role WHERE id = $id";
+        $query = "UPDATE users SET username = '$user_username', password = '$hashed_password', role_id = $id_role, no_telp = '$no_telp' WHERE id = $id";
         try {
             $this->db->execute($query);
 
@@ -109,8 +110,7 @@ class modelUser {
                 unset($_SESSION['user']);
             }
 
-            // Perbarui daftar user di sesi
-            $this->getAllUser();
+          
 
             return true;
         } catch (Exception $e) {

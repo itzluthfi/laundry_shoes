@@ -1,5 +1,5 @@
 <?php
-require_once "/laragon/www/project_akhir/model/modelRoleSql.php";
+require_once "/laragon/www/laundry_shoes/model/modelRoleSql.php";
 
 class ControllerRole {
     private $modelRole;
@@ -17,14 +17,14 @@ class ControllerRole {
         switch ($action) {
             case 'add':
                 // Ensure required fields are available before processing
-                if (isset($_POST['role_name'], $_POST['role_description'], $_POST['role_status'], $_POST['role_gaji'])) {
-                    $role_name = $_POST['role_name'];
-                    $role_description = $_POST['role_description'];
+                if (isset($_POST['role_nama'], $_POST['role_deskripsi'], $_POST['role_status'])) {
+                    $role_nama = $_POST['role_nama'];
+                    $role_deskripsi = $_POST['role_deskripsi'];
                     $role_status = $_POST['role_status'];
-                    $role_gaji = $_POST['role_gaji'];
+                   
 
                     // Add the new role using the model
-                    if ($this->modelRole->addRole($role_name, $role_description, $role_status, $role_gaji)) {
+                    if ($this->modelRole->addRole($role_nama, $role_deskripsi, $role_status)) {
                         $message = "Role added successfully!";
                     } else {
                         $message = "Failed to add role.";
@@ -36,15 +36,14 @@ class ControllerRole {
 
             case 'update':
                 // Ensure required fields are available before processing
-                if (isset($_POST['role_id'], $_POST['role_name'], $_POST['role_description'], $_POST['role_status'], $_POST['role_gaji'])) {
+                if (isset($_POST['role_id'], $_POST['role_nama'], $_POST['role_deskripsi'], $_POST['role_status'])) {
                     $role_id = $_POST['role_id'];
-                    $role_name = $_POST['role_name'];
-                    $role_description = $_POST['role_description'];
+                    $role_nama = $_POST['role_nama'];
+                    $role_deskripsi = $_POST['role_deskripsi'];
                     $role_status = $_POST['role_status'];
-                    $role_gaji = $_POST['role_gaji'];
 
                     // Update the role using the model
-                    if ($this->modelRole->updateRole($role_id, $role_name, $role_description, $role_status, $role_gaji)) {
+                    if ($this->modelRole->updateRole($role_id, $role_nama, $role_deskripsi, $role_status)) {
                         $message = "Role updated successfully!";
                     } else {
                         $message = "Failed to update role.";
@@ -77,6 +76,6 @@ class ControllerRole {
         }
 
         // Display message and redirect to the role list page
-        echo "<script>alert('$message'); window.location.href='/project_akhir/views/role/role_list.php';</script>";
+        echo "<script>alert('$message'); window.location.href='/laundry_shoes/views/role/role_list.php';</script>";
     }
 }

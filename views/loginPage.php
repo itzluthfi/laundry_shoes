@@ -28,8 +28,7 @@
                             </div>
                         </div>
                         <!-- Form Login -->
-                        <form action="/project_akhir/response_input.php?modul=login&fitur=authenticate" method="POST"
-                            class="
+                        <form action="/laundry_shoes/response_input.php?modul=auth&fitur=login" method="POST" class="
                             mx-auto max-w-xs">
                             <input
                                 class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"

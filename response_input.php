@@ -36,60 +36,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
         //     $cartController->handleAction($action);
         //     break;
             
-        case 'login':
+        case 'auth':
                 switch ($action) {
-                case 'member':
-                    $username = $_POST["username_login"];
-                    $password = $_POST["password_login"];
-                    $rememberMe = isset($_POST["remember_me"]); // Cek apakah "Remember Me" dicentang
-                    $members = $modelMember->getAllMembers();
-
-                    foreach ($members as $member) {
-                        // Cocokkan username dan password
-                        if ($member->name == $username && $member->password == $password) {
-                            // Simpan data member ke session
-                            $_SESSION['member_login'] = serialize($member);
-                
-                            // Jika "Remember Me" dicentang, simpan cookie yang berlaku selama 1 hari
-                            if ($rememberMe) {
-                                setcookie('member_login', serialize($member), time() + (86400), "/"); // 86400 detik = 1 hari
+                    case 'login':
+                        $username = $_POST["username_login"];
+                        $password = $_POST["password_login"];
+                        $rememberMe = isset($_POST["remember_me"]); // Cek apakah "Remember Me" dicentang
+                        $users = $modelUser->getAllUser();
+                    
+                        foreach ($users as $user) {
+                            // Cocokkan username dan verifikasi password
+                            if ($user->user_username == $username && password_verify($password, $user->user_password)) {
+                                // Simpan data member ke session
+                                $_SESSION['user_login'] = serialize($user);
+                    
+                                // Jika "Remember Me" dicentang, simpan cookie yang berlaku selama 1 hari
+                                if ($rememberMe) {
+                                    setcookie('user_login', serialize($user), time() + 86400, "/"); // 86400 detik = 1 hari
+                                }
+                                
+                                // Redirect berdasarkan role
+                                if ($user->id_role == 1) {
+                                    echo "<script>alert('Login berhasil, welcome back again admin!'); window.location.href='/laundry_shoes/views/dashboard/dashboard.php';</script>";
+                                    return;
+                                } else if ($user->id_role == 2) {
+                                    echo "<script>alert('Login berhasil, welcome back again customer!'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
+                                    return;
+                                }
                             }
-
-                            echo "<script>alert('Login berhasil'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
-
-                            return;
                         }
-                    }   
                     
-                    echo "<script>alert('Login gagal'); window.location.href='/laundry_shoes/views/web_laundry/login_member.php';</script>";
+                        // Jika tidak ditemukan user yang cocok
+                        echo "<script>alert('Login gagal'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
+                        break;
+                    
+
+                case 'registrasi':
+                    $username = $_POST["username"];
+                    $password = $_POST["password"];
+                    $no_telp = $_POST["no_telp"];
+                    $id_role = $_POST["id_role"];
+                    $modelUser->addUser($username, $password, $id_role, $no_telp);
+                    echo "<script>alert('Registrasi berhasil'); window.location.href='/laundry_shoes/views/web_laundry/loginPage.php';</script>";
                     break;
-                case 'ghost':
-                $username = $_POST["username_login"];
-                $password = $_POST["password_login"];
-                $rememberMe = isset($_POST["remember_me"]); // Cek apakah "Remember Me" dicentang
-                $users = $modelUser->getAllUser(); 
-
-                foreach ($users as $user) {
-                    // Cocokkan username dan password
-                    if ($user->user_username === $username &&  password_verify($password, $user->user_password)) {
-                        // Simpan data user ke session
-                        $_SESSION['user_login'] = serialize($user);
-            
-                
-                    // Jika "Remember Me" dicentang, simpan cookie yang berlaku selama 1 hari
-                    if ($rememberMe) {
-                        setcookie('user_login', serialize($user), time() + (86400), "/"); // 86400 detik = 1 hari
-                    }
-
-                    echo "<script>alert('Login berhasil'); window.location.href='/project_akhir/views/dashboard/dashboard.php';</script>";
-
-                        return;
-                    }
-                    
-                    }
-                // Jika login gagal
-                 echo "<script>alert('Login gagal!'); window.location.href='/project_akhir/';</script>";
-                break;
+               
                 }
             break;
         case 'logout':
@@ -101,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                 if (isset($_COOKIE['user_login'])) {
                     setcookie('user_login', '', time() - 3600, "/");
                 }
-                echo "<script>alert('Logout berhasil!'); window.location.href='/project_akhir/';</script>";
+                echo "<script>alert('Logout berhasil!'); window.location.href='/laundry_shoes/';</script>";
 
                 break;
 
@@ -110,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     
                     setcookie('member_login', '', time() - 3600, "/");
                 }
-                echo "<script>alert('Logout berhasil!'); window.location.href='/project_akhir/views/warkop_ui/index.php';</script>";
+                echo "<script>alert('Logout berhasil!'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
                 break;
                 }
                 echo "<script>alert('Logout gagal!fitur tak di kenal');</script>";
@@ -118,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                 break;
 
         default:
-            //echo "<script>alert('Module tidak dikenal.'); window.location.href='/project_akhir/{$modul}/{$modul}_list.php';</script>";
+            echo "<script>alert('Module tidak dikenal.'); window.location.href='/laundry_shoes/{$modul}/{$modul}_list.php';</script>";
             break;
     }
 }

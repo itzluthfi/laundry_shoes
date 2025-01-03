@@ -1,6 +1,6 @@
 <?php
-require_once "/laragon/www/project_akhir/init.php";
-require_once "/laragon/www/project_akhir/auth_check.php";
+require_once "/laragon/www/laundry_shoes/init.php";
+require_once "/laragon/www/laundry_shoes/auth_check.php";
 $sales = $modelSale->getAllSales();
 ?>
 
@@ -27,7 +27,7 @@ $sales = $modelSale->getAllSales();
     function confirmDelete(saleId) {
         if (confirm('Apakah Anda yakin ingin menghapus role ini?')) {
             // Redirect ke halaman delete dengan fitur=delete
-            window.location.href = "/project_akhir/response_input.php?modul=sale&fitur=delete&id=" + saleId;
+            window.location.href = "/laundry_shoes/response_input.php?modul=sale&fitur=delete&id=" + saleId;
         } else {
             // Batalkan penghapusan
             alert("gagal menghapus data");
@@ -80,7 +80,7 @@ $sales = $modelSale->getAllSales();
                                     <?php echo htmlspecialchars($sale->sale_id); ?></td>
                                 <!-- <td class="w-1/4 py-3 px-4"><?php echo htmlspecialchars($sale->sale_date); ?></td> -->
                                 <td class="w-1/4 py-3 px-4">
-                                    <?php $user = $modelUser->getUserById($sale->id_user);$role = $modelRole->getRoleById($user->id_role); echo htmlspecialchars("{$user->user_username} - [{$role->role_name}]"); ?>
+                                    <?php $user = $modelUser->getUserById($sale->id_user);$role = $modelRole->getRoleById($user->id_role); echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); ?>
                                 </td>
                                 <td class="w-1/4 py-3 px-4">
                                     <?php $member = $modelMember->getMemberById($sale->id_member); echo htmlspecialchars($member->name); ?>
@@ -151,7 +151,7 @@ $sales = $modelSale->getAllSales();
                     <div><?php 
                         $user = $modelUser->getUserById($sale->id_user);
                         $role = $modelRole->getRoleById($user->id_role);
-                        echo htmlspecialchars("{$user->user_username} - [{$role->role_name}]");
+                        echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]");
                     ?></div>
                 </div>
 
@@ -230,7 +230,7 @@ $sales = $modelSale->getAllSales();
     function deleteSale(saleId) {
         if (confirm('Apakah Anda yakin ingin menghapus penjualan ini?')) {
             // Redirect to delete page with fitur=delete
-            window.location.href = `/project_akhir/response_input.php?modul=sale&fitur=delete&id=${saleId}`;
+            window.location.href = `/laundry_shoes/response_input.php?modul=sale&fitur=delete&id=${saleId}`;
         } else {
             alert("Penghapusan data dibatalkan");
         }
@@ -261,7 +261,7 @@ $sales = $modelSale->getAllSales();
     //         date: "01-11-2024"
     //     };
 
-    //     fetch('/project_akhir/response_input.php?modul=sale&fitur=add', {
+    //     fetch('/laundry_shoes/response_input.php?modul=sale&fitur=add', {
     //             method: 'POST',
     //             headers: {
     //                 'Content-Type': 'application/json'

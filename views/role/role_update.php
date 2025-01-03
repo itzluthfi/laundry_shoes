@@ -1,5 +1,5 @@
 <?php
-    require_once "/laragon/www/project_akhir/init.php";
+    require_once "/laragon/www/laundry_shoes/init.php";
 
     $obj_roles = $modelRole->getRoleById($_GET['id']);
 ?>
@@ -38,26 +38,19 @@
                         <label for="role_name" class="block text-gray-700 text-sm font-bold mb-2">Nama Role:</label>
                         <input type="text" id="role_name" name="role_name"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Masukkan Nama Role" required value="<?= $obj_roles->role_name ?>">
+                            placeholder="Masukkan Nama Role" required value="<?= $obj_roles->role_nama ?>">
                     </div>
 
-                    <!-- Salary Role -->
-                    <div class="mb-4">
-                        <label for="role_gaji" class="block text-gray-700 text-sm font-bold mb-2">Salary
-                            Role:</label>
-                        <input type="number" id="role_gaji" name="role_gaji"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Masukkan Gaji Role" required value="<?= $obj_roles->role_gaji ?>">
-                    </div>
+
 
                     <!-- Role Deskripsi -->
                     <div class="mb-4 text-left">
-                        <label for="role_description" class="block text-gray-700 text-sm font-bold mb-2">Role
+                        <label for="role_deskripsi" class="block text-gray-700 text-sm font-bold mb-2">Role
                             Deskripsi:</label>
-                        <textarea id="role_description" name="role_description"
+                        <textarea id="role_deskripsi" name="role_deskripsi"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Masukkan Deskripsi Role" rows="3"
-                            required> <?= $obj_roles->role_description ?></textarea>
+                            required> <?= $obj_roles->role_deskripsi ?></textarea>
                     </div>
 
                     <!-- Role Status -->

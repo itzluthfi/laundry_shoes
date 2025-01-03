@@ -1,5 +1,5 @@
 <?php
-    require_once "/laragon/www/project_akhir/init.php";
+    require_once "/laragon/www/laundry_shoes/init.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,19 +30,19 @@
                 <form action="../../response_input.php?modul=role&fitur=add" method="POST">
                     <!-- Nama Role -->
                     <div class="mb-4">
-                        <label for="role_name" class="block text-gray-700 text-sm font-bold mb-2">Nama Role:</label>
-                        <input type="text" id="role_name" name="role_name"
+                        <label for="role_nama" class="block text-gray-700 text-sm font-bold mb-2">Nama Role:</label>
+                        <input type="text" id="role_nama" name="role_nama"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Masukkan Nama Role" required>
                     </div>
 
                     <!-- Gaji Role -->
-                    <div class="mb-4">
+                    <!-- <div class="mb-4">
                         <label for="role_gaji" class="block text-gray-700 text-sm font-bold mb-2">Salary Role:</label>
                         <input type="number" id="role_gaji" name="role_gaji"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Masukkan Gaji Role" required>
-                    </div>
+                    </div> -->
 
                     <!-- Role Deskripsi -->
                     <div class="mb-4">

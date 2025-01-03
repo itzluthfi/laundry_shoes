@@ -1,9 +1,9 @@
 <?php
-    require_once "/laragon/www/project_akhir/init.php";
+    require_once "/laragon/www/laundry_shoes/init.php";
 
     $obj_user = $modelUser->getUserById($_GET['id']);
    
-    $obj_roles = $modelRole->getAllRole();
+    $obj_roles = $modelRole->getAllRoleFromDB();
 ?>
 
 
@@ -63,7 +63,7 @@
                             <option value="<?= $obj_user->id_role ?>">Pilih Role</option>
                             <?php foreach($obj_roles as $role) {
                                 if($role->role_status == 1) { ?>
-                            <option value="<?= $role->role_id ?>"><?= $role->role_name ?></option>
+                            <option value="<?= $role->role_id ?>"><?= $role->role_nama ?></option>
                             <?php } } ?>
                         </select>
                     </div>

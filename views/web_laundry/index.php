@@ -27,7 +27,7 @@
                         Kami</a>
                 </li>
                 <li>
-                    <a href="#services" class="hover:text-yellow-300 transition duration-300 ease-in-out">Layanan</a>
+                    <a href="#img" class="hover:text-yellow-300 transition duration-300 ease-in-out">Layanan</a>
                 </li>
                 <li>
                     <a href="#contact" class="hover:text-yellow-300 transition duration-300 ease-in-out">Kontak</a>
@@ -75,7 +75,7 @@
           <li>
             <a href="#about" class="hover:text-yellow-300">Tentang Kami</a>
           </li>
-          <li><a href="#services" class="hover:text-yellow-300">Layanan</a></li>
+          <li><a href="#img" class="hover:text-yellow-300">Layanan</a></li>
           <li><a href="#contact" class="hover:text-yellow-300">Kontak</a></li>
         </ul>
       </div> -->
@@ -242,7 +242,7 @@
 
     <!-- Layanan Kami -->
     <!-- Layanan Kami -->
-    <section id="services" class="py-16 bg-white">
+    <section id="img" class="py-16 bg-white">
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold text-blue-500">Layanan Kami</h2>
             <p class="text-gray-600 mt-4">
@@ -254,7 +254,7 @@
                 <!-- Layanan 1 -->
                 <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
                     onclick="openModal('easy')">
-                    <img src="services/1.jpg" alt="Easy Wash"
+                    <img src="img/easyWash.jpg" alt="Easy Wash"
                         class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
@@ -263,6 +263,16 @@
                             <p class="text-sm mt-2">
                                 Cuci bagian midsole dan outsole saja.
                             </p>
+                            <div class="flex justify-center space-x-4 mt-4">
+                                <button onclick="openModal('unyellowing')"
+                                    class="flex items-center bg-gray-700 hover:bg-gray-800 text-white px-3 py-2 rounded-md">
+                                    <i class="fas fa-eye mr-2"></i> Detail
+                                </button>
+                                <a href="./regReservasi.php"
+                                    class="flex items-center bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md">
+                                    <i class="fas fa-shopping-cart mr-2"></i> Pesan
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -270,7 +280,7 @@
                 <!-- Layanan tambahan -->
                 <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
                     onclick="openModal('repair')">
-                    <img src="services/repair.jpg" alt="Repair"
+                    <img src="img/repair.jpg" alt="Repair"
                         class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
@@ -285,7 +295,7 @@
 
                 <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
                     onclick="openModal('unyellowing')">
-                    <img src="services/unyellowing.jpg" alt="Unyellowing"
+                    <img src="img/unyellowing.jpg" alt="Unyellowing"
                         class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
@@ -300,7 +310,7 @@
 
                 <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
                     onclick="openModal('repaint')">
-                    <img src="services/repaint.jpg" alt="Repaint"
+                    <img src="img/repaint.jpg" alt="Repaint"
                         class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
@@ -313,24 +323,11 @@
                     </div>
                 </div>
 
-                <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
-                    onclick="openModal('oneDay')">
-                    <img src="services/one-day-service.jpg" alt="One Day Service"
-                        class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
-                    <div
-                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center">
-                            <h3 class="text-xl font-semibold">One Day Service</h3>
-                            <p class="text-sm mt-2">
-                                Layanan ekspres, sepatu selesai dalam 1 hari.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+
 
                 <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
                     onclick="openModal('premiumSuede')">
-                    <img src="services/premium-suede.jpg" alt="Premium Suede"
+                    <img src="img/premium-suede.jpg" alt="Premium Suede"
                         class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
@@ -345,7 +342,7 @@
 
                 <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
                     onclick="openModal('leatherShining')">
-                    <img src="services/leather-shining.jpg" alt="Leather Shining"
+                    <img src="img/leather-shining.jpg" alt="Leather Shining"
                         class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">

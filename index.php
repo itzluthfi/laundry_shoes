@@ -31,9 +31,9 @@ if (isset($_SESSION['user_login'])) {
     // Jika ada sesi untuk ghost, arahkan ke halaman dashboard
     header('Location: /laundry_shoes/views/dashboard/dashboard.php');
     exit();
-} elseif (isset($_SESSION['member_login'])) {
-    // Jika ada sesi untuk member, arahkan ke halaman member
-    header('Location: /laundry_shoes/views/warkop_ui/login_member.php');
+} elseif (isset($_SESSION['customer_login'])) {
+    // Jika ada sesi untuk member, arahkan ke halaman login
+    header('Location: /laundry_shoes/views/web_laundry/loginPage.php');
     exit();
 }
 
@@ -44,11 +44,11 @@ if (isset($_COOKIE['user_login'])) {
     // Arahkan ke halaman dashboard
     header('Location: /laundry_shoes/views/dashboard/dashboard.php');
     exit();
-} elseif (isset($_COOKIE['member_login'])) {
+} elseif (isset($_COOKIE['customer_login'])) {
     // Jika ada, set sesi dari cookie
-    $_SESSION['member_login'] = $_COOKIE['member_login'];
-    // Arahkan ke halaman member
-    header('Location: /laundry_shoes/views/warkop_ui/login_member.php');
+    $_SESSION['customer_login'] = $_COOKIE['customer_login'];
+    // Arahkan ke halaman login
+    header('Location: /laundry_shoes/views/web_laundry/loginPage.php');
     exit();
 }
 

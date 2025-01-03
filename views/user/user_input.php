@@ -1,5 +1,5 @@
 <?php
-    require_once "/laragon/www/project_akhir/init.php";
+    require_once "/laragon/www/laundry_shoes/init.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,11 +52,11 @@
                             required>
                             <option value="">Pilih Role</option>
                             <?php 
-                            $roles = $modelRole->getAllRole();
+                            $roles = $modelRole->getAllRoleFromDB();
                             foreach($roles as $role) { 
                             if($role->role_status == 1){  ?>
 
-                            <option value="<?= $role->role_id ?>"><?= $role->role_name ?></option>
+                            <option value="<?= $role->role_id ?>"><?= $role->role_nama ?></option>
 
                             <?php } } ?>
                         </select>

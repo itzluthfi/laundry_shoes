@@ -1,5 +1,5 @@
 <?php
-include_once "/laragon/www/project_akhir/init.php";
+include_once "/laragon/www/laundry_shoes/init.php";
 
 $user_name = unserialize($_SESSION['user_login'])->user_username;
 
@@ -28,7 +28,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                     <!-- Username dan Role -->
                     <span class="text-black text-center">
                         <?= $user_name ?></span>
-                    <span class="text-slate-500 text-center italic"><?= $user_role->role_name ?></span>
+                    <span class="text-slate-500 text-center italic"><?= $user_role->role_nama ?></span>
                 </div>
             </div>
 

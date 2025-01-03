@@ -1,5 +1,5 @@
 <?php
-require_once "/laragon/www/project_akhir/init.php";
+require_once "/laragon/www/laundry_shoes/init.php";
 $items = $modelItem->getAllItem();
 $members = $modelMember->getAllMembers();
 $user_id = unserialize($_SESSION['user_login'])->user_id;
