@@ -1,15 +1,21 @@
 <?php
-class reservasi {
-    public $reservasi_id;
-    public $layanan_id;
-    public $reservasi_jumlah;
+class Reservasi {
+    public $id;
+    public $user_id;
     public $status_id;
+    public $uang_bayar;
+    public $uang_kembali;
+
+    public array $detailReservasi = [];
    
 
-   public function __construct($reservasi_id, $layanan_id, $reservasi_jumlah, $status_id) {
-        $this->reservasi_id = $reservasi_id;
+   public function __construct($id, $layanan_id, $status_id,$uang_bayar,$uang_kembali,array $detailReservasi = []) {
+        $this->id = $id;
         $this->layanan_id = $layanan_id;
-        $this->reservasi_jumlah = $reservasi_jumlah;
         $this->status_id = $status_id;
+        $this->uang_bayar = $uang_bayar;
+        $this->uang_kembali = $uang_kembali;
+        $this->detailReservasi = $detailReservasi;
+
     }
 }

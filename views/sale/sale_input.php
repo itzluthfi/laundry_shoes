@@ -34,7 +34,7 @@ $user_id = unserialize($_SESSION['user_login'])->user_id;
 
 
 
-                <div class="mb-4 w-1/3 max-w-md">
+                <!-- <div class="mb-4 w-1/3 max-w-md">
                     <label for="memberSelect" class="block text-gray-800 text-xl font-semibold">Pilih Member</label>
                     <select id="memberSelect" class="mt-1 p-2 border border-gray-300 rounded w-full">
                         <option value="" disabled selected>Pilih Member</option>
@@ -44,7 +44,7 @@ $user_id = unserialize($_SESSION['user_login'])->user_id;
                     }
                     ?>
                     </select>
-                </div>
+                </div> -->
 
                 <h3 class="text-xl font-semibold mb-2">Detail Barang</h3>
 

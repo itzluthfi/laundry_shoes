@@ -250,7 +250,7 @@ $sales_totals_json = json_encode($sales_totals);
                                 <tr>
                                     <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID sale</th>
                                     <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">User</th>
-                                    <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Member</th>
+                                    <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Customer</th>
                                     <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Total Harga</th>
                                     <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Dibayar</th>
                                     <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Kembalian</th>

@@ -6,17 +6,17 @@ $user_name = unserialize($_SESSION['user_login'])->user_username;
 $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_role);
 ?>
 
-<nav class="bg-blue-500 p-4 shadow-lg rounded">
+<nav class="bg-yellow-500 p-4 shadow-lg rounded">
     <div class="container mx-auto flex justify-between items-center">
-        <div class="ml-4 text-white font-bold text-xl italic">
-            Point Of Sale
+        <div class="ml-1 text-white font-bold text-2xl italic">
+            laundry_shoes
         </div>
         <div class="relative flex items-center text-white mr-3">
 
             <!-- Tempat untuk foto berbentuk lingkaran -->
             <div class=" group">
 
-                <img src="../../public/img/pp3.jpg" alt="Profile Image"
+                <img src="../../public/img/gita.jpg" alt="Profile Image"
                     class="w-11 h-11 rounded-full mr-4 object-cover border-2 border-gray-400">
 
                 <!-- Teks Username dan Role, hidden secara default dan muncul saat hover, diatur agar center -->
@@ -34,7 +34,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
 
             <form action="../../response_input.php?modul=logout&fitur=user" method="POST">
                 <button type="submit"
-                    class="ml-4 bg-slate-500 hover:bg-red-700 hover:text-black text-white font-bold py-2 px-4 rounded flex border-2 border-gray-900">
+                    class="ml-4 bg-gray-800 hover:bg-red-700 hover:text-black text-white font-bold py-2 px-4 rounded-xl flex border-2 border-gray-900 ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"

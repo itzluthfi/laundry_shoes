@@ -23,6 +23,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
             $userController->handleAction($action);
             break;
 
+
+        case 'layanan':
+            require_once 'controller/ControllerLayanan.php';
+            $layananController = new ControllerLayanan();
+            $layananController->handleAction($action);
+            break;
+
+
+        case 'reservasi':
+            require_once 'controller/ControllerReservasi.php';
+            $reservasiController = new ControllerReservasi();
+            $reservasiController->handleAction($action);
+            break;
         
         // case 'sale':
         //     require_once 'controller/ControllerSale.php';
@@ -30,12 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
         //     $saleController->handleAction($action);
         //     break;
 
-        // case 'cart':
-        //     require_once 'controller/ControllerCart.php';
-        //     $cartController = new ControllerCart();
-        //     $cartController->handleAction($action);
-        //     break;
-            
+      
         case 'auth':
                 switch ($action) {
                     case 'login':
@@ -72,12 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     
 
                 case 'registrasi':
-                    $username = $_POST["username"];
-                    $password = $_POST["password"];
+                    $username = $_POST["username_register"];
+                    $password = $_POST["password_register"];
                     $no_telp = $_POST["no_telp"];
-                    $id_role = $_POST["id_role"];
+                    $id_role = $_POST["role_id"];
                     $modelUser->addUser($username, $password, $id_role, $no_telp);
-                    echo "<script>alert('Registrasi berhasil'); window.location.href='/laundry_shoes/views/web_laundry/loginPage.php';</script>";
+                    echo "<script>alert('Registrasi berhasil'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
                     break;
                
                 }

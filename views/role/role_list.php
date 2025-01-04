@@ -48,7 +48,7 @@ include "/laragon/www/laundry_shoes/auth_check.php";
 
                 <!-- Button to Insert New Role -->
                 <div class="mb-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                         <i class="fa-solid fa-plus"></i>
                         <a href="/laundry_shoes/views/role/role_input.php"> Add New Role</a>
                     </button>
@@ -76,7 +76,7 @@ include "/laragon/www/laundry_shoes/auth_check.php";
                             foreach($obj_role as $role){ ?>
 
                             <tr class="text-center">
-                                <td class="py-3 px-4 text-blue-600"><?= $role->role_id ?></td>
+                                <td class="py-3 px-4 text-yellow-600"><?= $role->role_id ?></td>
                                 <td class="w-1/6 py-3 px-4"><?= $role->role_nama ?></td>
                                 <td class="w-1/4 py-3 px-4"><?= $role->role_deskripsi ?></td>
                                 <td class="w-1/6 py-3 px-4">
@@ -89,7 +89,7 @@ include "/laragon/www/laundry_shoes/auth_check.php";
                                 </td>
                                 <td class="w-1/6 py-3 px-4">
                                     <button
-                                        class="bg-violet-500 hover:bg-violet-700 text-white font-bold py-1 px-2 rounded mr-2">
+                                        class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2">
                                         <a href="/laundry_shoes/views/role/role_update.php?id=<?= $role->role_id?>"><i
                                                 class="fa-regular fa-pen-to-square"></i></a>
                                     </button>

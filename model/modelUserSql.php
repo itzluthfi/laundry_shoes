@@ -37,7 +37,6 @@ class modelUser {
             $this->db->execute($query);
             return true;
         } catch (Exception $e) {
-            echo "<script>console.log('Error adding user: " . $e->getMessage() . "');</script>";
             return false;
         }
     }
@@ -95,7 +94,6 @@ class modelUser {
 
             return true;
         } catch (Exception $e) {
-            echo "<script>console.log('Error updating user: " . $e->getMessage() . "');</script>";
             return false;
         }
     }
@@ -114,7 +112,6 @@ class modelUser {
 
             return true;
         } catch (Exception $e) {
-            echo "<script>console.log('Error deleting user: " . $e->getMessage() . "');</script>";
             return false;
         }
     }

@@ -2,7 +2,7 @@
 require_once "/laragon/www/laundry_shoes/init.php";
 include "/laragon/www/laundry_shoes/auth_check.php"; 
 
-$obj_layanan = $modelLayanan->getAllLayanan();
+$obj_layanan = $modelLayanan->getAllLayananFromDB();
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +39,7 @@ $obj_layanan = $modelLayanan->getAllLayanan();
 
                 <!-- Button to Insert New Layanan -->
                 <div class="mb-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                         <i class="fa-solid fa-plus"></i>
                         <a href="/laundry_shoes/views/layanan/layanan_input.php"> Add New Layanan</a>
                     </button>
@@ -64,20 +64,20 @@ $obj_layanan = $modelLayanan->getAllLayanan();
                             <!-- Dynamic Data Rows -->
                             <?php foreach($obj_layanan as $layanan){ ?>
                             <tr class="text-center">
-                                <td class="w-1/12 py-3 px-4 text-blue-600"><?= $layanan->id ?></td>
-                                <td class="w-1/4 py-3 px-4"><?= $layanan->nama ?></td>
-                                <td class="w-1/3 py-3 px-4"><?= $layanan->deskripsi ?></td>
-                                <td class="w-1/6 py-3 px-4">Rp. <?= number_format($layanan->harga) ?></td>
+                                <td class="w-1/12 py-3 px-4 text-yellow-600"><?= $layanan->layanan_id ?></td>
+                                <td class="w-1/4 py-3 px-4"><?= $layanan->layanan_nama ?></td>
+                                <td class="w-1/3 py-3 px-4"><?= $layanan->layanan_deskripsi ?></td>
+                                <td class="w-1/6 py-3 px-4">Rp. <?= number_format($layanan->layanan_harga) ?></td>
                                 <td class="w-1/6 py-3 px-4">
                                     <button
-                                        class="bg-violet-500 hover:bg-violet-700 text-white font-bold py-1 px-2 rounded mr-2">
+                                        class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2">
                                         <a
-                                            href="/laundry_shoes/views/layanan/layanan_update.php?id=<?= $layanan->id ?>"><i
+                                            href="/laundry_shoes/views/layanan/layanan_update.php?id=<?= $layanan->layanan_id ?>"><i
                                                 class="fa-regular fa-pen-to-square"></i></a>
                                     </button>
                                     <button
                                         class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
-                                        onclick="return confirmDelete(<?= $layanan->id ?>)">
+                                        onclick="return confirmDelete(<?= $layanan->layanan_id ?>)">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>

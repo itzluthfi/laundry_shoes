@@ -2,298 +2,128 @@
 include_once "/laragon/www/laundry_shoes/init.php";
 
 $user_name = unserialize($_SESSION['user_login'])->user_username;
-
 $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_role);
 ?>
 
-<div
-    class="relative flex h-[calc(100vh-2rem)] w-full max-w-[17rem] flex-col bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5 rounded-xl">
+<div class="relative flex h-[calc(100vh-2rem)]">
+    <!-- Sidebar -->
+    <div id="sidebar"
+        class="relative flex flex-col w-64 bg-gray-900 text-gray-200 p-4 shadow-xl rounded-xl transition-transform duration-300 transform">
+        <!-- Sidebar Header -->
+        <div class="flex items-center justify-between mb-6">
+            <h5 class="text-xl font-semibold italic tracking-wide">WELCOME BACK</h5>
+            <button id="closeSidebar" class="text-gray-400 hover:text-white">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
 
+        <!-- User Info -->
+        <div class="flex items-center justify-left mb-6">
 
-    <div class="p-4 mb-4 mt-1">
-        <h5
-            class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900 italic">
-            WELCOME BACK,
-            <div class="flex">
-                <p class="text-gray-800 ">
-                    <?=  $user_name ?>,
-                </p>
-                <span class="italic text-slate-400">
-                    <?= $user_role->role_nama ?>
-                </span>
+            <img src="/laundry_shoes/public/img/gita.jpg" alt="User"
+                class="w-14 h-14 mb-4 rounded-full object-cover border-2 border-gray-400">
+            <div class="p-4 mb-4 ml-4">
+                <h6 class="font-bold text-white"> <?= $user_name ?> </h6>
+                <span class="italic text-sm text-gray-400"> <?= $user_role->role_nama ?> </span>
             </div>
-        </h5>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex flex-col gap-2">
+            <a href="/laundry_shoes/views/dashboard/dashboard.php" class="nav-link">
+                <i class="fa-solid fa-person-skating"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="/laundry_shoes/views/role/role_list.php" class="nav-link">
+                <i class="fa-solid fa-person-swimming"></i>
+                <span>Master Data Role</span>
+            </a>
+            <a href="/laundry_shoes/views/user/user_list.php" class="nav-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Master Data User</span>
+            </a>
+            <a href="/laundry_shoes/views/layanan/layanan_list.php" class="nav-link">
+                <i class="fa-solid fa-person-praying"></i>
+                <span>Master Data Layanan</span>
+            </a>
+            <a href="/laundry_shoes/views/cart/cart_list.php" class="nav-link">
+                <i class="fa-solid fa-cube"></i>
+                <span>Master Data Reservasi</span>
+            </a>
+            <div class="relative group">
+                <button class="nav-link">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Menu Transaksi</span>
+                    <i class="fa-solid fa-chevron-down ml-auto"></i>
+                </button>
+                <div class="hidden pl-6 group-hover:block">
+                    <a href="/laundry_shoes/views/reservasi/reservasi_input.php" class="sub-nav-link">
+                        <i class="fa-solid fa-clipboard"></i>
+                        <span>Add Transaksi</span>
+                    </a>
+                    <a href="/laundry_shoes/views/reservasi/reservasi_list.php" class="sub-nav-link">
+                        <i class="fa-solid fa-clipboard"></i>
+                        <span>List Transaksi</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
     </div>
-    <?php
-          if ($user_role->role_id == 1) {
-        
-        ?>
-    <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-        <a href="/laundry_shoes/views/dashboard/dashboard.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="ml-1 grid mr-4 place-items-center">
-                    <!-- <i class="fa-solid fa-house"></i> -->
-                    <i class="fa-solid fa-person-skating"></i>
-                </div>
-                Dashboard
-            </div>
-        </a>
-        <a href="/laundry_shoes/views/role/role_list.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="ml-1 grid mr-4 place-items-center">
-                    <!-- <i class="fa-solid fa-user"></i> -->
-                    <i class="fa-solid fa-person-swimming"></i>
-                </div>
-                Master Data Role
-            </div>
-        </a>
-        <!-- <a href="/laundry_shoes/views/user/user_list.php">
-                <div role="button"
-                    class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                    <div class="grid mr-4 place-items-center"> -->
-        <!-- <i class="fa-solid fa-users"></i> -->
-        <!-- <i class="fa-solid fa-person-biking"></i>
-                    </div>
-                    Master Data User
-                </div>
-            </a> -->
 
-        <a href="/laundry_shoes/views/member/member_list.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="grid mr-4 place-items-center">
-                    <i class="fa-solid fa-person-praying"></i>
-                </div>
-                Master Data Member
-            </div>
-        </a>
-
-        <a href="/laundry_shoes/views/item/item_list.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="grid mr-4 place-items-center">
-                    <!-- <i class="fa-solid fa-cube"></i> -->
-                    <i class="fa-solid fa-people-carry-box"></i>
-                </div>
-                Master Data Item
-            </div>
-        </a>
-        <a href="/laundry_shoes/views/cart/cart_list.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="grid mr-4 place-items-center">
-                    <i class="fa-solid fa-cube"></i>
-
-                </div>
-                Master Data Cart
-            </div>
-        </a>
-
-        <div class="group relative block w-full hover:bg-slate-100 rounded-lg">
-            <div role="button"
-                class="flex items-center w-full p-0 leading-tight transition-all rounded-lg outline-none bg-blue-gray-50/50 text-start text-blue-gray-700 hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <button type="button"
-                    class="flex items-center justify-between w-full p-3 font-sans text-xl antialiased font-semibold leading-snug text-left transition-colors border-b-0 select-none border-b-blue-gray-100 text-blue-gray-900 hover:text-blue-gray-900">
-                    <div class="grid mr-4 place-items-center">
-                        <i class="fa-solid fa-cart-shopping"></i>
-
-                    </div>
-                    <p
-                        class="block mr-auto font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-900">
-                        Menu Transaksi
-                    </p>
-                    <span class="ml-4">
-                        <i class="fa-solid fa-chevron-down fa-xs"></i>
-                    </span>
-                </button>
-            </div>
-            <div class="overflow-hidden hidden group-hover:block">
-                <div class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
-                    <nav
-                        class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
-                        <!-- <a href="/laundry_shoes/views/sale/sale_input.php">
-                                <div role="button"
-                                    class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                    <div class="grid mr-4 place-items-center">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                    </div>
-                                    Insert Transaksi
-                                </div>
-                            </a> -->
-                        <a href="/laundry_shoes/views/sale/sale_list.php">
-                            <div role="button"
-                                class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                <div class="grid mr-4 place-items-center">
-                                    <i class="fa-solid fa-clipboard"></i>
-                                </div>
-                                List Transaksi
-                            </div>
-                        </a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <?php }else if($user_role->role_id == 3){ ?>
-
-    <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-        <a href="/laundry_shoes/views/dashboard/dashboard.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="ml-1 grid mr-4 place-items-center">
-                    <!-- <i class="fa-solid fa-house"></i> -->
-                    <i class="fa-solid fa-person-skating"></i>
-                </div>
-                Dashboard
-            </div>
-        </a>
-        <a href="/laundry_shoes/views/role/role_list.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="ml-1 grid mr-4 place-items-center">
-                    <!-- <i class="fa-solid fa-user"></i> -->
-                    <i class="fa-solid fa-person-swimming"></i>
-                </div>
-                Master Data Role
-            </div>
-        </a>
-        <a href="/laundry_shoes/views/user/user_list.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="grid mr-4 place-items-center">
-                    <!-- <i class="fa-solid fa-users"></i> -->
-                    <i class="fa-solid fa-person-biking"></i>
-                </div>
-                Master Data User
-            </div>
-        </a>
-
-        <a href="/laundry_shoes/views/member/member_list.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="grid mr-4 place-items-center">
-                    <i class="fa-solid fa-person-praying"></i>
-                </div>
-                Master Data Member
-            </div>
-        </a>
-
-        <a href="/laundry_shoes/views/item/item_list.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="grid mr-4 place-items-center">
-                    <!-- <i class="fa-solid fa-cube"></i> -->
-                    <i class="fa-solid fa-people-carry-box"></i>
-                </div>
-                Master Data Item
-            </div>
-        </a>
-        <a href="/laundry_shoes/views/cart/cart_list.php">
-            <div role="button"
-                class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <div class="grid mr-4 place-items-center">
-                    <i class="fa-solid fa-cube"></i>
-
-                </div>
-                Master Data Cart
-            </div>
-        </a>
-
-        <div class="group relative block w-full hover:bg-slate-100 rounded-lg">
-            <div role="button"
-                class="flex items-center w-full p-0 leading-tight transition-all rounded-lg outline-none bg-blue-gray-50/50 text-start text-blue-gray-700 hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <button type="button"
-                    class="flex items-center justify-between w-full p-3 font-sans text-xl antialiased font-semibold leading-snug text-left transition-colors border-b-0 select-none border-b-blue-gray-100 text-blue-gray-900 hover:text-blue-gray-900">
-                    <div class="grid mr-4 place-items-center">
-                        <i class="fa-solid fa-cart-shopping"></i>
-
-                    </div>
-                    <p
-                        class="block mr-auto font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-900">
-                        Menu Transaksi
-                    </p>
-                    <span class="ml-4">
-                        <i class="fa-solid fa-chevron-down fa-xs"></i>
-                    </span>
-                </button>
-            </div>
-            <div class="overflow-hidden hidden group-hover:block">
-                <div class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
-                    <nav
-                        class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
-                        <a href="/laundry_shoes/views/sale/sale_input.php">
-                            <div role="button"
-                                class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                <div class="grid mr-4 place-items-center">
-                                    <i class="fa-solid fa-cart-plus"></i>
-                                </div>
-                                Insert Transaksi
-                            </div>
-                        </a>
-                        <a href="/laundry_shoes/views/sale/sale_list.php">
-                            <div role="button"
-                                class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                <div class="grid mr-4 place-items-center">
-                                    <i class="fa-solid fa-clipboard"></i>
-                                </div>
-                                List Transaksi
-                            </div>
-                        </a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <?php }elseif ($user_role->role_id == 4){ ?>
-    <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-
-
-        <div class="group relative block w-full hover:bg-slate-100 rounded-lg">
-            <div role="button"
-                class="flex items-center w-full p-0 leading-tight transition-all rounded-lg outline-none bg-blue-gray-50/50 text-start text-blue-gray-700 hover:bg-slate-100 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                <button type="button"
-                    class="flex items-center justify-between w-full p-3 font-sans text-xl antialiased font-semibold leading-snug text-left transition-colors border-b-0 select-none border-b-blue-gray-100 text-blue-gray-900 hover:text-blue-gray-900">
-                    <div class="grid mr-4 place-items-center">
-                        <i class="fa-solid fa-cart-shopping"></i>
-
-                    </div>
-                    <p
-                        class="block mr-auto font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-900">
-                        Menu Transaksi
-                    </p>
-                    <span class="ml-4">
-                        <i class="fa-solid fa-chevron-down fa-xs"></i>
-                    </span>
-                </button>
-            </div>
-            <div class="overflow-hidden hidden group-hover:block">
-                <div class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
-                    <nav
-                        class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
-                        <a href="/laundry_shoes/views/sale/sale_input.php">
-                            <div role="button"
-                                class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                <div class="grid mr-4 place-items-center">
-                                    <i class="fa-solid fa-cart-plus"></i>
-                                </div>
-                                Insert Transaksi
-                            </div>
-                        </a>
-                        <a href="/laundry_shoes/views/sale/sale_list.php">
-                            <div role="button"
-                                class="flex items-center w-full p-3 pl-6 leading-tight transition-all rounded-lg outline-none text-start hover:bg-slate-200 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                <div class="grid mr-4 place-items-center">
-                                    <i class="fa-solid fa-clipboard"></i>
-                                </div>
-                                List Transaksi
-                            </div>
-                        </a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <?php } ?>
+    <!-- Main Content -->
+    <div class="flex-1 p-4">
+        <button id="openSidebar" class="p-2 bg-gray-900 text-white rounded-lg shadow-lg hover:bg-gray-800">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
 </div>
+
+<script>
+const sidebar = document.getElementById('sidebar');
+const openSidebarBtn = document.getElementById('openSidebar');
+const closeSidebarBtn = document.getElementById('closeSidebar');
+
+openSidebarBtn.addEventListener('click', () => {
+    sidebar.classList.remove('-translate-x-full');
+});
+
+closeSidebarBtn.addEventListener('click', () => {
+    sidebar.classList.add('-translate-x-full');
+});
+</script>
+
+<style>
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background: #2d3748;
+    color: #edf2f7;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.nav-link:hover {
+    background: #4a5568;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sub-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    background: #2d3748;
+    color: #a0aec0;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.sub-nav-link:hover {
+    background: #4a5568;
+    color: #edf2f7;
+}
+</style>

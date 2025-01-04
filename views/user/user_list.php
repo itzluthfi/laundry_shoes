@@ -42,7 +42,7 @@ $obj_user = $modelUser->getAllUser();
 
                 <!-- Button to Insert New User -->
                 <div class="mb-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                         <i class="fa-solid fa-plus"></i>
                         <a href="/laundry_shoes/views/user/user_input.php"> Add New User</a>
                     </button>
@@ -59,39 +59,39 @@ $obj_user = $modelUser->getAllUser();
                                 <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">User ID</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Username</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Password</th>
-                                <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Role</th>
+                                <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">Role</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">No Telp</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-700">
                             <!-- Dynamic Data Rows -->
-
-
                             <?php foreach($obj_user as $user){ 
-                                $user_role = $modelRole->getRoleById($user->id_role);
-                                
-                            ?>
+        $user_role = $modelRole->getRoleById($user->id_role);
+    ?>
                             <tr class="text-center">
-                                <td class="w-1/12 py-3 px-4 text-blue-600"><?= $user->user_id ?></td>
+                                <td class="w-1/12 py-3 px-4 text-yellow-600"><?= $user->user_id ?></td>
                                 <td class="w-1/6 py-3 px-4"><?= $user->user_username ?></td>
                                 <td class="w-1/6 py-3 px-4"><?= $user->user_password ?></td>
-                                <td class="w-1/6 py-3 px-4"><?= $user_role->role_nama ?></td>
+                                <td class="w-1/12 py-3 px-4"><?= $user_role->role_nama ?></td>
                                 <td class="w-1/6 py-3 px-4"><?= $user->no_telp ?></td>
-
-                                <button
-                                    class="bg-violet-500 hover:bg-violet-700 text-white font-bold py-1 px-2 rounded mr-2">
-                                    <a href="/laundry_shoes/views/user/user_update.php?id=<?= $user->user_id ?>"><i
-                                            class="fa-regular fa-pen-to-square"></i></a>
-                                </button>
-                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
-                                    onclick="return confirmDelete(<?= $user->user_id ?>)">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
+                                <td class="w-1/6 py-3 px-4">
+                                    <!-- Action Buttons -->
+                                    <button
+                                        class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2">
+                                        <a href="/laundry_shoes/views/user/user_update.php?id=<?= $user->user_id ?>">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+                                    </button>
+                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                                        onclick="return confirmDelete(<?= $user->user_id ?>)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                             <?php } ?>
                         </tbody>
+
                     </table>
                 </div>
             </div>

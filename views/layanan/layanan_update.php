@@ -35,18 +35,17 @@
                     method="POST">
                     <!-- Nama Layanan -->
                     <div class="mb-4">
-                        <label for="layanan_nama" class="block text-gray-700 text-sm font-bold mb-2">Nama
+                        <label for="nama" class="block text-gray-700 text-sm font-bold mb-2">Nama
                             Layanan:</label>
-                        <input type="text" id="layanan_nama" name="layanan_nama"
+                        <input type="text" id="nama" name="nama"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Masukkan Nama Layanan" value="<?= $obj_layanan->layanan_nama ?>" required>
                     </div>
 
                     <!-- Deskripsi Layanan -->
                     <div class="mb-4">
-                        <label for="layanan_deskripsi"
-                            class="block text-gray-700 text-sm font-bold mb-2">Deskripsi:</label>
-                        <textarea id="layanan_deskripsi" name="layanan_deskripsi"
+                        <label for="deskripsi" class="block text-gray-700 text-sm font-bold mb-2">Deskripsi:</label>
+                        <textarea id="deskripsi" name="deskripsi"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Masukkan Deskripsi Layanan" rows="4"
                             required><?= $obj_layanan->layanan_deskripsi ?></textarea>
@@ -54,8 +53,8 @@
 
                     <!-- Harga Layanan -->
                     <div class="mb-4">
-                        <label for="layanan_harga" class="block text-gray-700 text-sm font-bold mb-2">Harga:</label>
-                        <input type="number" id="layanan_harga" name="layanan_harga"
+                        <label for="harga" class="block text-gray-700 text-sm font-bold mb-2">Harga:</label>
+                        <input type="number" id="harga" name="harga"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Masukkan Harga Layanan" value="<?= $obj_layanan->layanan_harga ?>" required>
                     </div>

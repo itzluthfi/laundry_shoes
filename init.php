@@ -3,6 +3,7 @@
 session_start();
 include_once "model/modelRoleSql.php";
 include_once "model/modelUserSql.php";
+include_once "model/modelLayanan.php";
 // include_once "model/modelSaleSql.php";
 // include_once "model/modelCartSql.php";
 //include_once "model/modelDetailSales.php";
@@ -10,6 +11,7 @@ include_once "model/modelUserSql.php";
 //role
 $modelRole = new modelRole();
 $modelUser = new modelUser();
+$modelLayanan = new modelLayanan();
 // $modelSale = new modelSaleSql();
 // $modelCart = new modelCart();
 //$modelDetailSale = new modelDetailSale();
