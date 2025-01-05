@@ -23,7 +23,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 <div
                     class="absolute right-28 top-12 bg-gray-100 text-white p-4 rounded hidden group-hover:flex flex-col items-center justify-center border-2 border-gray-400 transition-all duration-300 ease-in-out">
                     <!-- Foto Profil yang muncul saat hover -->
-                    <img src="../../public/img/pp3.jpg" alt="Profile Image"
+                    <img src="../../public/img/gita.jpg" alt="Profile Image"
                         class="w-10 h-10 rounded-full my-1 object-cover border-2 border-gray-300">
                     <!-- Username dan Role -->
                     <span class="text-black text-center">

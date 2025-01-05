@@ -60,6 +60,7 @@ class ModelReservasiSql {
                 $row['status_id'],
                 $row['uang_bayar'],
                 $row['uang_kembali'],
+                $row['date'],
                 $details
             );
         }
@@ -79,6 +80,8 @@ class ModelReservasiSql {
                 $row['status_id'],
                 $row['uang_bayar'],
                 $row['uang_kembali'],
+                $row['date'],
+
                 $details
             );
         }

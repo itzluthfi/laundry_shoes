@@ -46,14 +46,14 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 <i class="fa-solid fa-person-praying"></i>
                 <span>Master Data Layanan</span>
             </a>
-            <a href="/laundry_shoes/views/cart/cart_list.php" class="nav-link">
+            <!-- <a href="/laundry_shoes/views/cart/cart_list.php" class="nav-link">
                 <i class="fa-solid fa-cube"></i>
                 <span>Master Data Reservasi</span>
-            </a>
+            </a> -->
             <div class="relative group">
                 <button class="nav-link">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span>Menu Transaksi</span>
+                    <span>Manage Transaksi</span>
                     <i class="fa-solid fa-chevron-down ml-auto"></i>
                 </button>
                 <div class="hidden pl-6 group-hover:block">
