@@ -1,3 +1,7 @@
+<?php
+require_once "/laragon/www/laundry_shoes/init.php";
+$layanans = $modelLayanan->getAllLayananFromDB();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +11,30 @@
     <title>Laundry Web</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<style>
+/* #serviceModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+/* CSS untuk animasi modal */
+#modalContentContainer {
+    transform: scale(0.95);
+    /* Mulai dengan skala lebih kecil */
+    opacity: 0;
+    /* Awalnya tidak terlihat */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+#modalContentContainer.scale-100 {
+    transform: scale(1);
+    /* Animasi ke ukuran penuh */
+    animation-duration: 0.5s;
+    opacity: 1;
+    /* Menjadi terlihat */
+}
+</style>
 
 <body class="font-sans text-gray-800">
     <!-- Navbar -->
@@ -168,8 +196,7 @@
                             <dt>
                                 <div
                                     class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                                    <img src="https://www.svgrepo.com/show/366244/cleaning.svg"
-                                        alt="Peralatan Cuci Sepatu" />
+                                    <img src="img/about_us/brush.png" alt="Peralatan Cuci Sepatu" />
                                 </div>
                                 <p class="font-heading ml-16 text-lg leading-6 font-bold text-gray-700">
                                     Peralatan Cuci Canggih
@@ -186,8 +213,7 @@
                             <dt>
                                 <div
                                     class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                                    <img src="https://www.svgrepo.com/show/499135/eco-friendly.svg"
-                                        alt="Produk Ramah Lingkungan" />
+                                    <img src="img/about_us/polish.png" alt="Produk Ramah Lingkungan" />
                                 </div>
                                 <p class="font-heading ml-16 text-lg leading-6 font-bold text-gray-700">
                                     Produk Ramah Lingkungan
@@ -204,8 +230,7 @@
                             <dt>
                                 <div
                                     class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                                    <img src="https://www.svgrepo.com/show/416101/fast-drying.svg"
-                                        alt="Pengeringan Cepat" />
+                                    <img src="img/about_us/pengeringan.png" alt="Pengeringan Cepat" />
                                 </div>
                                 <p class="font-heading ml-16 text-lg leading-6 font-bold text-gray-700">
                                     Pengeringan Cepat
@@ -222,8 +247,7 @@
                             <dt>
                                 <div
                                     class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                                    <img src="https://www.svgrepo.com/show/74289/shoe-care.svg"
-                                        alt="Perawatan Sepatu" />
+                                    <img src="img/about_us/clean.png" alt="Perawatan Sepatu" />
                                 </div>
                                 <p class="font-heading ml-16 text-lg leading-6 font-bold text-gray-700">
                                     Perawatan Sepatu Profesional
@@ -241,30 +265,31 @@
     </section>
 
     <!-- Layanan Kami -->
-    <!-- Layanan Kami -->
+
     <section id="img" class="py-16 bg-white">
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold text-blue-500">Layanan Kami</h2>
             <p class="text-gray-600 mt-4">
-                Kami telah mencuci lebih dari
-                <span class="font-bold">264,645</span> pasang sepatu, dan akan terus
+                Kami telah mencuci lebih dari <span class="font-bold">264,645</span> pasang sepatu, dan akan terus
                 bertambah...
             </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                <!-- Layanan 1 -->
+                <!-- Layanan -->
+                <?php foreach ($layanans as $layanan) { ?>
                 <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
-                    onclick="openModal('easy')">
-                    <img src="img/easyWash.jpg" alt="Easy Wash"
+                    data-id="<?= $layanan->layanan_id; ?>" data-nama="<?= $layanan->layanan_nama; ?>"
+                    data-deskripsi="<?= $layanan->layanan_deskripsi; ?>" data-harga="<?= $layanan->layanan_harga; ?>"
+                    onclick="openModal(this)">
+                    <img src="img/<?= strtolower(str_replace(' ', '', $layanan->layanan_nama)); ?>.jpg"
+                        alt="<?= $layanan->layanan_nama; ?>"
                         class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
                         <div class="text-center">
-                            <h3 class="text-xl font-semibold">Easy Wash</h3>
-                            <p class="text-sm mt-2">
-                                Cuci bagian midsole dan outsole saja.
-                            </p>
+                            <h3 class="text-xl font-semibold"><?= $layanan->layanan_nama; ?></h3>
+                            <p class="text-sm mt-2"><?= $layanan->layanan_deskripsi; ?></p>
                             <div class="flex justify-center space-x-4 mt-4">
-                                <button onclick="openModal('unyellowing')"
+                                <button
                                     class="flex items-center bg-gray-700 hover:bg-gray-800 text-white px-3 py-2 rounded-md">
                                     <i class="fas fa-eye mr-2"></i> Detail
                                 </button>
@@ -276,98 +301,34 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Layanan tambahan -->
-                <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
-                    onclick="openModal('repair')">
-                    <img src="img/repair.jpg" alt="Repair"
-                        class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
-                    <div
-                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center">
-                            <h3 class="text-xl font-semibold">Repair</h3>
-                            <p class="text-sm mt-2">
-                                Perbaikan untuk sepatu Anda agar terlihat seperti baru lagi.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
-                    onclick="openModal('unyellowing')">
-                    <img src="img/unyellowing.jpg" alt="Unyellowing"
-                        class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
-                    <div
-                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center">
-                            <h3 class="text-xl font-semibold">Unyellowing</h3>
-                            <p class="text-sm mt-2">
-                                Mengembalikan warna midsole yang menguning menjadi putih lagi.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
-                    onclick="openModal('repaint')">
-                    <img src="img/repaint.jpg" alt="Repaint"
-                        class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
-                    <div
-                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center">
-                            <h3 class="text-xl font-semibold">Repaint</h3>
-                            <p class="text-sm mt-2">
-                                Pengecatan ulang sepatu Anda agar tampil segar dan baru.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
-                    onclick="openModal('premiumSuede')">
-                    <img src="img/premium-suede.jpg" alt="Premium Suede"
-                        class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
-                    <div
-                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center">
-                            <h3 class="text-xl font-semibold">Premium Suede</h3>
-                            <p class="text-sm mt-2">
-                                Perawatan khusus untuk sepatu berbahan suede.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
-                    onclick="openModal('leatherShining')">
-                    <img src="img/leather-shining.jpg" alt="Leather Shining"
-                        class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
-                    <div
-                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <div class="text-center">
-                            <h3 class="text-xl font-semibold">Leather Shining</h3>
-                            <p class="text-sm mt-2">
-                                Poles sepatu kulit agar tampak bersinar dan elegan.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </section>
 
     <!-- Modal -->
-    <div id="serviceModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg w-96 p-6 shadow-lg">
-            <h3 id="modalTitle" class="text-2xl font-bold text-blue-500"></h3>
-            <p id="modalContent" class="text-gray-600 mt-4"></p>
-            <button onclick="closeModal()" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded-md">
-                Tutup
+    <div id="serviceModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50"
+        onclick="closeModal(event)">
+        <div class="bg-white rounded-lg w-96 p-6 shadow-lg transform scale-95 opacity-0 transition-all duration-300"
+            id="modalContentContainer" onclick="event.stopPropagation()">
+            <!-- Button Icon 'X' -->
+            <button onclick="closeModal()"
+                class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 transition duration-300 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
             </button>
+            <img id="modalImage" src="" alt="Layanan Image" class="w-full h-48 object-cover rounded-lg mt-2">
+            <h3 id="modalTitle" class="text-2xl font-bold text-blue-500 mt-4"></h3>
+            <p id="modalPrice" class="text-gray-800 font-semibold mt-2"></p>
+            <p id="modalContent" class="text-gray-600 mt-4"></p>
         </div>
     </div>
+
+
+
+
 
     <!-- Kontak -->
     <section class="bg-blue-50 dark:bg-slate-800" id="contact">
@@ -587,6 +548,36 @@
             });
         });
     });
+
+    function openModal(element) {
+        const imageSrc = element.querySelector('img').src;
+        const layananNama = element.dataset.nama;
+        const layananDeskripsi = element.dataset.deskripsi;
+        const layananHarga = element.dataset.harga;
+
+        document.getElementById('modalImage').src = imageSrc;
+        document.getElementById('modalTitle').innerText = layananNama;
+        document.getElementById('modalPrice').innerText = `Harga: Rp ${layananHarga}`;
+        document.getElementById('modalContent').innerText = layananDeskripsi;
+
+        const modal = document.getElementById('serviceModal');
+        const modalContent = document.getElementById('modalContentContainer');
+
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modalContent.classList.add('scale-100', 'opacity-100');
+        }, 50);
+    }
+
+    function closeModal(event) {
+        const modal = document.getElementById('serviceModal');
+        const modalContent = document.getElementById('modalContentContainer');
+
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
     </script>
 </body>
 

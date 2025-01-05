@@ -131,7 +131,7 @@ $sales_totals_json = json_encode($sales_totals);
 }
 </style>
 
-<body class="bg-gray-100 font-sans leading-normal tracking-normal overflow-hidden">
+<body class="bg-yellow-100 font-sans leading-normal tracking-normal overflow-hidden">
 
     <!-- Navbar -->
     <?php include_once '/laragon/www/laundry_shoes/views/includes/navbar.php'; ?>
@@ -151,30 +151,30 @@ $sales_totals_json = json_encode($sales_totals);
                 <!-- Cards Section -->
                 <div class="mx-6 mb-6 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 xl:grid-cols-4">
                     <!-- Layanan Card -->
-                    <div class="card bg-blue-50 shadow-lg rounded-lg p-8">
+                    <div class="card bg-gray-50 shadow-lg rounded-lg p-8">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="text-2xl font-semibold text-gray-700">Layanan</h4>
                                 <div
-                                    class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-indigo-600">
+                                    class="bg-yellow-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-yellow-600">
                                     <i class="fa-solid fa-users"></i>
                                 </div>
                             </div>
                             <div class="mt-6 flex flex-col gap-0">
                                 <h2 class="text-3xl font-bold text-gray-800"><?= count($layanan) ?></h2>
                                 <p><span class="text-gray-600"><?= count($layanan) ?></span> <span
-                                        class="text-indigo-500">Jumlah Layanan</span>
+                                        class="text-yellow-500">Jumlah Layanan</span>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <!-- Reservasi Card -->
-                    <div class="card bg-green-50 shadow-lg rounded-lg p-6">
+                    <div class="card bg-gray-50 shadow-lg rounded-lg p-6">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="text-2xl font-semibold text-gray-700">Reservasi</h4>
                                 <div
-                                    class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-indigo-600">
+                                    class="bg-yellow-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-yellow-600">
                                     <i class="fa-solid fa-calendar-check"></i>
                                 </div>
                             </div>
@@ -187,12 +187,12 @@ $sales_totals_json = json_encode($sales_totals);
                         </div>
                     </div>
                     <!-- Role Card -->
-                    <div class="card bg-yellow-50 shadow-lg rounded-lg p-6">
+                    <div class="card bg-gray-50 shadow-lg rounded-lg p-6">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="text-2xl font-semibold text-gray-700">Role</h4>
                                 <div
-                                    class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-indigo-600">
+                                    class="bg-yellow-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-yellow-600">
                                     <i class="fa-solid fa-user"></i>
                                 </div>
                             </div>
@@ -206,19 +206,19 @@ $sales_totals_json = json_encode($sales_totals);
                         </div>
                     </div>
                     <!-- Sale Card -->
-                    <div class="card bg-red-50 shadow-lg rounded-lg p-6">
+                    <div class="card bg-gray-50 shadow-lg rounded-lg p-6">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
-                                <h4 class="text-2xl font-semibold text-gray-700">Total Sales</h4>
+                                <h4 class="text-2xl font-semibold text-gray-700">Total Reservasi</h4>
                                 <div
-                                    class="bg-indigo-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-indigo-600">
+                                    class="bg-yellow-600 bg-opacity-10 rounded-md w-10 h-10 flex items-center justify-center text-yellow-600">
                                     <i class="fa-solid fa-cart-shopping"></i>
                                 </div>
                             </div>
                             <div class="mt-6 flex flex-col gap-0">
                                 <!-- Menampilkan total penjualan -->
                                 <div class=" flex flex-col gap-0">
-                                    <h2 class="text-3xl font-bold text-blue-500">
+                                    <h2 class="text-3xl font-bold text-yellow-500">
                                         Rp. <?= number_format($total_sales, 2) ?>
                                     </h2>
                                 </div>

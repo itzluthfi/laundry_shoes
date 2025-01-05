@@ -2,7 +2,7 @@
 require_once "/laragon/www/laundry_shoes/init.php";
 require_once "/laragon/www/laundry_shoes/auth_check.php";
 $reservasis = $modelReservasi->getAllReservasi();
-var_dump($reservasis);
+// var_dump($reservasis);
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +51,7 @@ var_dump($reservasis);
         <!-- Main Content -->
         <div class="flex-1 p-8 overflow-y-auto h-[calc(100vh-4rem)]">
 
-            <h1 class="text-4xl font-bold mb-5 pb-2 text-gray-800 italic">Manage reservasis</h1>
+            <h1 class="text-4xl font-bold mb-5 pb-2 text-gray-800 italic">Manage Reservasi</h1>
 
 
             <!-- Main Container for Transactions -->
