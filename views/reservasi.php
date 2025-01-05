@@ -1,6 +1,10 @@
 <?php
 require_once "/laragon/www/laundry_shoes/init.php";
 $reservasiData = $modelReservasi->getAllReservasi();
+$user_login = unserialize($_SESSION['user_login']);
+// var_dump($_SESSION['user_login']);
+$user = $modelUser->getUserById($user_login->user_id);
+var_dump($user);
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +15,7 @@ $reservasiData = $modelReservasi->getAllReservasi();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cek Reservasi Sepatu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -21,8 +26,8 @@ $reservasiData = $modelReservasi->getAllReservasi();
                 <img src="../public/img/gita.jpg" alt="Foto Profil"
                     class="w-20 h-20 rounded-full border-2 border-yellow-500 object-cover">
                 <div class="ml-4">
-                    <h2 class="text-xl font-bold text-gray-800">Username: John Doe</h2>
-                    <p class="text-gray-600">Role: Administrator</p>
+                    <h2 class="text-xl font-bold text-gray-800">Username: <?= $user->user_username ?></h2>
+                    <p class="text-gray-600">Role: <?= $user->id_role    ?></p>
                 </div>
             </div>
 
@@ -137,15 +142,12 @@ $reservasiData = $modelReservasi->getAllReservasi();
 
 
                                     <button
-                                        class="border-2 border-gray-700 bg-white hover:bg-gray-800 hover:text-white text-gray-800 font-bold py-1 px-2 rounded"
+                                        class="flex border-2 border-gray-700 bg-white hover:bg-gray-800 hover:text-white text-gray-800 font-bold py-1 px-2 rounded"
                                         onclick="openModal('modal-<?php echo $reservasi->id; ?>')">
                                         Details
+
                                     </button>
-                                    <button
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
-                                        onclick="return confirmDelete(<?= $reservasi->id ?>)">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
+
                                 </div>
 
                             </td>
@@ -161,32 +163,32 @@ $reservasiData = $modelReservasi->getAllReservasi();
 
 
     <!-- Modal untuk detail reservasi -->
-    <?php if (!empty($reservasis)) {
-    foreach ($reservasis as $reservasi) { ?>
+    <?php if (!empty($reservasiData)) {
+foreach ($reservasiData as $reservasi) { ?>
     <div id="modal-<?php echo $reservasi->id; ?>"
-        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
-        <div
-            class="relative top-20 mx-auto p-8 border w-11/12 md:w-3/4 lg:w-1/2 xl:w-1/3 shadow-xl rounded-lg bg-white transition-all duration-300 ease-in-out transform">
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden"
+        onclick="closeModalOnOutsideClick(event, 'modal-<?php echo $reservasi->id; ?>')">
+        <div class="relative h-[500px] overflow-y-auto top-20 mx-auto p-8 border w-11/12 md:w-3/4 lg:w-1/2 xl:w-1/3 shadow-xl rounded-lg bg-white transition-all duration-300 ease-in-out transform"
+            onclick="event.stopPropagation()">
+            <!-- Mencegah propagasi klik ke container -->
             <div class="flex justify-between items-center mb-5">
-                <h3 class="text-2xl font-semibold text-gray-900">Detail Penjualan
+                <h3 class="text-2xl font-semibold text-gray-900">Detail Reservasi
                     #<?php echo htmlspecialchars($reservasi->id); ?></h3>
                 <button class="text-gray-500 hover:text-gray-700"
                     onclick="closeModal('modal-<?php echo $reservasi->id; ?>')">
-                    <i class="fas fa-times text-2xl"></i>
+                    <i data-feather="x" class="w-6 h-6"></i>
                 </button>
             </div>
             <div class="space-y-4">
-                <!-- Informasi reservasis -->
+                <!-- Informasi reservasi -->
                 <div class="flex justify-between">
                     <div class="font-semibold text-gray-700">User</div>
                     <div><?php 
-                        $user = $modelUser->getUserById($reservasi->user_id);
-                        $role = $modelRole->getRoleById($user->id_role);
-                        echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]");
-                    ?></div>
+                    $user = $modelUser->getUserById($reservasi->user_id);
+                    $role = $modelRole->getRoleById($user->id_role);
+                    echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]");
+                ?></div>
                 </div>
-
-
 
                 <div class="flex justify-between">
                     <div class="font-semibold text-gray-700">Total Harga</div>
@@ -205,31 +207,28 @@ $reservasiData = $modelReservasi->getAllReservasi();
 
                 <!-- Table Detail Barang -->
                 <div class="mt-6">
-                    <h4 class="text-lg font-semibold text-gray-800">Detail Barang</h4>
+                    <h4 class="text-lg font-semibold text-gray-800">Detail Layanan</h4>
                     <table class="min-w-full bg-white table-auto mt-4 rounded-lg overflow-hidden shadow-md">
-                        <thead class="bg-[#b6895b] text-white">
+                        <thead class="bg-yellow-500 text-white">
                             <tr>
                                 <th class="py-3 px-4 text-left">ID</th>
-                                <th class="py-3 px-4 text-left">Nama</th>
+                                <th class="py-3 px-4 text-left">Nama Layanan</th>
                                 <th class="py-3 px-4 text-right">Harga</th>
                                 <th class="py-3 px-4 text-right">Jumlah</th>
                                 <th class="py-3 px-4 text-right">Sub Total</th>
                             </tr>
                         </thead>
-
                         <tbody class="text-gray-700">
                             <?php foreach ($reservasi->detailReservasi as $detail) { 
-                                 $layanans = $modelLayanan->getlayananById($detail->layanan_id);
-                            ?>
-
+                             $layanans = $modelLayanan->getlayananById($detail->layanan_id);
+                        ?>
                             <tr class="hover:bg-gray-100 transition-all duration-300">
                                 <td class="py-2 px-4"><?php echo htmlspecialchars($detail->layanan_id); ?></td>
                                 <td class="py-2 px-4"><?php echo htmlspecialchars($layanans->layanan_nama); ?></td>
                                 <td class="py-2 px-4 text-right">
                                     <?php echo htmlspecialchars($layanans->layanan_harga); ?>
                                 </td>
-                                <td class="py-2 px-4 text-right"><?php echo htmlspecialchars($detail->jumlah); ?>
-                                </td>
+                                <td class="py-2 px-4 text-right"><?php echo htmlspecialchars($detail->jumlah); ?></td>
                                 <td class="py-2 px-4 text-right">
                                     <?php echo htmlspecialchars($layanans->layanan_harga * $detail->jumlah); ?>
                                 </td>
@@ -239,17 +238,37 @@ $reservasiData = $modelReservasi->getAllReservasi();
                     </table>
                 </div>
             </div>
-
-            <!-- Close Button -->
-            <div class="mt-6 text-center">
-                <button class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-200"
-                    onclick="closeModal('modal-<?php echo $reservasi->id; ?>')">
-                    Close
-                </button>
-            </div>
         </div>
     </div>
     <?php } } ?>
+
+    <script>
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex'); // Tambahkan untuk memastikan modal tampil
+        }
+    }
+
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex'); // Hapus class `flex` saat modal ditutup
+        }
+    }
+
+    function closeModalOnOutsideClick(event, id) {
+        const modal = document.getElementById(id);
+        if (event.target === modal) {
+            closeModal(id);
+        }
+    }
+
+    feather.replace();
+    </script>
+
 
 </body>
 

@@ -478,8 +478,8 @@ $layanans = $modelLayanan->getAllLayananFromDB();
     <!-- footer -->
     <div class="text-center py-6">
         <a href="#" class="flex items-center justify-center mb-5 text-2xl font-semibold text-gray-900">
-            <img src="https://www.svgrepo.com/show/499962/shoe.svg" class="h-12 mr-3 sm:h-9" alt="Sepatu Logo" />
-            SepatuLand
+            <img src="img/decor2.jpg" class="h-12 mr-3 sm:h-9" alt="Sepatu Logo" />
+            Laundry_shoes
         </a>
 
         <span class="block text-sm text-center text-gray-500">© 2021-2022 SepatuLand™. All Rights Reserved. Built with
