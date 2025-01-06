@@ -1,6 +1,8 @@
 <?php
 require_once "/laragon/www/laundry_shoes/init.php";
 $layanans = $modelLayanan->getAllLayananFromDB();
+$isLoggedIn = isset($_SESSION['customer_login']);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,15 +63,26 @@ $layanans = $modelLayanan->getAllLayananFromDB();
                     <a href="#contact" class="hover:text-yellow-300 transition duration-300 ease-in-out">Kontak</a>
                 </li>
                 <li>
-                    <a href="../reservasi.php"
-                        class="bg-yellow-300 text-blue-600 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-blue-900 transition duration-300 ease-in-out shadow-md">
-                        Cek Reservasimu
-                    </a>
+                    <?= $isLoggedIn ? 
+                    '<a href="../reservasiPage.php" class="bg-yellow-300 text-blue-600 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-blue-900 transition duration-300 ease-in-out shadow-md">Cek Reservasimu</a>' 
+                        : 
+                    ''; 
+                    ?>
                 </li>
             </ul>
 
             <!-- Auth Buttons -->
             <div class="flex space-x-4">
+                <?php if ($isLoggedIn){ ?>
+                <!-- Jika sudah login -->
+                <form action="../../response_input.php?modul=logout&fitur=customer" method="POST" id="logoutForm">
+                    <button type="submit"
+                        class="bg-white text-blue-600 px-5 py-2 rounded-full font-medium hover:bg-yellow-300 hover:text-blue-900 transition duration-300 ease-in-out shadow-md">
+                        Logout
+                    </button>
+                </form>
+                <?php }else{ ?>
+                <!-- Jika belum login -->
                 <a id="authButton" href="../loginPage.php"
                     class="bg-white text-blue-600 px-5 py-2 rounded-full font-medium hover:bg-yellow-300 hover:text-blue-900 transition duration-300 ease-in-out shadow-md">
                     Login
@@ -78,6 +91,7 @@ $layanans = $modelLayanan->getAllLayananFromDB();
                     class="bg-yellow-300 text-blue-600 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-blue-900 transition duration-300 ease-in-out shadow-md">
                     Registrasi
                 </a>
+                <?php } ?>
             </div>
 
             <!-- Mobile Menu Button -->
@@ -88,25 +102,6 @@ $layanans = $modelLayanan->getAllLayananFromDB();
                 </svg>
             </button>
         </div>
-
-        <!-- Mobile Menu -->
-        <!-- <div
-        id="mobileMenu"
-        class="hidden md:hidden bg-blue-500 text-white absolute w-full left-0 top-full py-4 px-6 shadow-lg"
-      >
-        <ul class="space-y-4 text-lg font-medium">
-          <li>
-            <a href="#hero" class="hover:text-yellow-300 hover:underline"
-              >Beranda</a
-            >
-          </li>
-          <li>
-            <a href="#about" class="hover:text-yellow-300">Tentang Kami</a>
-          </li>
-          <li><a href="#img" class="hover:text-yellow-300">Layanan</a></li>
-          <li><a href="#contact" class="hover:text-yellow-300">Kontak</a></li>
-        </ul>
-      </div> -->
     </nav>
     <!-- Navbar End -->
 

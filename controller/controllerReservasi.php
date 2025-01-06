@@ -13,28 +13,27 @@ class ControllerReservasi {
         switch ($action) {
             case 'add':
                 // Validasi data POST
-                var_dump($_POST);
+               
                 if (isset($_POST['user_id'], $_POST['status_id'], $_POST['uang_bayar'], $_POST['uang_kembali'], $_POST['layanans'])) {
                     $user_id = intval($_POST['user_id']);
                     $status_id = intval($_POST['status_id']);
                     $uang_bayar = intval($_POST['uang_bayar']);
                     $uang_kembali = intval($_POST['uang_kembali']);
 
-                    // Validasi data layanans
+                    // Validasi data layanans[]
                     $detailReservasi = json_decode($_POST['layanans'], true);
                     if (json_last_error() !== JSON_ERROR_NONE || !is_array($detailReservasi) || empty($detailReservasi)) {
                         echo "<script>alert('Data detail reservasi tidak valid!'); window.history.back();</script>";
                         break;
                     }
 
-                    foreach ($detailReservasi as $item) {
-                        if (!isset($item['layanan_id'], $item['jumlah']) || intval($item['jumlah']) <= 0) {
+                    foreach ($detailReservasi as $layanan) {
+                        if (!isset($layanan['layanan_id'], $layanan['jumlah']) || intval($layanan['jumlah']) <= 0) {
                             echo "<script>alert('Data layanan tidak lengkap atau tidak valid!'); window.history.back();</script>";
                             break 2;
                         }
                     }
-                    var_dump($_POST);
-
+                    // var_dump($_POST);
                     // Tambahkan reservasi dan detailnya
                     $isSuccess = $this->modelReservasi->addReservasi($detailReservasi, $user_id, $status_id, $uang_bayar, $uang_kembali);
 

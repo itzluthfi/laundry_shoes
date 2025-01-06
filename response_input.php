@@ -15,8 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
             $roleController->handleAction($action);
             break;
 
-       
-
         case 'user':
             require_once 'controller/ControllerUser.php';
             $userController = new ControllerUser();
@@ -36,85 +34,83 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
             $reservasiController = new ControllerReservasi();
             $reservasiController->handleAction($action);
             break;
-        
-        // case 'sale':
-        //     require_once 'controller/ControllerSale.php';
-        //     $saleController = new ControllerSale();
-        //     $saleController->handleAction($action);
-        //     break;
-
       
-        case 'auth':
+            case 'auth':
                 switch ($action) {
                     case 'login':
                         $username = $_POST["username_login"];
                         $password = $_POST["password_login"];
                         $rememberMe = isset($_POST["remember_me"]); // Cek apakah "Remember Me" dicentang
                         $users = $modelUser->getAllUser();
-                    
+                        
                         foreach ($users as $user) {
                             // Cocokkan username dan verifikasi password
                             if ($user->user_username == $username && password_verify($password, $user->user_password)) {
-                                // Simpan data member ke session
-                                $_SESSION['user_login'] = serialize($user);
-                    
-                                // Jika "Remember Me" dicentang, simpan cookie yang berlaku selama 1 hari
-                                if ($rememberMe) {
-                                    setcookie('user_login', serialize($user), time() + 86400, "/"); // 86400 detik = 1 hari
-                                }
-                                
-                                // Redirect berdasarkan role
                                 if ($user->id_role == 1) {
+                                    // Simpan ke sesi user_login
+                                    $_SESSION['user_login'] = serialize($user);
+                                    if ($rememberMe) {
+                                        setcookie('user_login', serialize($user), time() + 86400, "/"); // 1 hari
+                                    }
                                     echo "<script>alert('Login berhasil, welcome back again admin!'); window.location.href='/laundry_shoes/views/dashboard/dashboard.php';</script>";
-                                    return;
-                                } else if ($user->id_role == 2) {
+                                } elseif ($user->id_role == 2) {
+                                    // Simpan ke sesi customer_login
+                                    $_SESSION['customer_login'] = serialize($user);
+                                    if ($rememberMe) {
+                                        setcookie('customer_login', serialize($user), time() + 86400, "/"); // 1 hari
+                                    }
                                     echo "<script>alert('Login berhasil, welcome back again customer!'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
-                                    return;
                                 }
+                                return;
                             }
                         }
-                    
+        
                         // Jika tidak ditemukan user yang cocok
                         echo "<script>alert('Login gagal'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
                         break;
-                    
-
-                case 'registrasi':
-                    $username = $_POST["username_register"];
-                    $password = $_POST["password_register"];
-                    $no_telp = $_POST["no_telp"];
-                    $id_role = $_POST["role_id"];
-                    $modelUser->addUser($username, $password, $id_role, $no_telp);
-                    echo "<script>alert('Registrasi berhasil'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
-                    break;
-               
+        
+                    case 'registrasi':
+                        $username = $_POST["username_register"];
+                        $password = $_POST["password_register"];
+                        $no_telp = $_POST["no_telp"];
+                        $id_role = $_POST["role_id"];
+                        $modelUser->addUser($username, $password, $id_role, $no_telp);
+                        echo "<script>alert('Registrasi berhasil'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
+                        break;
                 }
-            break;
-        case 'logout':
-                // Hapus sesi dan cookie
-                session_unset();
-                session_destroy(); 
+                break;
+        
+            case 'logout':
                 switch ($action) {
-                case 'user':
-                if (isset($_COOKIE['user_login'])) {
-                    setcookie('user_login', '', time() - 3600, "/");
+                    case 'user':
+                        // Hapus sesi user_login
+                        if (isset($_SESSION['user_login'])) {
+                            unset($_SESSION['user_login']);
+                        }
+                        // Hapus cookie jika ada
+                        if (isset($_COOKIE['user_login'])) {
+                            setcookie('user_login', '', time() - 3600, "/");
+                        }
+                        echo "<;>alert('Logout berhasil!'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
+                        break;
+        
+                    case 'customer':
+                        // Hapus sesi customer_login
+                        if (isset($_SESSION['customer_login'])) {
+                            unset($_SESSION['customer_login']);
+                        }
+                        // Hapus cookie jika ada
+                        if (isset($_COOKIE['customer_login'])) {
+                            setcookie('customer_login', '', time() - 3600, "/");
+                        }
+                        echo "<script>alert('Logout berhasil!'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
+                        break;
+        
+                    default:
+                        echo "<script>alert('Logout gagal! Fitur tak dikenal'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
+                        break;
                 }
-                echo "<script>alert('Logout berhasil!'); window.location.href='/laundry_shoes/';</script>";
-
                 break;
-
-                case 'member':
-                if (isset($_COOKIE['member_login'])) {
-                    
-                    setcookie('member_login', '', time() - 3600, "/");
-                }
-                echo "<script>alert('Logout berhasil!'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
-                break;
-                }
-                echo "<script>alert('Logout gagal!fitur tak di kenal');</script>";
-                
-                break;
-
         default:
             echo "<script>alert('Module tidak dikenal.'); window.location.href='/laundry_shoes/{$modul}/{$modul}_list.php';</script>";
             break;

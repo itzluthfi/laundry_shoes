@@ -2,9 +2,9 @@
 require_once "/laragon/www/laundry_shoes/init.php";
 $reservasiData = $modelReservasi->getAllReservasi();
 $user_login = unserialize($_SESSION['user_login']);
-// var_dump($_SESSION['user_login']);
+
 $user = $modelUser->getUserById($user_login->user_id);
-var_dump($user);
+var_dump($user);    
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,12 @@ var_dump($user);
                     class="w-20 h-20 rounded-full border-2 border-yellow-500 object-cover">
                 <div class="ml-4">
                     <h2 class="text-xl font-bold text-gray-800">Username: <?= $user->user_username ?></h2>
-                    <p class="text-gray-600">Role: <?= $user->id_role    ?></p>
+                    <p class="text-gray-600">Role:
+                        <?php 
+                            $role = $modelRole->getRoleById($user->id_role);
+                            echo htmlspecialchars($role->role_nama);
+                        ?>
+                    </p>
                 </div>
             </div>
 
@@ -47,7 +52,7 @@ var_dump($user);
                 </div>
             </form>
 
-            <!-- <?php
+            <?php
             
             
 
@@ -94,7 +99,7 @@ var_dump($user);
                 }
                 
             }
-            ?> -->
+            ?>
 
             <!-- Daftar Reservasi -->
             <h2 class="text-xl font-bold text-gray-800 mt-8 mb-4">Daftar Reservasi</h2>

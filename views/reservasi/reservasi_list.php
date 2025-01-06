@@ -61,7 +61,7 @@ $reservasis = $modelReservasi->getAllReservasi();
                 <!-- reservasi Table -->
                 <div class="bg-white shadow-md  my-6">
                     <table class="min-w-full bg-white table-auto mt-4 rounded-lg overflow-hidden shadow-md">
-                        <thead class="bg-gray-800 text-white">
+                        <thead class="bg-yellow-500 text-white">
                             <tr>
                                 <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID reservasi</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">User</th>
@@ -215,10 +215,6 @@ $reservasis = $modelReservasi->getAllReservasi();
         </div>
     </div>
     <?php } } ?>
-
-
-
-
 
 </body>
 

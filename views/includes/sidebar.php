@@ -31,11 +31,11 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
         <!-- Navigation Links -->
         <nav class="flex flex-col gap-2">
             <a href="/laundry_shoes/views/dashboard/dashboard.php" class="nav-link">
-                <i class="fa-solid fa-person-skating"></i>
+                <i class="fa-solid fa-house"></i>
                 <span>Dashboard</span>
             </a>
             <a href="/laundry_shoes/views/role/role_list.php" class="nav-link">
-                <i class="fa-solid fa-person-swimming"></i>
+                <i class="fa-solid fa-circle-user"></i>
                 <span>Master Data Role</span>
             </a>
             <a href="/laundry_shoes/views/user/user_list.php" class="nav-link">
@@ -43,7 +43,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 <span>Master Data User</span>
             </a>
             <a href="/laundry_shoes/views/layanan/layanan_list.php" class="nav-link">
-                <i class="fa-solid fa-person-praying"></i>
+                <i class="fa-solid fa-handshake"></i>
                 <span>Master Data Layanan</span>
             </a>
             <!-- <a href="/laundry_shoes/views/cart/cart_list.php" class="nav-link">
