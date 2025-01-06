@@ -75,7 +75,8 @@ $reservasis = $modelReservasi->getAllReservasi();
                         <tbody class="text-gray-700">
                             <?php if (!empty($reservasis)) {
                                 // var_dump($reservasis);
-                                foreach ($reservasis as $reservasi) { ?>
+                                foreach ($reservasis as $reservasi) { 
+                                    $status = $modelStatus->getStatusById($reservasi->status_id); ?>
                             <tr class="text-center">
                                 <td class="py-3 px-4 text-blue-600">
                                     <?php echo htmlspecialchars($reservasi->id); ?></td>
@@ -83,8 +84,15 @@ $reservasis = $modelReservasi->getAllReservasi();
                                 <td class="w-1/6 py-3 px-4">
                                     <?php $user = $modelUser->getUserById($reservasi->user_id);$role = $modelRole->getRoleById($user->id_role); echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); ?>
                                 </td>
+
+
                                 <td class="w-1/6 py-3 px-4">
-                                    <?php echo htmlspecialchars($reservasi->status_id); ?>
+                                    <span
+                                        class="bg-<?=  $status->status_color?>-100 text-<?=  $status->status_color?>600?> 
+                                                inline-flex items-center justify-center px-4 py-1 rounded-full text-sm font-semibold shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105">
+                                        <?php   echo htmlspecialchars($status->status_nama); ?>
+                                    </span>
+
                                 </td>
 
                                 <td class="w-1/4 py-3 px-4">
@@ -172,7 +180,7 @@ $reservasis = $modelReservasi->getAllReservasi();
                 <div class="mt-6">
                     <h4 class="text-lg font-semibold text-gray-800">Detail Barang</h4>
                     <table class="min-w-full bg-white table-auto mt-4 rounded-lg overflow-hidden shadow-md">
-                        <thead class="bg-[#b6895b] text-white">
+                        <thead class="bg-yellow-500 text-white">
                             <tr>
                                 <th class="py-3 px-4 text-left">ID</th>
                                 <th class="py-3 px-4 text-left">Nama</th>

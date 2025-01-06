@@ -67,6 +67,30 @@ class ModelReservasiSql {
         return $reservasiList;
     }
 
+    public function getReservasiByUserId($userId) {
+        $userId = (int)$userId; // Pastikan input berupa integer
+        $query = "SELECT * FROM reservasi WHERE user_id = $userId";
+        $result = $this->db->select($query);
+    
+        $reservasiList = [];
+        foreach ($result as $row) {
+            $reservasiId = $row['id'];
+            $details = $this->getDetailReservasiByReservasiId($reservasiId);
+            $reservasiList[] = new Reservasi(
+                $reservasiId,
+                $row['user_id'],
+                $row['status_id'],
+                $row['uang_bayar'],
+                $row['uang_kembali'],
+                $row['date'],
+                $details
+            );
+        }
+    
+        return $reservasiList;
+    }
+    
+
     public function getReservasiById($reservasiId) {
         $query = "SELECT * FROM reservasi WHERE id = $reservasiId";
         $result = $this->db->select($query);

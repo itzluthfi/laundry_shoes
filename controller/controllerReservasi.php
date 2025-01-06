@@ -38,7 +38,7 @@ class ControllerReservasi {
                     $isSuccess = $this->modelReservasi->addReservasi($detailReservasi, $user_id, $status_id, $uang_bayar, $uang_kembali);
 
                     if ($isSuccess) {
-                        echo "<script>alert('Reservasi berhasil ditambahkan!'); window.location.href='/laundry_shoes/views/reservasi/reservasi_list.php';</script>";
+                        echo "<script>alert('Reservasi berhasil ditambahkan!'); ";
                     } else {
                         echo "<script>alert('Gagal menambahkan reservasi!'); window.history.back();</script>";
                     }

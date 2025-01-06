@@ -35,6 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
             $reservasiController->handleAction($action);
             break;
       
+
+        case 'status':  
+            require_once 'controller/ControllerStatus.php';
+            $statusController = new ControllerStatus();
+            $statusController->handleAction($action);
+            break;
+
             case 'auth':
                 switch ($action) {
                     case 'login':
@@ -91,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                         if (isset($_COOKIE['user_login'])) {
                             setcookie('user_login', '', time() - 3600, "/");
                         }
-                        echo "<;>alert('Logout berhasil!'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
+                        echo "<script>alert('Logout berhasil!'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
                         break;
         
                     case 'customer':

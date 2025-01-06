@@ -38,6 +38,10 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 <i class="fa-solid fa-circle-user"></i>
                 <span>Master Data Role</span>
             </a>
+            <a href="/laundry_shoes/views/status/status_list.php" class="nav-link">
+                <i class="fa-solid fa-bell"></i>
+                <span>Master Data Status</span>
+            </a>
             <a href="/laundry_shoes/views/user/user_list.php" class="nav-link">
                 <i class="fa-solid fa-users"></i>
                 <span>Master Data User</span>
@@ -46,24 +50,21 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->id_ro
                 <i class="fa-solid fa-handshake"></i>
                 <span>Master Data Layanan</span>
             </a>
-            <!-- <a href="/laundry_shoes/views/cart/cart_list.php" class="nav-link">
-                <i class="fa-solid fa-cube"></i>
-                <span>Master Data Reservasi</span>
-            </a> -->
+
             <div class="relative group">
                 <button class="nav-link">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span>Manage Transaksi</span>
+                    <span>Manage Reservasi</span>
                     <i class="fa-solid fa-chevron-down ml-auto"></i>
                 </button>
                 <div class="hidden pl-6 group-hover:block">
                     <a href="/laundry_shoes/views/reservasi/reservasi_input.php" class="sub-nav-link">
                         <i class="fa-solid fa-clipboard"></i>
-                        <span>Add Transaksi</span>
+                        <span>Add Reservasi</span>
                     </a>
                     <a href="/laundry_shoes/views/reservasi/reservasi_list.php" class="sub-nav-link">
                         <i class="fa-solid fa-clipboard"></i>
-                        <span>List Transaksi</span>
+                        <span>List Reservasi</span>
                     </a>
                 </div>
             </div>

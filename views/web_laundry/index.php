@@ -277,7 +277,7 @@ $isLoggedIn = isset($_SESSION['customer_login']);
                     onclick="openModal(this)">
                     <img src="img/<?= strtolower(str_replace(' ', '', $layanan->layanan_nama)); ?>.jpg"
                         alt="<?= $layanan->layanan_nama; ?>"
-                        class="w-full h-60 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
+                        class="w-full h-100 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
                         <div class="text-center">
@@ -288,7 +288,7 @@ $isLoggedIn = isset($_SESSION['customer_login']);
                                     class="flex items-center bg-gray-700 hover:bg-gray-800 text-white px-3 py-2 rounded-md">
                                     <i class="fas fa-eye mr-2"></i> Detail
                                 </button>
-                                <a href="./regReservasi.php"
+                                <a href="../new_reservasiPage.php"
                                     class="flex items-center bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md">
                                     <i class="fas fa-shopping-cart mr-2"></i> Pesan
                                 </a>

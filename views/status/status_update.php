@@ -1,19 +1,22 @@
 <?php
-    require_once "/laragon/www/laundry_shoes/init.php";
+require_once "/laragon/www/laundry_shoes/init.php";
+
+$obj_status = $modelStatus->getStatusById($_GET['id']);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Role</title>
+    <title>Status Update</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-
     <!-- Navbar -->
     <?php include '../includes/navbar.php'; ?>
 
@@ -24,40 +27,29 @@
 
         <!-- Main Content -->
         <div class="flex-1 p-8">
-            <!-- Formulir Input Role -->
+            <!-- Formulir Update Status -->
             <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800">Input Role</h2>
-                <form action="../../response_input.php?modul=role&fitur=add" method="POST">
-                    <!-- Nama Role -->
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Update Status</h2>
+                <form action="../../response_input.php?modul=status&fitur=update" method="POST">
+                    <input type="hidden" name="status_id" value="<?= $obj_status->status_id ?>">
+
+                    <!-- Nama Status -->
                     <div class="mb-4">
-                        <label for="role_nama" class="block text-gray-700 text-sm font-bold mb-2">Nama Role:</label>
-                        <input type="text" id="role_nama" name="role_nama"
+                        <label for="status_name" class="block text-gray-700 text-sm font-bold mb-2">Nama Status:</label>
+                        <input type="text" id="status_name" name="status_name"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Masukkan Nama Role" required>
+                            placeholder="Masukkan Nama Status" required value="<?= $obj_status->status_nama ?>">
                     </div>
 
-                  
-
-                    <!-- Role Deskripsi -->
+                    <!-- Warna Status -->
                     <div class="mb-4">
-                        <label for="role_description" class="block text-gray-700 text-sm font-bold mb-2">Role
-                            Deskripsi:</label>
-                        <textarea id="role_description" name="role_description"
+                        <label for="status_color" class="block text-gray-700 text-sm font-bold mb-2">Warna
+                            Status:</label>
+                        <input type="color" id="status_color" name="status_color"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Masukkan Deskripsi Role" rows="3" required></textarea>
+                            required value="<?= $obj_status->status_color ?>">
                     </div>
 
-                    <!-- Role Status -->
-                    <div class="mb-4">
-                        <label for="role_status" class="block text-gray-700 text-sm font-bold mb-2">Role Status:</label>
-                        <select id="role_status" name="role_status"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            required>
-                            <option value="">Pilih Status</option>
-                            <option value=1>Active</option>
-                            <option value=0>Inactive</option>
-                        </select>
-                    </div>
 
                     <!-- Submit and Cancel Buttons -->
                     <div class="flex items-center justify-between">

@@ -1,7 +1,7 @@
 <?php
 require_once "/laragon/www/laundry_shoes/init.php";
-$reservasiData = $modelReservasi->getAllReservasi();
-$user_login = unserialize($_SESSION['user_login']);
+$user_login = unserialize($_SESSION['customer_login']);
+$reservasiData = $modelReservasi->getReservasiByUserId($user_login->user_id);
 
 $user = $modelUser->getUserById($user_login->user_id);
 var_dump($user);    
@@ -20,7 +20,7 @@ var_dump($user);
 
 <body class="bg-gray-100">
     <div class="min-h-screen flex items-center justify-center bg-gray-100">
-        <div class="max-w-4xl w-full bg-white shadow-md rounded-lg p-6">
+        <div class="max-w-4xl w-full bg-white shadow-md rounded-lg p-6 max-h-[630px] overflow-y-auto overflow-hidden">
             <!-- Profil Pengguna -->
             <div class="flex items-center mb-8">
                 <img src="../public/img/gita.jpg" alt="Foto Profil"
@@ -53,10 +53,7 @@ var_dump($user);
             </form>
 
             <?php
-            
-            
-
-            // Ambil ID reservasi dari form
+                // Ambil ID reservasi dari form
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id = $_POST['id'];
                 $found = false;
@@ -65,7 +62,10 @@ var_dump($user);
                     if ($reservasi->id == $id) {
                         $found = true;
                         echo "
-                        <div class='bg-green-100 p-4 rounded-lg'>
+                        <div id='hasilSearch' class='bg-green-100 p-4 rounded-lg relative'>
+                            <button class='absolute top-2 right-2 text-gray-500 hover:text-gray-700' onclick='closeSearchResult()'>
+                                <i data-feather='x' class='w-6 h-6'></i>
+                            </button>
                             <p class='text-sm text-gray-800'><strong>ID Reservasi:</strong> {$reservasi->id}</p>
                             <p class='text-sm text-gray-800'><strong>Status:</strong> {$reservasi->status_id}</p>
                             <p class='text-sm text-gray-800'><strong>Uang Bayar:</strong> Rp " . number_format($reservasi->uang_bayar, 0, ',', '.') . "</p>
@@ -74,7 +74,7 @@ var_dump($user);
                             <hr class='my-4'>
                             <h3 class='font-semibold text-gray-800 mb-2'>Detail Reservasi:</h3>
                             <ul class='list-disc pl-6 text-sm text-gray-800'>";
-                
+                        
                         // Iterasi melalui detailReservasi
                         foreach ($reservasi->detailReservasi as $detail) {
                             echo "
@@ -83,7 +83,7 @@ var_dump($user);
                                 <strong>Jumlah:</strong> {$detail->jumlah} Pasang
                             </li>";
                         }
-                
+                        
                         echo "
                             </ul>
                         </div>";
@@ -93,11 +93,13 @@ var_dump($user);
                 
                 if (!$found) {
                     echo "
-                    <div class='bg-red-100 p-4 rounded-lg'>
+                    <div id='hasilSearch' class='bg-red-100 p-4 rounded-lg relative'>
+                        <button class='absolute top-2 right-2 text-gray-500 hover:text-gray-700' onclick='closeSearchResult()'>
+                            <i data-feather='x' class='w-6 h-6'></i>
+                        </button>
                         <p class='text-sm text-gray-800'>Reservasi dengan ID <strong>$id</strong> tidak ditemukan.</p>
                     </div>";
                 }
-                
             }
             ?>
 
@@ -268,6 +270,13 @@ foreach ($reservasiData as $reservasi) { ?>
         const modal = document.getElementById(id);
         if (event.target === modal) {
             closeModal(id);
+        }
+    }
+
+    function closeSearchResult() {
+        const searchResult = document.getElementById('hasilSearch');
+        if (searchResult) {
+            searchResult.style.display = 'none';
         }
     }
 
