@@ -61,9 +61,28 @@ class ControllerReservasi {
                 }
                 break;
 
-            default:
-                echo "<script>alert('Aksi tidak dikenal!'); window.location.href='/laundry_shoes/views/reservasi/reservasi_list.php';</script>";
+
+
+            case 'updateStatus':
+                // Update status reservasi berdasarkan ID
+                   if (isset($_POST['reservasi_id'], $_POST['status_id'])) {
+                       $reservasiId = intval($_POST['reservasi_id']);
+                       $statusId = intval($_POST['status_id']);
+                
+                       if ($this->modelReservasi->updateReservasiStatus($reservasiId, $statusId)) {
+                           echo "<script>alert('Status reservasi berhasil diperbarui!'); window.location.href='/laundry_shoes/views/reservasi/reservasi_list.php';</script>";
+                       } else {
+                           echo "<script>alert('Gagal memperbarui status reservasi!'); window.history.back();</script>";
+                       }
+                    } else {
+                      echo "<script>alert('Data yang dikirim tidak lengkap!'); window.history.back();</script>";
+                    }
                 break;
+
+            default:
+                 echo "<script>alert('Aksi tidak dikenal!'); window.location.href='/laundry_shoes/views/reservasi/reservasi_list.php';</script>";
+                break;
+                
         }
     }
 }

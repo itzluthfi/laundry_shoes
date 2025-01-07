@@ -44,7 +44,7 @@ var_dump($user);
                 <div class="mt-2 flex">
                     <input type="text" id="id" name="id"
                         class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
-                        placeholder="Contoh: RS123" required />
+                        placeholder="Contoh: 1" required />
                     <button type="submit"
                         class="ml-4 bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-all">
                         Cek
@@ -112,7 +112,7 @@ var_dump($user);
                         <tr>
                             <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID reservasi</th>
                             <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">User</th>
-                            <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Status</th>
+                            <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Status</th>
                             <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Total Harga</th>
                             <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Dibayar</th>
                             <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Kembalian</th>
@@ -120,7 +120,9 @@ var_dump($user);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($reservasiData as $reservasi): ?>
+                        <?php foreach ($reservasiData as $reservasi): 
+                                $status = $modelStatus->getStatusById($reservasi->status_id); 
+                         ?>
                         <tr class="hover:bg-gray-100">
                             <td class="py-3 px-4 text-blue-600">
                                 <?php echo htmlspecialchars($reservasi->id); ?></td>
@@ -128,8 +130,13 @@ var_dump($user);
                             <td class="w-1/6 py-3 px-4">
                                 <?php $user = $modelUser->getUserById($reservasi->user_id);$role = $modelRole->getRoleById($user->id_role); echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); ?>
                             </td>
-                            <td class="w-1/6 py-3 px-4">
-                                <?php echo htmlspecialchars($reservasi->status_id); ?>
+                            <td class="w-1/4 py-3 px-4">
+                                <span
+                                    class="bg-<?= $status->status_color ?>-100 text-<?= $status->status_color ?>600 
+                        inline-flex items-center justify-center px-4 py-1 rounded-full text-sm font-semibold shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105">
+                                    <?php echo htmlspecialchars($status->status_nama); ?>
+                                </span>
+
                             </td>
 
                             <td class="w-1/4 py-3 px-4">

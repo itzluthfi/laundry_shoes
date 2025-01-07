@@ -46,6 +46,22 @@ class ModelReservasiSql {
         }
     }
 
+    public function updateReservasiStatus($reservasiId, $statusId) {
+        $reservasiId = (int)$reservasiId; // Pastikan input berupa integer
+        $statusId = (int)$statusId; // Pastikan input berupa integer
+    
+        $query = "UPDATE reservasi SET status_id = $statusId WHERE id = $reservasiId";
+    
+        try {
+            $this->db->execute($query);
+            return true;
+        } catch (Exception $e) {
+            echo "<script>console.log('Error updating reservasi status: " . addslashes($e->getMessage()) . "');</script>";
+            return false;
+        }
+    }
+    
+
     public function getAllReservasi() {
         $query = "SELECT * FROM reservasi";
         $result = $this->db->select($query);

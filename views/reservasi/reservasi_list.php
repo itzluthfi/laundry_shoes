@@ -15,23 +15,42 @@ $reservasis = $modelReservasi->getAllReservasi();
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- Script untuk mengaktifkan modal -->
+    <style>
+    .modal {
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 50;
+    }
+
+    .hidden {
+        display: none;
+    }
+    </style>
+
+    <!-- Script untuk mengelola modal -->
     <script>
     function openModal(id) {
-        document.getElementById(id).classList.remove('hidden');
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.remove('hidden');
+        } else {
+            console.error(`Modal with ID "${id}" not found.`);
+        }
     }
 
     function closeModal(id) {
-        document.getElementById(id).classList.add('hidden');
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.add('hidden');
+        } else {
+            console.error(`Modal with ID "${id}" not found.`);
+        }
     }
 
     function confirmDelete(reservasiId) {
         if (confirm('Apakah Anda yakin ingin menghapus reservasi ini?')) {
-            // Redirect ke halaman delete dengan fitur=delete
             window.location.href = "/laundry_shoes/response_input.php?modul=reservasi&fitur=delete&id=" + reservasiId;
         } else {
-            // Batalkan penghapusan
-            alert("gagal menghapus data reservasi");
+            alert("Gagal menghapus data reservasi.");
             return false;
         }
     }
@@ -60,13 +79,14 @@ $reservasis = $modelReservasi->getAllReservasi();
                     class="p-2 border border-gray-300 rounded-xl w-Search-Input " style="width: 26rem;" />
                 <!-- reservasi Table -->
                 <div class="bg-white shadow-md  my-6">
-                    <table class="min-w-full bg-white table-auto mt-4 rounded-lg overflow-hidden shadow-md">
+                    <table
+                        class="min-w-full bg-white table-auto mt-4 rounded-lg overflow-y-hidden shadow-md max-h-[500px] overflow-auto">
                         <thead class="bg-yellow-500 text-white">
                             <tr>
                                 <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID reservasi</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">User</th>
-                                <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Status</th>
-                                <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Total Harga</th>
+                                <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Status</th>
+                                <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">Total Harga</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Dibayar</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Kembalian</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Actions</th>
@@ -74,46 +94,52 @@ $reservasis = $modelReservasi->getAllReservasi();
                         </thead>
                         <tbody class="text-gray-700">
                             <?php if (!empty($reservasis)) {
-                                // var_dump($reservasis);
-                                foreach ($reservasis as $reservasi) { 
-                                    $status = $modelStatus->getStatusById($reservasi->status_id); ?>
+                             foreach ($reservasis as $reservasi) {
+                                $status = $modelStatus->getStatusById($reservasi->status_id); 
+                            ?>
                             <tr class="text-center">
                                 <td class="py-3 px-4 text-blue-600">
-                                    <?php echo htmlspecialchars($reservasi->id); ?></td>
-                                <!-- <td class="w-1/4 py-3 px-4"><?php echo htmlspecialchars($reservasi->date); ?></td> -->
-                                <td class="w-1/6 py-3 px-4">
-                                    <?php $user = $modelUser->getUserById($reservasi->user_id);$role = $modelRole->getRoleById($user->id_role); echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); ?>
+                                    <?php echo htmlspecialchars($reservasi->id); ?>
                                 </td>
-
-
+                                <td class="w-1/6 py-3 px-4">
+                            <?php 
+                                $user = $modelUser->getUserById($reservasi->user_id);
+                                $role = $modelRole->getRoleById($user->id_role); 
+                                echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); 
+                            ?>
+                                </td>
                                 <td class="w-1/6 py-3 px-4">
                                     <span
-                                        class="bg-<?=  $status->status_color?>-100 text-<?=  $status->status_color?>600?> 
-                                                inline-flex items-center justify-center px-4 py-1 rounded-full text-sm font-semibold shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105">
-                                        <?php   echo htmlspecialchars($status->status_nama); ?>
+                                        class="bg-<?= $status->status_color ?>-100 text-<?= $status->status_color ?>600 
+                        inline-flex items-center justify-center px-4 py-1 rounded-full text-sm font-semibold shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105">
+                                        <?php echo htmlspecialchars($status->status_nama); ?>
                                     </span>
-
+                                    <button class="ml-2 text-blue-600 hover:text-blue-800"
+                                        onclick="openModal('modal-update-<?= $reservasi->id ?>')">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </button>
                                 </td>
-
-                                <td class="w-1/4 py-3 px-4">
+                                <td class="w-1/6 py-3 px-4">
                                     <?php 
-                                    $total_harga = 0;
+                                  $total_harga = 0;
                                     foreach ($reservasi->detailReservasi as $detail) {
                                         $layanans = $modelLayanan->getlayananById($detail->layanan_id);
-                                        $total_harga += htmlspecialchars($layanans->layanan_harga * $detail->jumlah); 
+                                        $total_harga += htmlspecialchars($layanans->layanan_harga * $detail->jumlah);
                                     }
-                                    echo htmlspecialchars($total_harga); ?></td>
-                                <td class="w-1/6 py-3 px-4"><?php echo htmlspecialchars($reservasi->uang_bayar); ?>
+                                    echo htmlspecialchars($total_harga); 
+                                ?>
+                                </td>
+                                <td class="w-1/12 py-3 px-4">
+                                    <?php echo htmlspecialchars($reservasi->uang_bayar); ?>
                                 </td>
                                 <td class="w-1/6 py-3 px-4">
-                                    <?php echo htmlspecialchars($reservasi->uang_kembali); ?></td>
+                                    <?php echo htmlspecialchars($reservasi->uang_kembali); ?>
+                                </td>
                                 <td class="w-1/6 py-3 px-4">
                                     <div class="flex items-center space-x-4">
-
-
                                         <button
                                             class="border-2 border-gray-700 bg-white hover:bg-gray-800 hover:text-white text-gray-800 font-bold py-1 px-2 rounded"
-                                            onclick="openModal('modal-<?php echo $reservasi->id; ?>')">
+                                            onclick="openModal('modal-details-<?php echo $reservasi->id; ?>')">
                                             Details
                                         </button>
                                         <button
@@ -122,11 +148,43 @@ $reservasis = $modelReservasi->getAllReservasi();
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </div>
-
                                 </td>
                             </tr>
+
+                            <!-- Modal Update Status -->
+                            <div id="modal-update-<?= $reservasi->id ?>"
+                                class="modal hidden fixed inset-0 flex items-center justify-center">
+                                <div class="modal-content bg-white rounded-lg shadow-lg p-6 w-1/3">
+                                    <h2 class="text-lg font-bold mb-4">Update Status Reservasi</h2>
+                                    <form action="../../response_input.php?modul=reservasi&fitur=updateStatus"
+                                        method="POST">
+                                        <input type="hidden" name="reservasi_id" value="<?= $reservasi->id ?>">
+                                        <div class="mb-4">
+                                            <label for="status_id" class="block text-gray-700 font-medium">Pilih Status
+                                                Baru:</label>
+                                            <select name="status_id" id="status_id"
+                                                class="w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                                <?php foreach ($modelStatus->getAllStatusFromDb() as $statusOption) { ?>
+                                                <option value="<?= $statusOption->status_id ?>"
+                                                    <?= $statusOption->status_id == $reservasi->status_id ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($statusOption->status_nama) ?>
+                                                </option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="flex justify-end">
+                                            <button type="button"
+                                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded mr-2"
+                                                onclick="closeModal('modal-update-<?= $reservasi->id ?>')">Batal</button>
+                                            <button type="submit"
+                                                class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                             <?php } } ?>
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -136,7 +194,7 @@ $reservasis = $modelReservasi->getAllReservasi();
     <!-- Modal untuk detail reservasi -->
     <?php if (!empty($reservasis)) {
     foreach ($reservasis as $reservasi) { ?>
-    <div id="modal-<?php echo $reservasi->id; ?>"
+    <div id="modal-details-<?= $reservasi->id ?>"
         class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
         <div
             class="relative top-20 mx-auto p-8 border w-11/12 md:w-3/4 lg:w-1/2 xl:w-1/3 shadow-xl rounded-lg bg-white transition-all duration-300 ease-in-out transform">
@@ -216,8 +274,8 @@ $reservasis = $modelReservasi->getAllReservasi();
             <!-- Close Button -->
             <div class="mt-6 text-center">
                 <button class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-200"
-                    onclick="closeModal('modal-<?php echo $reservasi->id; ?>')">
-                    Close
+                    onclick="closeModal('modal-details-<?= $reservasi->id ?>')">Close</button>
+
                 </button>
             </div>
         </div>

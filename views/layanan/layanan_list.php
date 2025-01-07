@@ -34,7 +34,7 @@ $obj_layanan = $modelLayanan->getAllLayananFromDB();
         <!-- Main Content -->
         <div class="flex-1 p-8">
             <!-- Main Content -->
-            <div class="container mx-auto overflow-y-auto h-[calc(100vh-4rem)]">
+            <div class="container mx-auto overflow-y-auto max-h-[650px] overflow-hidden">
                 <h1 class="text-4xl font-bold mb-5 pb-2 text-gray-800 italic">Manage Layanan</h1>
 
                 <!-- Button to Insert New Layanan -->
