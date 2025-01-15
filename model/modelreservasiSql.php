@@ -1,15 +1,17 @@
 <?php
 
-require_once "/laragon/www/laundry_shoes/model/dbConnect.php";
-require_once "/laragon/www/laundry_shoes/domain_object/node_reservasi.php";
-require_once "/laragon/www/laundry_shoes/domain_object/node_detailreservasi.php";
+require_once __DIR__ . '/dbConnection.php';
+require_once __DIR__ . '../../domain_object/node_reservasi.php';
+require_once __DIR__ . '../../domain_object/node_detailreservasi.php';
 
 class ModelReservasiSql {
     private $db;
 
     public function __construct() {
-        // Inisialisasi koneksi database
-        $this->db = new Database('localhost', 'root', '', 'laundrysepatu');
+        // Gunakan koneksi database global
+        $this->db = Databases::getInstance();
+        // Ambil data dari database
+        // $this->layanans = $this->getAllLayananFromDB();
     }
 
     public function addReservasi($detailReservasi, $user_id, $status_id, $uang_bayar, $uang_kembali) {
@@ -42,13 +44,14 @@ class ModelReservasiSql {
             return true;
         } catch (Exception $e) {
             echo "<script>console.log('Error adding reservasi: " . addslashes($e->getMessage()) . "');</script>";
-            return false;
+            return $e->getMessage();
+
         }
     }
 
     public function updateReservasiStatus($reservasiId, $statusId) {
-        $reservasiId = (int)$reservasiId; // Pastikan input berupa integer
-        $statusId = (int)$statusId; // Pastikan input berupa integer
+        $reservasiId = (int)$reservasiId;
+        $statusId = (int)$statusId; 
     
         $query = "UPDATE reservasi SET status_id = $statusId WHERE id = $reservasiId";
     
@@ -57,7 +60,8 @@ class ModelReservasiSql {
             return true;
         } catch (Exception $e) {
             echo "<script>console.log('Error updating reservasi status: " . addslashes($e->getMessage()) . "');</script>";
-            return false;
+            return $e->getMessage();
+
         }
     }
     
@@ -144,24 +148,25 @@ class ModelReservasiSql {
         return $details;
     }
 
-    public function deleteReservasi($reservasiId) {
-        $reservasiId = (int)$reservasiId;
+        public function deleteReservasi($reservasiId) {
+            $reservasiId = (int)$reservasiId;
 
-        try {
-            $this->db->execute("DELETE FROM detail_reservasi WHERE reservasi_id = $reservasiId");
-            $this->db->execute("DELETE FROM reservasi WHERE id = $reservasiId");
+            try {
+                $this->db->execute("DELETE FROM detail_reservasi WHERE reservasi_id = $reservasiId");
+                $this->db->execute("DELETE FROM reservasi WHERE id = $reservasiId");
 
-            return true;
-        } catch (Exception $e) {
-            echo "<script>console.log('Error deleting reservasi: " . addslashes($e->getMessage()) . "');</script>";
-            return false;
+                return true;
+            } catch (Exception $e) {
+                echo "<script>console.log('Error deleting reservasi: " . addslashes($e->getMessage()) . "');</script>";
+                return $e->getMessage();
+
+            }
         }
-    }
 
-    public function __destruct() {
-        // Menutup koneksi database
-        $this->db->close();
-    }
+    // public function __destruct() {
+    //     // Menutup koneksi database
+    //     $this->db->close();
+    // }
 }
 
 ?>

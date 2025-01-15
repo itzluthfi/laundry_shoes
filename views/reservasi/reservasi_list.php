@@ -1,6 +1,9 @@
 <?php
-require_once "/laragon/www/laundry_shoes/init.php";
-require_once "/laragon/www/laundry_shoes/auth_check.php";
+
+
+require_once __DIR__ . '../../../init.php';
+require_once __DIR__ . '../../../auth_check.php';
+
 $reservasis = $modelReservasi->getAllReservasi();
 // var_dump($reservasis);
 ?>
@@ -48,7 +51,7 @@ $reservasis = $modelReservasi->getAllReservasi();
 
     function confirmDelete(reservasiId) {
         if (confirm('Apakah Anda yakin ingin menghapus reservasi ini?')) {
-            window.location.href = "/laundry_shoes/response_input.php?modul=reservasi&fitur=delete&id=" + reservasiId;
+            window.location.href = "../../response_input.php?modul=reservasi&fitur=delete&id=" + reservasiId;
         } else {
             alert("Gagal menghapus data reservasi.");
             return false;
@@ -102,9 +105,9 @@ $reservasis = $modelReservasi->getAllReservasi();
                                     <?php echo htmlspecialchars($reservasi->id); ?>
                                 </td>
                                 <td class="w-1/6 py-3 px-4">
-                            <?php 
+                                    <?php 
                                 $user = $modelUser->getUserById($reservasi->user_id);
-                                $role = $modelRole->getRoleById($user->id_role); 
+                                $role = $modelRole->getRoleById($user->role_id); 
                                 echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); 
                             ?>
                                 </td>
@@ -119,7 +122,7 @@ $reservasis = $modelReservasi->getAllReservasi();
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </button>
                                 </td>
-                                <td class="w-1/6 py-3 px-4">
+                                <td class="w-1/12 py-3 px-4">
                                     <?php 
                                   $total_harga = 0;
                                     foreach ($reservasi->detailReservasi as $detail) {
@@ -212,8 +215,7 @@ $reservasis = $modelReservasi->getAllReservasi();
                     <div class="font-semibold text-gray-700">User</div>
                     <div><?php 
                         $user = $modelUser->getUserById($reservasi->user_id);
-                        $role = $modelRole->getRoleById($user->id_role);
-                        echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]");
+                        echo htmlspecialchars("{$user->user_username} - [{$user->role_nama}]");
                     ?></div>
                 </div>
 

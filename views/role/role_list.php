@@ -1,8 +1,8 @@
 <?php
-//require_once "/laragon/www/laundry_shoes/model/modelRole.php";
-require_once "/laragon/www/laundry_shoes/init.php";
- 
-include "/laragon/www/laundry_shoes/auth_check.php"; 
+
+require_once __DIR__ . '../../../init.php';
+require_once __DIR__ . '../../../auth_check.php';
+
 
  $obj_role = $modelRole->getAllRoleFromDB();
 //  var_dump($modelSale->getAllSales());
@@ -30,12 +30,14 @@ include "/laragon/www/laundry_shoes/auth_check.php";
 <body class="bg-gray-100 font-sans leading-normal tracking-normal overflow-hidden">
 
     <!-- Navbar -->
-    <?php include_once '/laragon/www/laundry_shoes/views/includes/navbar.php'; ?>
+    <?php include '../includes/navbar.php'; ?>
+
 
     <!-- Main container -->
     <div class="flex">
         <!-- Sidebar -->
-        <?php include_once "/laragon/www/laundry_shoes/views/includes/sidebar.php";  ?>
+        <?php include '../includes/sidebar.php'; ?>
+
 
 
         <!-- Main Content -->

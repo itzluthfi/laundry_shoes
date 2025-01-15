@@ -1,6 +1,6 @@
 <?php
-require_once "/laragon/www/laundry_shoes/init.php";
-include "/laragon/www/laundry_shoes/auth_check.php"; 
+require_once __DIR__ . '../../../init.php';
+require_once __DIR__ . '../../../auth_check.php';
 
 $obj_layanan = $modelLayanan->getAllLayananFromDB();
 ?>
@@ -24,12 +24,11 @@ $obj_layanan = $modelLayanan->getAllLayananFromDB();
 <body class="bg-gray-100 font-sans leading-normal tracking-normal overflow-hidden">
 
     <!-- Navbar -->
-    <?php include_once '/laragon/www/laundry_shoes/views/includes/navbar.php'; ?>
-
+    <?php include_once "../includes/navbar.php"; ?>"
     <!-- Main container -->
     <div class="flex">
         <!-- Sidebar -->
-        <?php include_once "/laragon/www/laundry_shoes/views/includes/sidebar.php"; ?>
+        <?php include_once "../includes/sidebar.php"; ?>"
 
         <!-- Main Content -->
         <div class="flex-1 p-8">
@@ -41,7 +40,7 @@ $obj_layanan = $modelLayanan->getAllLayananFromDB();
                 <div class="mb-4">
                     <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                         <i class="fa-solid fa-plus"></i>
-                        <a href="/laundry_shoes/views/layanan/layanan_input.php"> Add New Layanan</a>
+                        <a href="./layanan_input.php"> Add New Layanan</a>
                     </button>
                 </div>
 
@@ -71,8 +70,7 @@ $obj_layanan = $modelLayanan->getAllLayananFromDB();
                                 <td class="w-1/6 py-3 px-4">
                                     <button
                                         class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2">
-                                        <a
-                                            href="/laundry_shoes/views/layanan/layanan_update.php?id=<?= $layanan->layanan_id ?>"><i
+                                        <a href="./layanan_update.php?id=<?= $layanan->layanan_id ?>"><i
                                                 class="fa-regular fa-pen-to-square"></i></a>
                                     </button>
                                     <button
@@ -93,7 +91,7 @@ $obj_layanan = $modelLayanan->getAllLayananFromDB();
     <script>
     function confirmDelete(layananId) {
         if (confirm('Apakah Anda yakin ingin menghapus layanan ini?')) {
-            window.location.href = "/laundry_shoes/response_input.php?modul=layanan&fitur=delete&id=" + layananId;
+            window.location.href = "../../response_input.php?modul=layanan&fitur=delete&id=" + layananId;
         } else {
             alert("Gagal menghapus data");
             return false;

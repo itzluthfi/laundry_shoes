@@ -1,5 +1,6 @@
 <?php
-    require_once "/laragon/www/laundry_shoes/init.php";
+    require_once __DIR__ . '../../../init.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +37,7 @@
                             placeholder="Masukkan Nama Role" required>
                     </div>
 
-                  
+
 
                     <!-- Role Deskripsi -->
                     <div class="mb-4">

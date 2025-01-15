@@ -1,44 +1,57 @@
 <?php
-require_once "/laragon/www/laundry_shoes/init.php";
+require_once __DIR__ . '../../../init.php';
+
 $layanans = $modelLayanan->getAllLayananFromDB();
 
 $user_id = unserialize($_SESSION['user_login'])->user_id;
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservasi Baru</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: "#3b82f6",
+                    secondary: "#1d4ed8",
+                    accent: "#fbbf24",
+                }
+            }
+        }
+    }
+    </script>
 </head>
 
-<body class="bg-gray-100 font-sans leading-normal tracking-normal overflow-hidden">
-
-    <!-- Navbar -->
-    <?php include_once '../includes/navbar.php'; ?>
+<body class="bg-blue-50 font-sans leading-normal tracking-normal overflow-hidden">
+    <!-- Navbar placeholder -->
+    <!-- Navbar content -->
+    <?php include '../includes/navbar.php'; ?>
 
     <div class="flex">
-        <!-- Sidebar -->
-        <?php include_once '../includes/sidebar.php'; ?>
+        <!-- Sidebar placeholder -->
+        <!-- Sidebar content -->
+        <?php include '../includes/sidebar.php'; ?>
 
         <!-- Main Content -->
-        <div class="flex-1 p-10 overflow-y-auto h-[calc(100vh-5rem)] bg-gray-50">
-
-            <h1 class="text-4xl font-bold mb-5 pb-2 text-gray-800 italic">Manage Reservasi</h1>
+        <div class="flex-1 p-10 overflow-y-auto h-[calc(100vh-5rem)] bg-white">
+            <h1 class="text-4xl font-bold mb-5 pb-2 text-primary italic">Manage Reservasi</h1>
 
             <form action="../../response_input.php?modul=reservasi&fitur=add" method="POST" id="reservasiForm"
-                class="bg-white p-8 rounded-lg shadow-lg">
-
-                <h3 class="text-2xl font-semibold mb-4 text-yellow-500">Detail Reservasi</h3>
+                class="bg-blue-50 p-8 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-semibold mb-4 text-secondary">Detail Reservasi</h3>
 
                 <!-- Select and Input for new layanan -->
                 <div class="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div>
-                        <label for="layananselect" class="block text-sm font-medium text-gray-800">Reservasi</label>
+                        <label for="layananselect" class="block text-sm font-medium text-gray-700">Reservasi</label>
                         <select id="layananselect"
                             class="mt-2 p-3 border border-blue-300 rounded-lg w-full bg-blue-50 focus:ring focus:ring-blue-200">
                             <option value="" disabled selected>Pilih Layanan</option>
@@ -52,14 +65,14 @@ $user_id = unserialize($_SESSION['user_login'])->user_id;
                         </select>
                     </div>
                     <div>
-                        <label for="jumlahInput" class="block text-sm font-medium text-gray-800">Jumlah</label>
+                        <label for="jumlahInput" class="block text-sm font-medium text-gray-700">Jumlah</label>
                         <input type="number" id="jumlahInput"
-                            class="mt-2 p-3 border border-green-300 rounded-lg w-full bg-green-50 focus:ring focus:ring-green-200"
+                            class="mt-2 p-3 border border-blue-300 rounded-lg w-full bg-white focus:ring focus:ring-blue-200"
                             min="1">
                     </div>
                     <div class="flex items-end">
                         <button type="button" id="addReservasiBtn"
-                            class="px-6 py-3 text-base font-semibold tracking-tight text-white bg-indigo-500 rounded-lg hover:bg-indigo-700 focus:ring focus:ring-indigo-200">
+                            class="px-6 py-3 text-base font-semibold tracking-tight text-white bg-secondary rounded-lg hover:bg-blue-700 focus:ring focus:ring-blue-200">
                             Tambah Reservasi
                         </button>
                     </div>
@@ -67,14 +80,14 @@ $user_id = unserialize($_SESSION['user_login'])->user_id;
 
                 <!-- Table selected layanans -->
                 <table id="layananTable" class="w-full bg-white shadow-md rounded-lg overflow-hidden mt-6">
-                    <thead class="bg-yellow-400">
+                    <thead class="bg-accent">
                         <tr>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-indigo-900">ID</th>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-indigo-900">Nama layanan</th>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-indigo-900">Quantity</th>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-indigo-900">Harga</th>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-indigo-900">Subtotal</th>
-                            <th class="py-2 px-4 border-b border-gray-300 text-left text-indigo-900">Aksi</th>
+                            <th class="py-2 px-4 border-b border-blue-200 text-left text-blue-900">ID</th>
+                            <th class="py-2 px-4 border-b border-blue-200 text-left text-blue-900">Nama layanan</th>
+                            <th class="py-2 px-4 border-b border-blue-200 text-left text-blue-900">Quantity</th>
+                            <th class="py-2 px-4 border-b border-blue-200 text-left text-blue-900">Harga</th>
+                            <th class="py-2 px-4 border-b border-blue-200 text-left text-blue-900">Subtotal</th>
+                            <th class="py-2 px-4 border-b border-blue-200 text-left text-blue-900">Aksi</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -83,30 +96,30 @@ $user_id = unserialize($_SESSION['user_login'])->user_id;
                 <!-- Display total harga -->
                 <div class="mb-6 mt-4 flex items-center gap-6">
                     <div>
-                        <label for="reservasi_harga" class="block text-sm font-medium text-gray-800">Total Harga</label>
+                        <label for="reservasi_harga" class="block text-sm font-medium text-gray-700">Total Harga</label>
                         <a id="reservasi_harga"
-                            class="block mt-2 p-3 w-80 rounded-lg bg-yellow-50 border border-yellow-300 text-yellow-800">Rp
+                            class="block mt-2 p-3 w-80 rounded-lg bg-blue-100 border border-blue-300 text-blue-800">Rp
                             <span>0</span></a>
                     </div>
                     <div>
-                        <label for="uang_kembali" class="block text-sm font-medium text-gray-800">Kembalian</label>
+                        <label for="uang_kembali" class="block text-sm font-medium text-gray-700">Kembalian</label>
                         <a id="uang_kembali"
-                            class="block mt-2 p-3 w-80 rounded-lg bg-red-50 border border-red-300 text-red-800"><span>0</span></a>
+                            class="block mt-2 p-3 w-80 rounded-lg bg-blue-100 border border-blue-300 text-blue-800"><span>0</span></a>
                     </div>
                 </div>
 
                 <!-- Input untuk jumlah pembayaran -->
                 <div class="mb-6">
-                    <label for="uang_bayar" class="block text-sm font-medium text-gray-800">Pembayaran</label>
+                    <label for="uang_bayar" class="block text-sm font-medium text-gray-700">Pembayaran</label>
                     <input type="number" name="uang_bayar" id="uang_bayar"
-                        class="mt-2 p-3 border border-purple-300 rounded-lg w-full bg-purple-50 focus:ring focus:ring-purple-200"
+                        class="mt-2 p-3 border border-blue-300 rounded-lg w-full bg-white focus:ring focus:ring-blue-200"
                         required>
                 </div>
 
                 <!-- Buttons -->
                 <div class="flex items-center gap-4">
                     <button type="submit"
-                        class="px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring focus:ring-blue-200">
+                        class="px-6 py-3 text-lg font-semibold text-white bg-primary rounded-lg hover:bg-blue-700 focus:ring focus:ring-blue-200">
                         Simpan Reservasi
                     </button>
                     <button type="button" id="cancelButton"
@@ -121,10 +134,8 @@ $user_id = unserialize($_SESSION['user_login'])->user_id;
                 <input type="hidden" name="layanans" id="layanans">
                 <input type="hidden" name="status_id" id="status_id" value="1">
                 <input type="hidden" name="user_id" id="user_id" value="<?= $user_id?>">
-
             </form>
         </div>
-
     </div>
 
     <script>

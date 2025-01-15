@@ -1,117 +1,17 @@
 <?php 
-//require_once "/laragon/www/laundry_shoes/model/modelRole.php"; 
-require_once "/laragon/www/laundry_shoes/init.php";   
-include "/laragon/www/laundry_shoes/auth_check.php";    
+
+require_once __DIR__ . '../../../init.php';   
+require_once __DIR__ . '../../../auth_check.php';   
 $obj_role = $modelRole->getAllRoleFromDB(); 
-// $obj_member = $modelMember->getAllMembers(); 
-// $obj_item = $modelItem->getAllItem(); 
-// $obj_sale = $modelSale->getAllSales(); 
+$obj_user = $modelUser->getAllUser(); 
+$obj_layanan = $modelLayanan->getAllLayananFromDB(); 
+$obj_reservasi = $modelReservasi->getAllReservasi(); 
 
-
-// Ambil tanggal dan total penjualan dari setiap objek penjualan
-$obj_sale = [
-    (object)[
-        'sale_id' => 1,
-        'sale_date' => '2025-01-02',
-        'sale_totalPrice' => 150000,
-        'sale_pay' => 200000,
-        'sale_change' => 50000,
-        'id_user' => 1,
-        'id_member' => 1,
-        'detailSale' => [
-            (object)[
-                'item_id' => 101,
-                'item_name' => 'Cuci Mobil',
-                'item_price' => 50000,
-                'item_qty' => 1,
-                'subtotal' => 50000,
-            ],
-            (object)[
-                'item_id' => 102,
-                'item_name' => 'Ganti Oli',
-                'item_price' => 100000,
-                'item_qty' => 1,
-                'subtotal' => 100000,
-            ],
-        ],
-    ],
-    (object)[
-        'sale_id' => 2,
-        'sale_date' => '2025-01-03',
-        'sale_totalPrice' => 75000,
-        'sale_pay' => 100000,
-        'sale_change' => 25000,
-        'id_user' => 2,
-        'id_member' => 2,
-        'detailSale' => [
-            (object)[
-                'item_id' => 103,
-                'item_name' => 'Salon Mobil',
-                'item_price' => 75000,
-                'item_qty' => 1,
-                'subtotal' => 75000,
-            ],
-        ],
-    ],
-    (object)[
-        'sale_id' => 3,
-        'sale_date' => '2025-01-04',
-        'sale_totalPrice' => 200000,
-        'sale_pay' => 250000,
-        'sale_change' => 50000,
-        'id_user' => 3,
-        'id_member' => 3,
-        'detailSale' => [
-            (object)[
-                'item_id' => 104,
-                'item_name' => 'Paket Lengkap Cuci + Salon',
-                'item_price' => 200000,
-                'item_qty' => 1,
-                'subtotal' => 200000,
-            ],
-        ],
-    ],
-];
-
-
-$sales_dates = [];
-$sales_totals = [];
-foreach ($obj_sale as $sale) {
-    $sales_dates[] = $sale->sale_date; // Asumsi ada field sale_date
-    $sales_totals[] = $sale->sale_totalPrice;
+$total_reservasis = 0;
+foreach ($obj_reservasi as $reservasi) {
+    $total_reservasis += $reservasi->uang_bayar + $reservasi->uang_kembali;
 }
 
-// Menghitung total penjualan
-$total_sales = 0;
-foreach ($obj_sale as $sale) {
-    $total_sales += $sale->sale_totalPrice;
-}
-
-//information label card
-$non_active_roles = [];
-foreach ($obj_role as $role) {
-    if (!$role->role_status) {
-        $non_active_roles[] = $role;
-    }
-}
-
-$layanan = [
-    ['id' => 1, 'nama' => 'Layanan Cuci Mobil', 'harga' => 50000],
-    ['id' => 2, 'nama' => 'Layanan Salon Mobil', 'harga' => 150000],
-    ['id' => 3, 'nama' => 'Layanan Ganti Oli', 'harga' => 75000],
-];
-
-// Data dummy untuk reservasi
-$reservasi = [
-    ['id' => 1, 'nama_pelanggan' => 'John Doe', 'layanan' => 'Cuci Mobil', 'jadwal' => '2025-01-03 10:00:00'],
-    ['id' => 2, 'nama_pelanggan' => 'Jane Smith', 'layanan' => 'Salon Mobil', 'jadwal' => '2025-01-03 14:00:00'],
-    ['id' => 3, 'nama_pelanggan' => 'Michael Brown', 'layanan' => 'Ganti Oli', 'jadwal' => '2025-01-04 09:30:00'],
-];
-
-
-// Encode data untuk digunakan di JavaScript
-$sales_dates_json = json_encode($sales_dates);
-$sales_totals_json = json_encode($sales_totals);
 ?>
 
 <!DOCTYPE html>
@@ -129,29 +29,36 @@ $sales_totals_json = json_encode($sales_totals);
 .w-Search-Input {
     width: 400px;
 }
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
 </style>
 
-<body class="bg-yellow-100 font-sans leading-normal tracking-normal overflow-hidden">
+<body class="bg-gray-50 font-sans leading-normal tracking-normal overflow-hidden">
 
     <!-- Navbar -->
-    <?php include_once '/laragon/www/laundry_shoes/views/includes/navbar.php'; ?>
+    <?php include_once '../includes/navbar.php'; ?>
 
     <!-- Main container -->
     <div class="flex h-screen">
         <!-- Sidebar -->
 
-        <?php include_once '/laragon/www/laundry_shoes/views/includes/sidebar.php'; ?>
-
-
+        <?php include_once '../includes/sidebar.php'; ?>
 
         <!-- Main Content -->
-        <div class="flex-1 p-8 overflow-y-auto h-[calc(100vh-4rem)]">
+        <div class="flex-1 p-8 overflow-y-auto h-[calc(100vh-4rem)] bg-white rounded-lg shadow-xl">
             <div class="container mx-auto">
-                <h1 class="text-4xl font-bold mb-5 pb-2 text-gray-800 italic">Dashboard Page</h1>
+                <h1 class="text-4xl font-extrabold text-gray-800 mb-6 pb-2 text-center">Dashboard Cuci Sepatu</h1>
                 <!-- Cards Section -->
                 <div class="mx-6 mb-6 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 xl:grid-cols-4">
-                    <!-- Layanan Card -->
-                    <div class="card bg-gray-50 shadow-lg rounded-lg p-8">
+                    <!-- obj_layanan Card -->
+                    <div class="card bg-white p-8 rounded-lg shadow-lg border-t-4 border-blue-400">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="text-2xl font-semibold text-gray-700">Layanan</h4>
@@ -161,15 +68,15 @@ $sales_totals_json = json_encode($sales_totals);
                                 </div>
                             </div>
                             <div class="mt-6 flex flex-col gap-0">
-                                <h2 class="text-3xl font-bold text-gray-800"><?= count($layanan) ?></h2>
-                                <p><span class="text-gray-600"><?= count($layanan) ?></span> <span
-                                        class="text-yellow-500">Jumlah Layanan</span>
+                                <h2 class="text-3xl font-bold text-gray-800"><?= count($obj_layanan) ?></h2>
+                                <p class="text-gray-600"><?= count($obj_layanan) ?> <span class="text-yellow-500">Jumlah
+                                        Layanan</span>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <!-- Reservasi Card -->
-                    <div class="card bg-gray-50 shadow-lg rounded-lg p-6">
+                    <div class="card bg-white p-8 rounded-lg shadow-lg border-t-4 border-purple-400">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="text-2xl font-semibold text-gray-700">Reservasi</h4>
@@ -179,15 +86,15 @@ $sales_totals_json = json_encode($sales_totals);
                                 </div>
                             </div>
                             <div class="mt-6 flex flex-col gap-0">
-                                <h2 class="text-3xl font-bold text-gray-800"><?= count($reservasi) ?></h2>
-                                <p><span class="text-gray-600"><?= count($reservasi) ?></span> <span
+                                <h2 class="text-3xl font-bold text-gray-800"><?= count($obj_reservasi) ?></h2>
+                                <p class="text-gray-600"><?= count($obj_reservasi) ?> <span
                                         class="text-yellow-500">Total Reservasi</span>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <!-- Role Card -->
-                    <div class="card bg-gray-50 shadow-lg rounded-lg p-6">
+                    <div class="card bg-white p-8 rounded-lg shadow-lg border-t-4 border-teal-400">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="text-2xl font-semibold text-gray-700">Role</h4>
@@ -197,16 +104,15 @@ $sales_totals_json = json_encode($sales_totals);
                                 </div>
                             </div>
                             <div class="mt-6 flex flex-col gap-0">
-                                <h2 class="text-3xl font-bold text-gray-800"><?= count($obj_role) ?>
-                                </h2>
-                                <p><span class="text-gray-600"><?= count($non_active_roles) ?></span> <span
-                                        class="text-red-500">Non Active</span>
+                                <h2 class="text-3xl font-bold text-gray-800"><?= count($obj_role) ?></h2>
+                                <p class="text-gray-600"><?= count($obj_role) ?> <span class="text-red-500">Non
+                                        Active</span>
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <!-- Sale Card -->
-                    <div class="card bg-gray-50 shadow-lg rounded-lg p-6">
+                    <!-- Total Reservasi Card -->
+                    <div class="card bg-white p-8 rounded-lg shadow-lg border-t-4 border-pink-400">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-4">
                                 <h4 class="text-2xl font-semibold text-gray-700">Total Reservasi</h4>
@@ -216,204 +122,76 @@ $sales_totals_json = json_encode($sales_totals);
                                 </div>
                             </div>
                             <div class="mt-6 flex flex-col gap-0">
-                                <!-- Menampilkan total penjualan -->
-                                <div class=" flex flex-col gap-0">
-                                    <h2 class="text-3xl font-bold text-yellow-500">
-                                        Rp. <?= number_format($total_sales, 2) ?>
-                                    </h2>
-                                </div>
-                                <!-- Menampilkan jumlah total sale -->
-                                <p><span class="text-gray-600"><?= count($obj_sale) ?></span> <span
+                                <h2 class="text-3xl font-bold text-yellow-500">
+                                    Rp. <?= number_format($total_reservasis, 2) ?>
+                                </h2>
+                                <p class="text-gray-600"><?= count($obj_reservasi) ?> <span
                                         class="text-green-500">Completed</span>
                                 </p>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
 
-
-                <!-- Sales Chart and Table Section -->
-                <div class="mx-6 mt-8">
-                    <!-- Sales Chart -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
-                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Sales Overview</h2>
-                        <canvas id="salesChart" width="400" height="200"></canvas>
+                <!-- Additional Content Section -->
+                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- New Stats Card -->
+                    <div class="card bg-white p-8 rounded-lg shadow-lg">
+                        <h4 class="text-2xl font-semibold text-gray-700 mb-4">Users Registered</h4>
+                        <p class="text-3xl font-bold text-gray-800"><?= count($obj_user) ?> Users</p>
+                        <p class="text-gray-600">Total users who have registered for laundry services</p>
                     </div>
 
-                    <!-- Sales Data Table -->
-                    <div class="bg-white shadow-lg rounded-lg p-6">
-                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Sales Data</h2>
-                        <table class="min-w-full bg-white border">
-                            <thead class="border-b-2 border-gray-300 text-gray-800">
-                                <tr>
-                                    <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">ID sale</th>
-                                    <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">User</th>
-                                    <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Customer</th>
-                                    <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Total Harga</th>
-                                    <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Dibayar</th>
-                                    <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Kembalian</th>
-                                    <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-700">
-                                <?php if (!empty($obj_sale)) {
-                                // var_dump($obj_sale);
-                                foreach ($obj_sale as $sale) { ?>
-                                <tr class="text-center">
-                                    <td class="py-3 px-4 text-blue-600">
-                                        <?php echo htmlspecialchars($sale->sale_id); ?></td>
-                                    <!-- <td class="w-1/4 py-3 px-4"><?php echo htmlspecialchars($sale->sale_date); ?></td> -->
-                                    <td class="w-1/4 py-3 px-4">
-                                        <?php $user = $modelUser->getUserById($sale->id_user);$role = $modelRole->getRoleById($sale->id_user); echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); ?>
-                                    </td>
-                                    <td class="w-1/4 py-3 px-4">
-                                        <?php $member = $modelMember->getMemberById($sale->id_member); echo htmlspecialchars($member->name); ?>
-                                    </td>
-                                    <td class="w-1/4 py-3 px-4">
-                                        <?php echo htmlspecialchars($sale->sale_totalPrice); ?>
-                                    </td>
-                                    <td class="w-1/6 py-3 px-4"><?php echo htmlspecialchars($sale->sale_pay); ?>
-                                    </td>
-                                    <td class="w-1/6 py-3 px-4"><?php echo htmlspecialchars($sale->sale_change); ?>
-                                    </td>
-                                    <td class="w-1/6 py-3 px-4">
-                                        <div class="flex items-center space-x-4">
-                                            <button
-                                                class="border-2 border-gray-700 bg-white hover:bg-gray-800 hover:text-white text-gray-800 font-bold py-1 px-2 rounded"
-                                                onclick="openModal('modal-<?php echo $sale->sale_id; ?>')">
-                                                Details
-                                            </button>
-                                            <!-- <button
-                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
-                                                onclick="return confirmDelete(<?= $sale->sale_id ?>)">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button> -->
-                                        </div>
-
-                                    </td>
-                                </tr>
-                                <?php } } ?>
-                            </tbody>
-                        </table>
-
+                    <!-- New Stats Card -->
+                    <div class="card bg-white p-8 rounded-lg shadow-lg">
+                        <h4 class="text-2xl font-semibold text-gray-700 mb-4">Pending Tasks</h4>
+                        <p class="text-3xl font-bold text-gray-800">5 Tasks</p>
+                        <p class="text-gray-600">Tasks yet to be completed</p>
                     </div>
 
+                    <!-- Chart Card -->
+                    <div class="card bg-white p-8 rounded-lg shadow-lg col-span-2 xl:col-span-1">
+                        <h4 class="text-2xl font-semibold text-gray-700 mb-4">Revenue Overview</h4>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
                 </div>
+
             </div>
-        </div>
 
-        <!-- Modal untuk detail sale -->
-        <?php if (!empty($obj_sale)) {
-            foreach ($obj_sale as $sale) { ?>
-        <div id="modal-<?php echo $sale->sale_id; ?>"
-            class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
-            <div class="relative top-20 mx-auto p-5 border w-1/2 shadow-lg rounded-md bg-white">
-                <div class="mt-3 text-center">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">Detail sale:
-                        <?php echo htmlspecialchars($sale->sale_id); ?></h3>
-                    <div class="mt-2">
-                        <table class="min-w-full bg-white overflow-y-auto overflow-x-auto">
-                            <thead class="bg-gray-800 text-white">
-                                <tr>
-                                    <th class="w-1/8 py-3 px-4 uppercase font-semibold text-sm">Id</th>
-                                    <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Barang</th>
-                                    <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Harga</th>
-                                    <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Jumlah</th>
-                                    <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Sub Total</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-700">
-                                <?php foreach ($sale->detailSale as $detail) { ?>
-                                <tr class="text-center">
-                                    <td class="py-3 px-2"><?php echo htmlspecialchars($detail->item_id); ?></td>
-                                    <td class="py-3 px-3"><?php echo htmlspecialchars($detail->item_name); ?></td>
-                                    <td class="py-3 px-4"><?php echo htmlspecialchars($detail->item_price); ?></td>
-                                    <td class="py-3 px-4"><?php echo htmlspecialchars($detail->item_qty); ?></td>
-                                    <td class="py-3 px-4"><?php echo htmlspecialchars($detail->subtotal); ?></td>
-                                </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="items-center px-4 py-3">
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                            onclick="closeModal('modal-<?php echo $sale->sale_id; ?>')">
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php } } ?>
-
-    </div>
-
-
-    <script>
-    // Ambil data dari PHP
-    const salesDates = <?php echo $sales_dates_json; ?>;
-    const salesTotals = <?php echo $sales_totals_json; ?>;
-
-    // Konfigurasi data chart menggunakan data dari PHP
-    const salesData = {
-        labels: salesDates,
-        datasets: [{
-            label: 'Total Penjualan (USD)',
-            data: salesTotals,
-            backgroundColor: 'rgba(99, 102, 241, 0.2)', // Background warna Indigo
-            borderColor: 'rgba(99, 102, 241, 1)', // Border warna Indigo
-            borderWidth: 1
-        }]
-    };
-
-    // Konfigurasi dan render chart
-    const salesConfig = {
-        type: 'line',
-        data: salesData,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+            <script>
+            // Revenue Chart
+            var ctx = document.getElementById('revenueChart').getContext('2d');
+            var revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [1200, 1500, 1100, 1700, 2000, 2100],
+                        borderColor: '#4C51BF',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Revenue (Rp)'
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    };
-
-    const salesChart = new Chart(
-        document.getElementById('salesChart'),
-        salesConfig
-    );
-    </script>
-
-
-    <script>
-    function openModal(id) {
-        const modal = document.getElementById(id);
-        if (modal) {
-            modal.classList.remove('hidden');
-        } else {
-            console.error('Modal not found: ', id);
-        }
-    }
-
-
-    function closeModal(id) {
-        document.getElementById(id).classList.add('hidden');
-    }
-
-    // function confirmDelete(saleId) {
-    //     if (confirm('Apakah Anda yakin ingin menghapus role ini?')) {
-    //         // Redirect ke halaman delete dengan fitur=delete
-    //         window.location.href = "/laundry_shoes/response_input.php?modul=sale&fitur=delete&id=" + saleId;
-    //     } else {
-    //         // Batalkan penghapusan
-    //         alert("gagal menghapus data");
-    //         return false;
-    //     }
-    // }
-    </script>
+            });
+            </script>
 
 </body>
 

@@ -1,5 +1,6 @@
 <?php
-    require_once "/laragon/www/laundry_shoes/init.php";
+    // require_once "/laragon/www/laundry_shoes/init.php";
+    require_once __DIR__ . '../../../init.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,17 +32,23 @@
                     <!-- Nama User -->
                     <div class="mb-4">
                         <label for="user_username" class="block text-gray-700 text-sm font-bold mb-2">Nama User:</label>
-                        <input type="text" id="user_username" name="user_username"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Masukkan Nama User" required>
+                        <input id="user_username"
+                            class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-1"
+                            type="text" placeholder="Masukkan Username..." name="user_username" required />
                     </div>
 
                     <!-- Password User -->
                     <div class="mb-4">
                         <label for="user_password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
-                        <input type="password" id="user_password" name="user_password"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Masukkan Password" required>
+                        <input id="user_password"
+                            class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-1"
+                            type="text" placeholder="Masukkan Password..." name="user_password" required />
+                    </div>
+                    <div class="mb-2">
+                        <label for="no_telp" class="block text-gray-700 text-sm font-bold mb-1">No Telp:</label>
+                        <input
+                            class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-1"
+                            type="text" placeholder="Masukkan No. Telepon..." name="no_telp" required />
                     </div>
 
                     <!-- Role User -->

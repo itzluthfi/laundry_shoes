@@ -1,5 +1,5 @@
 <?php
-require_once "/laragon/www/laundry_shoes/model/modelUserSql.php";
+require_once __DIR__ . '../../model/modelUserSql.php';
 
 class ControllerUser {
     private $modelUser;
@@ -67,6 +67,6 @@ class ControllerUser {
         }
 
         // Redirect setelah aksi dilakukan
-        echo "<script>alert('$message'); window.location.href='/laundry_shoes/views/user/user_list.php';</script>";
+        echo "<script>alert('$message'); window.location.href='./views/user/user_list.php';</script>";
     }
 }

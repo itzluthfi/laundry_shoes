@@ -1,6 +1,9 @@
 <?php
-require_once "/laragon/www/laundry_shoes/init.php";
-include "/laragon/www/laundry_shoes/auth_check.php"; 
+
+
+require_once __DIR__ . '../../../init.php';
+require_once __DIR__ . '../../../auth_check.php';
+
 
 $obj_status = $modelStatus->getAllStatusFromDB();
 ?>
@@ -25,12 +28,15 @@ $obj_status = $modelStatus->getAllStatusFromDB();
 <body class="bg-gray-100 font-sans leading-normal tracking-normal overflow-hidden">
 
     <!-- Navbar -->
-    <?php include_once '/laragon/www/laundry_shoes/views/includes/navbar.php'; ?>
+    <?php include '../includes/navbar.php'; ?>
+
 
     <!-- Main container -->
     <div class="flex">
         <!-- Sidebar -->
-        <?php include_once "/laragon/www/laundry_shoes/views/includes/sidebar.php"; ?>
+        <?php include '../includes/sidebar.php'; ?>
+
+
 
         <!-- Main Content -->
         <div class="flex-1 p-8">
@@ -41,7 +47,7 @@ $obj_status = $modelStatus->getAllStatusFromDB();
                 <div class="mb-4">
                     <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                         <i class="fa-solid fa-plus"></i>
-                        <a href="/laundry_shoes/views/status/status_input.php"> Add New Status</a>
+                        <a href="./status_input.php"> Add New Status</a>
                     </button>
                 </div>
                 <input id="search-input" type="text" name="query" placeholder="Search By Name Or Id"
@@ -72,8 +78,7 @@ $obj_status = $modelStatus->getAllStatusFromDB();
                                 <td class="w-1/6 py-3 px-4">
                                     <button
                                         class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2">
-                                        <a
-                                            href="/laundry_shoes/views/status/status_update.php?id=<?= $status->status_id ?>"><i
+                                        <a href="./status_update.php?id=<?= $status->status_id ?>"><i
                                                 class="fa-regular fa-pen-to-square"></i></a>
                                     </button>
                                     <button
@@ -95,7 +100,7 @@ $obj_status = $modelStatus->getAllStatusFromDB();
     function confirmDelete(statusId) {
         if (confirm('Apakah Anda yakin ingin menghapus status ini?')) {
             // Redirect ke halaman delete dengan fitur=delete
-            window.location.href = "/laundry_shoes/response_input.php?modul=status&fitur=delete&id=" + statusId;
+            window.location.href = "../../response_input.php?modul=status&fitur=delete&id=" + statusId;
         } else {
             // Batalkan penghapusan
             alert("Gagal menghapus data");

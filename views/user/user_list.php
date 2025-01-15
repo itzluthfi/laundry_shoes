@@ -1,8 +1,7 @@
 <?php
-//require_once "/laragon/www/laundry_shoes/model/modelUser.php";
-require_once "/laragon/www/laundry_shoes/init.php";
+require_once __DIR__ . '../../../init.php';
+require_once __DIR__ . '../../../auth_check.php';
 
-include "/laragon/www/laundry_shoes/auth_check.php"; 
 
 
 $obj_user = $modelUser->getAllUser();
@@ -66,14 +65,12 @@ $obj_user = $modelUser->getAllUser();
                         </thead>
                         <tbody class="text-gray-700">
                             <!-- Dynamic Data Rows -->
-                            <?php foreach($obj_user as $user){ 
-        $user_role = $modelRole->getRoleById($user->id_role);
-    ?>
+                            <?php foreach($obj_user as $user){  ?>
                             <tr class="text-center">
                                 <td class="w-1/12 py-3 px-4 text-yellow-600"><?= $user->user_id ?></td>
                                 <td class="w-1/6 py-3 px-4"><?= $user->user_username ?></td>
                                 <td class="w-1/6 py-3 px-4"><?= $user->user_password ?></td>
-                                <td class="w-1/12 py-3 px-4"><?= $user_role->role_nama ?></td>
+                                <td class="w-1/12 py-3 px-4"><?= $user->role_nama ?></td>
                                 <td class="w-1/6 py-3 px-4"><?= $user->no_telp ?></td>
                                 <td class="w-1/6 py-3 px-4">
                                     <!-- Action Buttons -->

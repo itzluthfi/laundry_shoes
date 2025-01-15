@@ -1,5 +1,7 @@
 <?php
-    require_once "/laragon/www/laundry_shoes/init.php";
+    // require_once "/laragon/www/laundry_shoes/init.php";
+    require_once __DIR__ . '../../../init.php';
+
 
     $obj_user = $modelUser->getUserById($_GET['id']);
    

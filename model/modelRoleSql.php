@@ -1,7 +1,6 @@
 <?php
-
-require_once "/laragon/www/laundry_shoes/model/dbConnect.php";
-require_once "/laragon/www/laundry_shoes/domain_object/node_role.php";
+require_once __DIR__ . '/dbConnection.php';
+require_once __DIR__ . '../../domain_object/node_role.php';
 
 class modelRole {
     private $db;
@@ -9,16 +8,7 @@ class modelRole {
 
     public function __construct() {
         // Inisialisasi koneksi database
-        $this->db = new Database('localhost', 'root', '', 'laundrysepatu');
-
-        if (isset($_SESSION['roles'])) {
-            // Ambil data dari sesi
-            $this->roles = unserialize($_SESSION['roles']);
-        } else {
-            // Jika sesi kosong, ambil dari database
-            $this->roles = $this->getAllRoleFromDB();
-            $_SESSION['roles'] = serialize($this->roles);
-        }
+        $this->db = Databases::getInstance();
     }
 
    
@@ -35,7 +25,8 @@ class modelRole {
             $_SESSION['roles'] = serialize($this->roles);
             return true;
         } catch (Exception $e) {
-            return false;
+                        return $e->getMessage();
+
         }
     }
 
@@ -80,7 +71,8 @@ class modelRole {
             $_SESSION['roles'] = serialize($this->roles);
             return true;
         } catch (Exception $e) {
-            return false;
+                        return $e->getMessage();
+
         }
     }
 
@@ -94,12 +86,13 @@ class modelRole {
             $_SESSION['roles'] = serialize($this->roles);
             return true;
         } catch (Exception $e) {
-            return false;
+                        return $e->getMessage();
+
         }
     }
 
-    public function __destruct() {
-        // Menutup koneksi database
-        $this->db->close();
-    }
+    // public function __destruct() {
+    //     // Menutup koneksi database
+    //     $this->db->close();
+    // }
 }

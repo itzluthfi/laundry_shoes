@@ -1,5 +1,5 @@
 <?php
-require_once "/laragon/www/laundry_shoes/init.php";
+require_once __DIR__. '/init.php';
 
 // Check request method (POST atau GET)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -53,36 +53,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                         foreach ($users as $user) {
                             // Cocokkan username dan verifikasi password
                             if ($user->user_username == $username && password_verify($password, $user->user_password)) {
-                                if ($user->id_role == 1) {
+                                if ($user->role_id == 1) {
                                     // Simpan ke sesi user_login
                                     $_SESSION['user_login'] = serialize($user);
                                     if ($rememberMe) {
                                         setcookie('user_login', serialize($user), time() + 86400, "/"); // 1 hari
                                     }
-                                    echo "<script>alert('Login berhasil, welcome back again admin!'); window.location.href='/laundry_shoes/views/dashboard/dashboard.php';</script>";
-                                } elseif ($user->id_role == 2) {
+                                    echo "<script>alert('Login berhasil, welcome back again admin!'); window.location.href='./views/dashboard/dashboard.php';</script>";
+                                } elseif ($user->role_id == 2) {
                                     // Simpan ke sesi customer_login
                                     $_SESSION['customer_login'] = serialize($user);
                                     if ($rememberMe) {
                                         setcookie('customer_login', serialize($user), time() + 86400, "/"); // 1 hari
                                     }
-                                    echo "<script>alert('Login berhasil, welcome back again customer!'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
+                                    echo "<script>alert('Login berhasil, welcome back again customer!'); window.location.href='./views/web_laundry/index.php';</script>";
                                 }
                                 return;
                             }
                         }
         
                         // Jika tidak ditemukan user yang cocok
-                        echo "<script>alert('Login gagal'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
+                        echo "<script>alert('Login gagal'); window.location.href='./views/loginPage.php';</script>";
                         break;
         
                     case 'registrasi':
                         $username = $_POST["username_register"];
                         $password = $_POST["password_register"];
                         $no_telp = $_POST["no_telp"];
-                        $id_role = $_POST["role_id"];
-                        $modelUser->addUser($username, $password, $id_role, $no_telp);
-                        echo "<script>alert('Registrasi berhasil'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
+                        $role_id = $_POST["role_id"];
+                        $modelUser->addUser($username, $password, $role_id, $no_telp);
+                        echo "<script>alert('Registrasi berhasil'); window.location.href='./views/loginPage.php';</script>";
                         break;
                 }
                 break;
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                         if (isset($_COOKIE['user_login'])) {
                             setcookie('user_login', '', time() - 3600, "/");
                         }
-                        echo "<script>alert('Logout berhasil!'); window.location.href='/laundry_shoes/views/loginPage.php';</script>";
+                        echo "<script>alert('Logout berhasil!'); window.location.href='./views/loginPage.php';</script>";
                         break;
         
                     case 'customer':
@@ -110,16 +110,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                         if (isset($_COOKIE['customer_login'])) {
                             setcookie('customer_login', '', time() - 3600, "/");
                         }
-                        echo "<script>alert('Logout berhasil!'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
+                        echo "<script>alert('Logout berhasil!'); window.location.href='./views/web_laundry/index.php';</script>";
                         break;
         
                     default:
-                        echo "<script>alert('Logout gagal! Fitur tak dikenal'); window.location.href='/laundry_shoes/views/web_laundry/index.php';</script>";
+                        echo "<script>alert('Logout gagal! Fitur tak dikenal'); window.location.href='./views/web_laundry/index.php';</script>";
                         break;
                 }
                 break;
         default:
-            echo "<script>alert('Module tidak dikenal.'); window.location.href='/laundry_shoes/{$modul}/{$modul}_list.php';</script>";
+            echo "<script>alert('Module tidak dikenal.'); window.location.href='./views/{$modul}/{$modul}_list.php';</script>";
             break;
     }
 }

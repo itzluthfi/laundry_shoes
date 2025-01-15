@@ -1,24 +1,17 @@
 <?php
 
-require_once "/laragon/www/laundry_shoes/model/dbConnect.php";
-require_once "/laragon/www/laundry_shoes/domain_object/node_layanan.php";
+require_once __DIR__ . '/dbConnection.php';
+require_once __DIR__ . '../../domain_object/node_layanan.php';
 
 class modelLayanan {
     private $db;
     private $layanans = [];
 
     public function __construct() {
-        // Inisialisasi koneksi database
-        $this->db = new Database('localhost', 'root', '', 'laundrysepatu');
-
-        if (isset($_SESSION['layanans'])) {
-            // Ambil data dari sesi
-            $this->layanans = unserialize($_SESSION['layanans']);
-        } else {
-            // Jika sesi kosong, ambil dari database
-            $this->layanans = $this->getAllLayananFromDB();
-            $_SESSION['layanans'] = serialize($this->layanans);
-        }
+        // Gunakan koneksi database global
+        $this->db = Databases::getInstance();
+        // Ambil data dari database
+        $this->layanans = $this->getAllLayananFromDB();
     }
 
     public function addLayanan($nama, $deskripsi, $harga) {
@@ -33,7 +26,7 @@ class modelLayanan {
             $_SESSION['layanans'] = serialize($this->layanans);
             return true;
         } catch (Exception $e) {
-            return false;
+            return $e->getMessage();
         }
     }
 
@@ -76,7 +69,8 @@ class modelLayanan {
             $_SESSION['layanans'] = serialize($this->layanans);
             return true;
         } catch (Exception $e) {
-            return false;
+            return $e->getMessage();
+
         }
     }
 
@@ -90,12 +84,13 @@ class modelLayanan {
             $_SESSION['layanans'] = serialize($this->layanans);
             return true;
         } catch (Exception $e) {
-            return false;
+            return $e->getMessage();
+
         }
     }
 
-    public function __destruct() {
-        // Menutup koneksi database
-        $this->db->close();
-    }
+    // public function __destruct() {
+    //     // Menutup koneksi database
+    //     $this->db->close();
+    // }
 }

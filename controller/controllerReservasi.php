@@ -1,6 +1,6 @@
 <?php
 
-require_once "/laragon/www/laundry_shoes/model/modelReservasiSql.php";
+require_once __DIR__ . '../../model/modelReservasiSql.php';
 
 class ControllerReservasi {
     private $modelReservasi;
@@ -37,29 +37,34 @@ class ControllerReservasi {
                     // Tambahkan reservasi dan detailnya
                     $isSuccess = $this->modelReservasi->addReservasi($detailReservasi, $user_id, $status_id, $uang_bayar, $uang_kembali);
 
-                    if ($isSuccess) {
-                        echo "<script>alert('Reservasi berhasil ditambahkan!'); ";
+                    if ($isSuccess === true) {
+                        echo "<script>alert('Reservasi berhasil ditambahkan!'); window.history.back(); </script>";
                     } else {
-                        echo "<script>alert('Gagal menambahkan reservasi!'); window.history.back();</script>";
+                        echo "<script>alert('Gagal menambahkan reservasi!'); window.history.back();</scrip>";
                     }
                 } else {
                     echo "<script>alert('Data yang dikirim tidak lengkap!'); window.history.back();</script>";
                 }
                 break;
 
-            case 'delete':
-                // Hapus reservasi berdasarkan ID
-                if (isset($_GET['id'])) {
-                    $reservasiId = intval($_GET['id']);
-                    if ($this->modelReservasi->deleteReservasi($reservasiId)) {
-                        echo "<script>alert('Reservasi berhasil dihapus!'); window.location.href='/laundry_shoes/views/reservasi/reservasi_list.php';</script>";
+                case 'delete':
+                    // Hapus reservasi berdasarkan ID
+                    if (isset($_GET['id'])) {
+                        $reservasiId = intval($_GET['id']);
+                        $deleteResult = $this->modelReservasi->deleteReservasi($reservasiId);
+                
+                        if ($deleteResult === true) {
+                            // Jika berhasil dihapus
+                            echo "<script>alert('Reservasi berhasil dihapus!'); window.history.back();</script>";
+                        } else {
+                            // Jika terjadi kesalahan, tampilkan pesan dari model
+                            echo "<script>alert('Gagal menghapus reservasi: " . addslashes($deleteResult) . "'); window.history.back();</script>";
+                        }
                     } else {
-                        echo "<script>alert('Gagal menghapus reservasi!'); window.location.href='/laundry_shoes/views/reservasi/reservasi_list.php';</script>";
+                        echo "<script>alert('ID reservasi tidak ditemukan!'); window.history.back();</script>";
                     }
-                } else {
-                    echo "<script>alert('ID reservasi tidak ditemukan!'); window.history.back();</script>";
-                }
-                break;
+                    break;
+                
 
 
 
@@ -70,7 +75,10 @@ class ControllerReservasi {
                        $statusId = intval($_POST['status_id']);
                 
                        if ($this->modelReservasi->updateReservasiStatus($reservasiId, $statusId)) {
-                           echo "<script>alert('Status reservasi berhasil diperbarui!'); window.location.href='/laundry_shoes/views/reservasi/reservasi_list.php';</script>";
+                           echo "<script>alert('Status reservasi berhasil diperbarui!'); window.history.back();</script>";
+                             header("location: ./views/reservasi/reservasi_list.php");
+                             exit();
+
                        } else {
                            echo "<script>alert('Gagal memperbarui status reservasi!'); window.history.back();</script>";
                        }
@@ -80,7 +88,8 @@ class ControllerReservasi {
                 break;
 
             default:
-                 echo "<script>alert('Aksi tidak dikenal!'); window.location.href='/laundry_shoes/views/reservasi/reservasi_list.php';</script>";
+                 echo "<script>alert('Aksi tidak dikenal!'); </script>";
+                 header("location: ./views/reservasi/reservasi_list.php");
                 break;
                 
         }

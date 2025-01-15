@@ -1,5 +1,5 @@
 <?php
-require_once "/laragon/www/laundry_shoes/init.php";
+require_once __DIR__ . '../../../init.php';
 $layanans = $modelLayanan->getAllLayananFromDB();
 $isLoggedIn = isset($_SESSION['customer_login']);
 
@@ -14,12 +14,6 @@ $isLoggedIn = isset($_SESSION['customer_login']);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <style>
-/* #serviceModal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
-
 /* CSS untuk animasi modal */
 #modalContentContainer {
     transform: scale(0.95);
@@ -64,7 +58,7 @@ $isLoggedIn = isset($_SESSION['customer_login']);
                 </li>
                 <li>
                     <?= $isLoggedIn ? 
-                    '<a href="../reservasiPage.php" class="bg-yellow-300 text-blue-600 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-blue-900 transition duration-300 ease-in-out shadow-md">Cek Reservasimu</a>' 
+                    '<a href="../profile.php" class="bg-yellow-300 text-blue-600 px-5 py-2 rounded-full font-medium hover:bg-white hover:text-blue-900 transition duration-300 ease-in-out shadow-md">Cek Reservasimu</a>' 
                         : 
                     ''; 
                     ?>
@@ -271,10 +265,7 @@ $isLoggedIn = isset($_SESSION['customer_login']);
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                 <!-- Layanan -->
                 <?php foreach ($layanans as $layanan) { ?>
-                <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer"
-                    data-id="<?= $layanan->layanan_id; ?>" data-nama="<?= $layanan->layanan_nama; ?>"
-                    data-deskripsi="<?= $layanan->layanan_deskripsi; ?>" data-harga="<?= $layanan->layanan_harga; ?>"
-                    onclick="openModal(this)">
+                <div class="relative bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden group cursor-pointer">
                     <img src="img/<?= strtolower(str_replace(' ', '', $layanan->layanan_nama)); ?>.jpg"
                         alt="<?= $layanan->layanan_nama; ?>"
                         class="w-full h-100 object-cover opacity-75 group-hover:opacity-100 transition duration-300" />
@@ -284,28 +275,54 @@ $isLoggedIn = isset($_SESSION['customer_login']);
                             <h3 class="text-xl font-semibold"><?= $layanan->layanan_nama; ?></h3>
                             <p class="text-sm mt-2"><?= $layanan->layanan_deskripsi; ?></p>
                             <div class="flex justify-center space-x-4 mt-4">
-                                <button
-                                    class="flex items-center bg-gray-700 hover:bg-gray-800 text-white px-3 py-2 rounded-md">
+                                <!-- Tombol Detail -->
+                                <button onclick="openModal(this)"
+                                    class="flex items-center bg-gray-700 hover:bg-gray-800 text-white px-3 py-2 rounded-md"
+                                    data-nama="<?= $layanan->layanan_nama; ?>"
+                                    data-deskripsi="<?= $layanan->layanan_deskripsi; ?>"
+                                    data-harga="<?= $layanan->layanan_harga; ?>"
+                                    data-image="img/<?= strtolower(str_replace(' ', '', $layanan->layanan_nama)); ?>.jpg">
                                     <i class="fas fa-eye mr-2"></i> Detail
                                 </button>
+                                <!-- Tombol Pesan -->
+                                <?php if (isset($_SESSION['customer_login'])) { ?>
                                 <a href="../new_reservasiPage.php"
                                     class="flex items-center bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md">
                                     <i class="fas fa-shopping-cart mr-2"></i> Pesan
                                 </a>
+                                <?php } else { ?>
+                                <a href="#" onclick="alert('Silahkan login terlebih dahulu!'); return false;"
+                                    class="flex items-center bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md">
+                                    <i class="fas fa-shopping-cart mr-2"></i> Pesan
+                                </a>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php } ?>
+
             </div>
         </div>
     </section>
-
     <!-- Modal -->
     <div id="serviceModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50"
         onclick="closeModal(event)">
-        <div class="bg-white rounded-lg w-96 p-6 shadow-lg transform scale-95 opacity-0 transition-all duration-300"
+        <div class="bg-white rounded-lg w-4/5 md:w-3/4 lg:w-1/2 xl:w-1/3 p-6 shadow-lg transform scale-95 opacity-0 transition-all duration-300 flex"
             id="modalContentContainer" onclick="event.stopPropagation()">
+            <!-- Gambar -->
+            <div class="w-1/2 pr-4">
+                <img id="modalImage" src="" alt="Layanan Image" class="w-full h-auto object-cover rounded-lg">
+            </div>
+
+            <!-- Konten Modal (Informasi Layanan) -->
+            <div class="w-1/2">
+                <h3 id="modalTitle" class="text-2xl font-bold text-blue-500 mt-4"></h3>
+                <p id="modalPrice" class="text-gray-800 font-semibold mt-2"></p>
+                <p id="modalContent" class="text-gray-600 mt-4"></p>
+
+            </div>
+
             <!-- Button Icon 'X' -->
             <button onclick="closeModal()"
                 class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 transition duration-300 mb-2">
@@ -314,16 +331,8 @@ $isLoggedIn = isset($_SESSION['customer_login']);
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-            <img id="modalImage" src="" alt="Layanan Image" class="w-full h-48 object-cover rounded-lg mt-2">
-            <h3 id="modalTitle" class="text-2xl font-bold text-blue-500 mt-4"></h3>
-            <p id="modalPrice" class="text-gray-800 font-semibold mt-2"></p>
-            <p id="modalContent" class="text-gray-600 mt-4"></p>
         </div>
     </div>
-
-
-
-
 
     <!-- Kontak -->
     <section class="bg-blue-50 dark:bg-slate-800" id="contact">
@@ -430,6 +439,7 @@ $isLoggedIn = isset($_SESSION['customer_login']);
                     </div>
 
                     <!-- Kanan: Formulir Kontak -->
+                    <!-- Kanan: Formulir Kontak -->
                     <div class="card h-fit max-w-6xl p-5 md:p-12" id="form">
                         <h2 class="mb-4 text-2xl font-bold dark:text-white">
                             Siap Mencuci Sepatu Anda?
@@ -441,30 +451,32 @@ $isLoggedIn = isset($_SESSION['customer_login']);
                                     <input type="text" id="name" autocomplete="given-name"
                                         placeholder="Masukkan nama Anda"
                                         class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
-                                        name="name" />
+                                        name="name" required />
                                 </div>
                                 <div class="mx-0 mb-1 sm:mb-4">
                                     <label for="email" class="pb-1 text-xs uppercase tracking-wider">Email Anda</label>
                                     <input type="email" id="email" autocomplete="email"
                                         placeholder="Masukkan alamat email Anda"
                                         class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
-                                        name="email" />
+                                        name="email" required />
                                 </div>
                             </div>
                             <div class="mx-0 mb-1 sm:mb-4">
                                 <label for="textarea" class="pb-1 text-xs uppercase tracking-wider">Pesan Anda</label>
                                 <textarea id="textarea" name="textarea" cols="30" rows="5"
                                     placeholder="Tulis pesan Anda..."
-                                    class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"></textarea>
+                                    class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
+                                    required></textarea>
                             </div>
                             <div class="text-center">
-                                <button type="submit"
+                                <button type="button" id="sendMessage"
                                     class="w-full bg-blue-800 text-white px-6 py-3 font-xl rounded-md sm:mb-0">
                                     Kirim Pesan
                                 </button>
                             </div>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -531,8 +543,34 @@ $isLoggedIn = isset($_SESSION['customer_login']);
             </li>
         </ul>
     </div>
+    <!-- contact form -->
+    <script>
+    document.getElementById('sendMessage').addEventListener('click', function() {
+        // Ambil nilai dari input form
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('textarea').value.trim();
 
-    <!-- Script -->
+        // Validasi input
+        if (!name || !email || !message) {
+            alert('Semua field harus diisi!');
+            return;
+        }
+
+        // Format pesan untuk WhatsApp
+        const whatsappNumber = '6288217194863';
+        const text = `Halo, Saya ${name}%0A,dari Web Laundry Shoes.%0AEmail: ${email}%0APesan: ${message}`;
+
+        // Buat URL WhatsApp
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${text}`;
+
+        // Buka WhatsApp di tab baru
+        window.open(whatsappURL, '_blank');
+    });
+    </script>
+    <!-- end contact form -->
+
+    <!-- Script UI-->
     <script>
     //scrolling
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -545,29 +583,30 @@ $isLoggedIn = isset($_SESSION['customer_login']);
     });
 
     function openModal(element) {
-        const imageSrc = element.querySelector('img').src;
+        // Mengambil data dari tombol Detail
         const layananNama = element.dataset.nama;
         const layananDeskripsi = element.dataset.deskripsi;
         const layananHarga = element.dataset.harga;
+        const imageSrc = element.dataset.image;
 
+        // Menampilkan data di modal
         document.getElementById('modalImage').src = imageSrc;
         document.getElementById('modalTitle').innerText = layananNama;
         document.getElementById('modalPrice').innerText = `Harga: Rp ${layananHarga}`;
         document.getElementById('modalContent').innerText = layananDeskripsi;
 
+        // Membuka modal
         const modal = document.getElementById('serviceModal');
         const modalContent = document.getElementById('modalContentContainer');
-
         modal.classList.remove('hidden');
         setTimeout(() => {
             modalContent.classList.add('scale-100', 'opacity-100');
         }, 50);
     }
 
-    function closeModal(event) {
+    function closeModal() {
         const modal = document.getElementById('serviceModal');
         const modalContent = document.getElementById('modalContentContainer');
-
         modalContent.classList.remove('scale-100', 'opacity-100');
         setTimeout(() => {
             modal.classList.add('hidden');

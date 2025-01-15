@@ -1,5 +1,5 @@
 <?php
-require_once "/laragon/www/laundry_shoes/model/modelLayanan.php";
+require_once __DIR__  . '../../model/modelLayanan.php';
 
 class ControllerLayanan {
     private $modelLayanan;
@@ -65,6 +65,6 @@ class ControllerLayanan {
         }
 
         // Redirect setelah aksi dilakukan
-        echo "<script>alert('$message'); window.location.href='/laundry_shoes/views/layanan/layanan_list.php';</script>";
+        echo "<script>alert('$message'); window.location.href='../views/layanan/layanan_list.php';</script>";
     }
 }

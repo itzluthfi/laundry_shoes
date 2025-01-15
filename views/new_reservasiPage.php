@@ -1,93 +1,121 @@
 <?php
-require_once "/laragon/www/laundry_shoes/init.php";
+require_once __DIR__ . '../../init.php';
 $layanans = $modelLayanan->getAllLayananFromDB();
 
 $user_id = unserialize($_SESSION['customer_login'])->user_id;
-var_dump($user_id);
+// var_dump($user_id);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservasi Baru</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: "#3b82f6",
+                    secondary: "#1d4ed8",
+                }
+            }
+        }
+    }
+    </script>
 </head>
 
-<body class="bg-white">
-    <div class="bg-white h-screen py-8">
+<body class="bg-blue-50">
+    <div class="min-h-screen py-8">
         <div class="container mx-auto px-4">
-            <h1 class="text-3xl font-semibold mb-6">Reservasi Baru</h1>
+            <button onclick="window.history.back()"
+                class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 mb-4 right-20 absolute">
+                Kembali
+            </button>
+            <h1 class="text-4xl font-bold mb-8 text-blue-800">Reservasi Baru</h1>
+
             <form action="../response_input.php?modul=reservasi&fitur=add" method="POST" id="reservasiForm">
-                <div class="flex flex-col md:flex-row gap-6">
+                <div class="flex flex-col lg:flex-row gap-8">
                     <!-- Left Section -->
-                    <div class="md:w-3/4">
-                        <div class="bg-gray-100 rounded-lg shadow-md p-6">
-                            <h2 class="text-lg font-semibold mb-4">Place Order Layanan</h2>
+                    <div class="lg:w-3/4">
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h2 class="text-2xl font-semibold mb-6 text-blue-700">Place Order Layanan</h2>
                             <div class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div>
-                                    <label for="layananselect" class="block text-gray-700 font-medium">Reservasi</label>
-                                    <select id="layananselect" class="mt-1 p-2 border border-gray-300 rounded w-full">
+                                <div class="form-control">
+                                    <label for="layananselect" class="label">
+                                        <span class="label-text">Reservasi</span>
+                                    </label>
+                                    <select id="layananselect" class="select select-bordered w-full">
                                         <option value="" disabled selected>Pilih Layanan</option>
                                         <?php
-                                    foreach ($layanans as $layanan) {
-                                        echo "<option value='{$layanan->layanan_id}' data-name='{$layanan->layanan_nama}' data-price='{$layanan->layanan_harga}'>
-                                        {$layanan->layanan_id} - {$layanan->layanan_nama} - Rp{$layanan->layanan_harga}
-                                        </option>";
-                                    }
-                                    ?>
+                                        foreach ($layanans as $layanan) {
+                                            echo "<option value='{$layanan->layanan_id}' data-name='{$layanan->layanan_nama}' data-price='{$layanan->layanan_harga}'>
+                                            {$layanan->layanan_id} - {$layanan->layanan_nama} - Rp{$layanan->layanan_harga}
+                                            </option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
-                                <div>
-                                    <label for="jumlahInput" class="block text-gray-700 font-medium">Jumlah</label>
-                                    <input type="number" id="jumlahInput"
-                                        class="mt-1 p-2 border border-gray-300 rounded w-full" min="1">
+                                <div class="form-control">
+                                    <label for="jumlahInput" class="label">
+                                        <span class="label-text">Jumlah</span>
+                                    </label>
+                                    <input type="number" id="jumlahInput" class="input input-bordered w-full" min="1">
                                 </div>
-                                <div>
-                                    <button type="button" id="addReservasiBtn"
-                                        class="bg-yellow-500 text-white py-2 px-4 rounded-md mt-6 w-full">Tambah
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Aksi</span>
+                                    </label>
+                                    <button type="button" id="addReservasiBtn" class="btn btn-primary">Tambah
                                         Reservasi</button>
                                 </div>
                             </div>
-                            <table id="layananTable" class="w-full bg-white rounded-lg shadow-md overflow-hidden mt-8">
-                                <thead class="bg-yellow-500 text-white">
-                                    <tr>
-                                        <th class="py-3 px-4 text-left font-semibold">ID</th>
-                                        <th class="py-3 px-4 text-left font-semibold">Nama layanan</th>
-                                        <th class="py-3 px-4 text-left font-semibold">Quantity</th>
-                                        <th class="py-3 px-4 text-left font-semibold">Harga</th>
-                                        <th class="py-3 px-4 text-left font-semibold">Subtotal</th>
-                                        <th class="py-3 px-4 text-left font-semibold">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                            <div class="overflow-x-auto">
+                                <table id="layananTable" class="table w-full">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nama layanan</th>
+                                            <th>Quantity</th>
+                                            <th>Harga</th>
+                                            <th>Subtotal</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <!-- Right Section -->
-                    <div class="md:w-1/4">
-                        <div class="bg-gray-100 rounded-lg shadow-md p-6">
-                            <h2 class="text-xl font-semibold mb-4">Payment</h2>
-                            <div class="flex justify-between mb-2">
-                                <span>Total Harga</span>
-                                <span id="reservasi_harga">Rp <span>0</span></span>
+                    <div class="lg:w-1/4">
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h2 class="text-2xl font-semibold mb-6 text-blue-700">Payment</h2>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Total Harga</span>
+                                </label>
+                                <input type="text" id="reservasi_harga" class="input input-bordered" readonly
+                                    value="Rp 0">
                             </div>
-                            <div class="flex justify-between mb-2">
-                                <span>Pembayaran</span>
-                                <input type="number" name="uang_bayar" id="uang_bayar"
-                                    class="mt-1 p-2 border border-gray-300 rounded w-full">
+                            <div class="form-control mt-4">
+                                <label class="label">
+                                    <span class="label-text">Pembayaran</span>
+                                </label>
+                                <input type="number" name="uang_bayar" id="uang_bayar" class="input input-bordered">
                             </div>
-                            <div class="flex justify-between mb-2">
-                                <span>Kembalian</span>
-                                <span id="uang_kembali">Rp <span>0</span></span>
+                            <div class="form-control mt-4">
+                                <label class="label">
+                                    <span class="label-text">Kembalian</span>
+                                </label>
+                                <input type="text" id="uang_kembali" class="input input-bordered" readonly value="Rp 0">
                             </div>
-                            <button type="submit" class="bg-yellow-500 text-white py-2 px-4 rounded-md mt-4 w-full"
-                                required>Bayar
-                            </button>
-                            <button type="button" id="cancelButton"
-                                class="bg-red-500 text-white py-2 px-4 rounded-md mt-2 w-full ">Batal</button>
+                            <button type="submit" class="btn btn-primary mt-6 w-full">Bayar</button>
+                            <button type="button" id="cancelButton" class="btn btn-error mt-2 w-full">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -267,7 +295,6 @@ var_dump($user_id);
         console.log('Semua form telah direset.');
     });
     </script>
-
 </body>
 
 </html>

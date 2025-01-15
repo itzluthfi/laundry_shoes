@@ -1,7 +1,8 @@
 <?php
 
-require_once "/laragon/www/laundry_shoes/model/dbConnect.php";
-require_once "/laragon/www/laundry_shoes/domain_object/node_status.php";
+
+require_once __DIR__ . '/dbConnection.php';
+require_once __DIR__ . '../../domain_object/node_status.php';
 
 class modelStatus {
     private $db;
@@ -9,16 +10,7 @@ class modelStatus {
 
     public function __construct() {
         // Inisialisasi koneksi database
-        $this->db = new Database('localhost', 'root', '', 'laundrysepatu');
-
-        if (isset($_SESSION['statuses'])) {
-            // Ambil data dari sesi
-            $this->statuses = unserialize($_SESSION['statuses']);
-        } else {
-            // Jika sesi kosong, ambil dari database
-            $this->statuses = $this->getAllStatusFromDB();
-            $_SESSION['statuses'] = serialize($this->statuses);
-        }
+        $this->db = Databases::getInstance();
     }
 
     public function addStatus($nama, $color) {
@@ -31,7 +23,8 @@ class modelStatus {
             $_SESSION['statuses'] = serialize($this->statuses);
             return true;
         } catch (Exception $e) {
-            return false;
+                       return $e->getMessage();
+
         }
     }
 
@@ -73,7 +66,8 @@ class modelStatus {
             $_SESSION['statuses'] = serialize($this->statuses);
             return true;
         } catch (Exception $e) {
-            return false;
+                       return $e->getMessage();
+
         }
     }
 
@@ -87,7 +81,8 @@ class modelStatus {
             $_SESSION['statuses'] = serialize($this->statuses);
             return true;
         } catch (Exception $e) {
-            return false;
+                       return $e->getMessage();
+
         }
     }
 
