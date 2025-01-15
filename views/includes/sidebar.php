@@ -11,7 +11,7 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->role_
         class="relative flex flex-col w-64 bg-blue-700 text-white p-4 shadow-lg rounded-xl transition-transform duration-300 transform ">
         <!-- Sidebar Header -->
         <div class="flex items-center justify-between mb-6">
-            <h5 class="text-xl font-semibold italic tracking-wide">WELCOME BACK</h5>
+            <h5 class="text-xl font-semibold italic tracking-wide">WELCOME BACK!!</h5>
             <button id="closeSidebar" class="text-gray-400 hover:text-white">
                 <i class="fa-solid fa-times"></i>
             </button>
@@ -22,8 +22,8 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->role_
             <img src="../../public/img/gita.jpg" alt="User"
                 class="w-16 h-16 rounded-full object-cover border-2 border-white">
             <div class="p-4 ml-4">
-                <h6 class="font-bold text-white"> <?= $user_name ?> </h6>
-                <span class="italic text-sm text-gray-300"> <?= $user_role->role_nama ?> </span>
+                <h6 class="font-bold text-white text-xl"> <?= $user_name ?> </h6>
+                <span class="italic text-sm text-gray-300 "> <?= $user_role->role_nama ?> </span>
             </div>
         </div>
 
@@ -118,13 +118,13 @@ closeSidebarBtn.addEventListener('click', () => {
     padding: 0.5rem;
     border-radius: 0.375rem;
     background: rgb(138, 181, 255);
-    color: #a0aec0;
+    color: rgb(3, 9, 15);
     text-decoration: none;
     transition: all 0.2s;
 }
 
 .sub-nav-link:hover {
     background: #4a5568;
-    color: #edf2f7;
+    color: rgb(3, 9, 15);
 }
 </style>

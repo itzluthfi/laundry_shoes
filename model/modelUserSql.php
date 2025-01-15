@@ -75,9 +75,9 @@ class modelUser {
         $query = "SELECT * FROM users WHERE id = $id";
         $result = $this->db->select($query);
 
-        $role = $this->getRoleById($result['role_id']);
         
         if (count($result) > 0) {
+            $role = $this->getRoleById($result[0]['role_id']);
             $row = $result[0];
             $user = new User($row['id'], $row['username'], $row['password'], $row['no_telp'],$row['role_id'],$role->role_nama, $role->role_deskripsi, $role->role_status);
             return $user;

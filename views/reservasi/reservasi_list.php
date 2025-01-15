@@ -5,7 +5,10 @@ require_once __DIR__ . '../../../init.php';
 require_once __DIR__ . '../../../auth_check.php';
 
 $reservasis = $modelReservasi->getAllReservasi();
-// var_dump($reservasis);
+// echo "<pre>";
+// print_r($reservasis);
+// echo "</pre>";
+// die();
 ?>
 
 <!DOCTYPE html>
@@ -109,6 +112,7 @@ $reservasis = $modelReservasi->getAllReservasi();
                                 $user = $modelUser->getUserById($reservasi->user_id);
                                 $role = $modelRole->getRoleById($user->role_id); 
                                 echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); 
+                               
                             ?>
                                 </td>
                                 <td class="w-1/6 py-3 px-4">
@@ -215,7 +219,8 @@ $reservasis = $modelReservasi->getAllReservasi();
                     <div class="font-semibold text-gray-700">User</div>
                     <div><?php 
                         $user = $modelUser->getUserById($reservasi->user_id);
-                        echo htmlspecialchars("{$user->user_username} - [{$user->role_nama}]");
+                        $role = $modelRole->getRoleById($user->role_id);
+                        echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]");
                     ?></div>
                 </div>
 

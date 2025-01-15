@@ -63,6 +63,6 @@ class ControllerStatus {
         }
 
         // Redirect setelah aksi dilakukan
-        echo "<script>alert('$message'); window.location.href='../views/status/status_list.php';</script>";
+        echo "<script>alert('$message'); window.location.href='./views/status/status_list.php';</script>";
     }
 }

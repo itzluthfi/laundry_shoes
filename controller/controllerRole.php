@@ -77,6 +77,6 @@ class ControllerRole {
         }
 
         // Display message and redirect to the role list page
-        echo "<script>alert('$message'); window.location.href='../views/role/role_list.php';</script>";
+        echo "<script>alert('$message'); window.location.href='./views/role/role_list.php';</script>";
     }
 }

@@ -26,12 +26,13 @@ $obj_user = $modelUser->getAllUser();
 <body class="bg-gray-100 font-sans leading-normal tracking-normal overflow-hidden">
 
     <!-- Navbar -->
-    <?php include_once '/laragon/www/laundry_shoes/views/includes/navbar.php'; ?>
+    <?php require_once __DIR__ . '../../includes/navbar.php'  ?>
 
     <!-- Main container -->
     <div class="flex">
         <!-- Sidebar -->
-        <?php include_once "/laragon/www/laundry_shoes/views/includes/sidebar.php"; ?>
+        <?php require_once __DIR__ . '../../includes/sidebar.php'  ?>
+
 
         <!-- Main Content -->
         <div class="flex-1 p-8">
@@ -43,7 +44,7 @@ $obj_user = $modelUser->getAllUser();
                 <div class="mb-4">
                     <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                         <i class="fa-solid fa-plus"></i>
-                        <a href="/laundry_shoes/views/user/user_input.php"> Add New User</a>
+                        <a href="user_input.php"> Add New User</a>
                     </button>
                 </div>
 
@@ -76,7 +77,7 @@ $obj_user = $modelUser->getAllUser();
                                     <!-- Action Buttons -->
                                     <button
                                         class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2">
-                                        <a href="/laundry_shoes/views/user/user_update.php?id=<?= $user->user_id ?>">
+                                        <a href="user_update.php?id=<?= $user->user_id ?>">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                     </button>
@@ -99,7 +100,7 @@ $obj_user = $modelUser->getAllUser();
     function confirmDelete(userId) {
         if (confirm('Apakah Anda yakin ingin menghapus user ini?')) {
             // Redirect ke halaman delete dengan fitur=delete
-            window.location.href = "/laundry_shoes/response_input.php?modul=user&fitur=delete&id=" + userId;
+            window.location.href = "../../response_input.php?modul=user&fitur=delete&id=" + userId;
         } else {
             // Batalkan penghapusan
             alert("Gagal menghapus data");

@@ -65,6 +65,6 @@ class ControllerLayanan {
         }
 
         // Redirect setelah aksi dilakukan
-        echo "<script>alert('$message'); window.location.href='../views/layanan/layanan_list.php';</script>";
+        echo "<script>alert('$message'); window.location.href='./views/layanan/layanan_list.php';</script>";
     }
 }
