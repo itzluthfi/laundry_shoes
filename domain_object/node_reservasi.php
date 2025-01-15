@@ -20,11 +20,11 @@ abstract class AbstractReservasi {
     }
 
     // Abstract method: wajib diimplementasikan di kelas turunan
-    abstract public function hitungTotalHarga();
+    abstract public function calculateTotalReservasiCost();
 }
 
 class Reservasi extends AbstractReservasi {
-    public function hitungTotalHarga() {
+    public function calculateTotalReservasiCost() {
         $totalCost = 0;
         foreach ($this->detailReservasi as $detail) {
             $totalCost += $detail->calculateTotalCost($detail->layanan_harga);

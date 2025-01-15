@@ -5,10 +5,8 @@ require_once __DIR__ . '../../../init.php';
 require_once __DIR__ . '../../../auth_check.php';
 
 $reservasis = $modelReservasi->getAllReservasi();
-// echo "<pre>";
-// print_r($reservasis);
-// echo "</pre>";
-// die();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +92,7 @@ $reservasis = $modelReservasi->getAllReservasi();
                                 <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Status</th>
                                 <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">Total Harga</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Dibayar</th>
-                                <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Kembalian</th>
+                                <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">Kembalian</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Actions</th>
                             </tr>
                         </thead>
@@ -102,6 +100,37 @@ $reservasis = $modelReservasi->getAllReservasi();
                             <?php if (!empty($reservasis)) {
                              foreach ($reservasis as $reservasi) {
                                 $status = $modelStatus->getStatusById($reservasi->status_id); 
+                                $user = $modelUser->getUserById($reservasi->user_id);
+                                
+                                $detailReservasis = [];
+                                $total_harga = 0;
+                                    foreach ($reservasi->detailReservasi as $detail) {
+                                        $layanan = $modelLayanan->getLayananById($detail->layanan_id);
+                                        $total_harga += $layanan->layanan_harga * $detail->jumlah;
+                                
+                                        $detailReservasis[] = [
+                                            'layanan_id' => $layanan->layanan_id,
+                                            'layanan_name' => $layanan->layanan_nama,
+                                            'layanan_price' => $layanan->layanan_harga,
+                                            'layanan_qty' => $detail->jumlah, 
+                                            'sub_total' => $layanan->layanan_harga * $detail->jumlah, 
+                                        ];
+                                        
+                                    }
+                            
+                                    $reservasiPrint = [
+                                        'reservasi_id' => $reservasi->id,
+                                        'reservasi_date' => $reservasi->date,
+                                        'reservasi_status' => $status->status_nama,
+                                        'reservasi_totalPrice' => $total_harga,
+                                        'reservasi_pay' => $reservasi->uang_bayar,
+                                        'reservasi_change' => $reservasi->uang_kembali,
+                                        'user_username' => $user->user_username,
+                                        'role_name' => $user->role_nama,
+                                        'detailReservasi' => $detailReservasis,
+                                    ];
+                                    
+                                    
                             ?>
                             <tr class="text-center">
                                 <td class="py-3 px-4 text-blue-600">
@@ -111,14 +140,14 @@ $reservasis = $modelReservasi->getAllReservasi();
                                     <?php 
                                 $user = $modelUser->getUserById($reservasi->user_id);
                                 $role = $modelRole->getRoleById($user->role_id); 
-                                echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); 
+                                echo htmlspecialchars("{$user->user_username} - {$role->role_nama}"); 
                                
                             ?>
                                 </td>
                                 <td class="w-1/6 py-3 px-4">
                                     <span
                                         class="bg-<?= $status->status_color ?>-100 text-<?= $status->status_color ?>600 
-                        inline-flex items-center justify-center px-4 py-1 rounded-full text-sm font-semibold shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105">
+                        inline-flex layanans-center justify-center px-4 py-1 rounded-full text-sm font-semibold shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105">
                                         <?php echo htmlspecialchars($status->status_nama); ?>
                                     </span>
                                     <button class="ml-2 text-blue-600 hover:text-blue-800"
@@ -139,28 +168,34 @@ $reservasis = $modelReservasi->getAllReservasi();
                                 <td class="w-1/12 py-3 px-4">
                                     <?php echo htmlspecialchars($reservasi->uang_bayar); ?>
                                 </td>
-                                <td class="w-1/6 py-3 px-4">
+                                <td class="w-1/12 py-3 px-4">
                                     <?php echo htmlspecialchars($reservasi->uang_kembali); ?>
                                 </td>
                                 <td class="w-1/6 py-3 px-4">
-                                    <div class="flex items-center space-x-4">
+                                    <div class="flex layanans-center space-x-4">
                                         <button
                                             class="border-2 border-gray-700 bg-white hover:bg-gray-800 hover:text-white text-gray-800 font-bold py-1 px-2 rounded"
                                             onclick="openModal('modal-details-<?php echo $reservasi->id; ?>')">
                                             Details
                                         </button>
                                         <button
+                                            class="border-2 border-gray-700 bg-yellow-500 text-white hover:bg-yellow-700 font-bold py-1 px-2 rounded flex layanans-center space-x-2"
+                                            onclick="printReservasi(<?= htmlspecialchars(json_encode($reservasiPrint), ENT_QUOTES, 'UTF-8') ?>)">
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                            <span>PDF</span>
+                                        </button>
+                                        <!-- <button
                                             class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
                                             onclick="return confirmDelete(<?= $reservasi->id ?>)">
                                             <i class="fa-solid fa-trash"></i>
-                                        </button>
+                                        </button> -->
                                     </div>
                                 </td>
                             </tr>
 
                             <!-- Modal Update Status -->
                             <div id="modal-update-<?= $reservasi->id ?>"
-                                class="modal hidden fixed inset-0 flex items-center justify-center">
+                                class="modal hidden fixed inset-0 flex layanans-center justify-center">
                                 <div class="modal-content bg-white rounded-lg shadow-lg p-6 w-1/3">
                                     <h2 class="text-lg font-bold mb-4">Update Status Reservasi</h2>
                                     <form action="../../response_input.php?modul=reservasi&fitur=updateStatus"
@@ -205,7 +240,7 @@ $reservasis = $modelReservasi->getAllReservasi();
         class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
         <div
             class="relative top-20 mx-auto p-8 border w-11/12 md:w-3/4 lg:w-1/2 xl:w-1/3 shadow-xl rounded-lg bg-white transition-all duration-300 ease-in-out transform">
-            <div class="flex justify-between items-center mb-5">
+            <div class="flex justify-between layanans-center mb-5">
                 <h3 class="text-2xl font-semibold text-gray-900">Detail Penjualan
                     #<?php echo htmlspecialchars($reservasi->id); ?></h3>
                 <button class="text-gray-500 hover:text-gray-700"
@@ -288,7 +323,141 @@ $reservasis = $modelReservasi->getAllReservasi();
         </div>
     </div>
     <?php } } ?>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script>
+    function printReservasi(reservasi) {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.open();
 
+        let htmlContent = `
+    <html>
+    <head>
+        <title>Cetak Reservasi</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                color: #333;
+            }
+            h1, h2 {
+                text-align: center;
+                color:#F7B500;
+            }
+            .info-section {
+                margin: 10px 0;
+                line-height: 1.6;
+                font-size: 14px;
+            }
+            .info-section .label {
+                font-weight: bold;
+                display: inline-block;
+                width: 120px;
+            }
+            .reservasi-summary {
+                background-color: #f7f7f7;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 10px;
+                text-align: left;
+            }
+            th {
+                background-color: #F7B500;
+                color: white;
+            }
+            tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 12px;
+                color: #666;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Reservasi Sepatu</h1>
+        <h2>#${reservasi.reservasi_id}</h2>
+        <div class="reservasi-summary">
+            <div class="info-section">
+                <span class="label">ID Reservasi:</span> ${reservasi.reservasi_id}
+            </div>
+            <div class="info-section">
+                <span class="label">Tanggal:</span> ${reservasi.reservasi_date}
+            </div>
+            <div class="info-section">
+                <span class="label">Status:</span> ${reservasi.reservasi_status}
+            </div>
+            <div class="info-section">
+                <span class="label">Pelanggan:</span> ${reservasi.user_username} (${reservasi.role_name})
+            </div>
+            <div class="info-section">
+                <span class="label">Total Harga:</span> Rp ${reservasi.reservasi_totalPrice.toLocaleString()}
+            </div>
+            <div class="info-section">
+                <span class="label">Dibayar:</span> Rp ${reservasi.reservasi_pay.toLocaleString()}
+            </div>
+            <div class="info-section">
+                <span class="label">Kembalian:</span> Rp ${reservasi.reservasi_change.toLocaleString()}
+            </div>
+        </div>
+        
+        <h2>Detail Reservasi</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama Layanan</th>
+                    <th>Harga Satuan</th>
+                    <th>Jumlah</th>
+                    <th>Sub Total</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+        reservasi.detailReservasi.forEach(detail => {
+            htmlContent += `
+        <tr>
+            <td>${detail.layanan_id}</td>
+            <td>${detail.layanan_name}</td>
+            <td>Rp ${detail.layanan_price.toLocaleString()}</td>
+            <td>${detail.layanan_qty}</td>
+            <td>Rp ${detail.sub_total.toLocaleString()}</td>
+        </tr>
+        `;
+        });
+
+        htmlContent += `
+            </tbody>
+        </table>
+        <div class="footer">
+            <p>Terima kasih telah menggunakan layanan kami!</p>
+        </div>
+    </body>
+    </html>
+    `;
+
+        printWindow.document.write(htmlContent);
+        printWindow.document.close();
+
+        printWindow.onload = function() {
+            printWindow.print();
+        };
+    }
+    </script>
 </body>
 
 </html>
