@@ -41,7 +41,7 @@ $user = $modelUser->getUserById($user_login->user_id);
                     <h2 class="text-xl font-bold text-gray-800">Username: <?= $user->user_username ?></h2>
                     <p class="text-gray-600">Role:
                         <?php 
-                            $role = $modelRole->getRoleById($user->id_role);
+                            $role = $modelRole->getRoleById($user->role_id);
                             echo htmlspecialchars($role->role_nama);
                         ?>
                     </p>
@@ -140,7 +140,7 @@ $user = $modelUser->getUserById($user_login->user_id);
                                 <?php echo htmlspecialchars($reservasi->id); ?></td>
                             <!-- <td class="w-1/4 py-3 px-4"><?php echo htmlspecialchars($reservasi->date); ?></td> -->
                             <td class="w-1/6 py-3 px-4">
-                                <?php $user = $modelUser->getUserById($reservasi->user_id);$role = $modelRole->getRoleById($user->id_role); echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); ?>
+                                <?php $user = $modelUser->getUserById($reservasi->user_id);$role = $modelRole->getRoleById($user->role_id); echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]"); ?>
                             </td>
                             <td class="w-1/4 py-3 px-4">
                                 <span
@@ -211,7 +211,7 @@ foreach ($reservasiData as $reservasi) { ?>
                     <div class="font-semibold text-gray-700">User</div>
                     <div><?php 
                     $user = $modelUser->getUserById($reservasi->user_id);
-                    $role = $modelRole->getRoleById($user->id_role);
+                    $role = $modelRole->getRoleById($user->role_id);
                     echo htmlspecialchars("{$user->user_username} - [{$role->role_nama}]");
                 ?></div>
                 </div>

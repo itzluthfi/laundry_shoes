@@ -70,7 +70,8 @@ $user_id = unserialize($_SESSION['customer_login'])->user_id;
                                     <label class="label">
                                         <span class="label-text">Aksi</span>
                                     </label>
-                                    <button type="button" id="addReservasiBtn" class="btn btn-primary">Tambah
+                                    <button type="button" id="addReservasiBtn"
+                                        class="btn btn-primary bg-blue-600">Tambah
                                         Reservasi</button>
                                 </div>
                             </div>
@@ -106,7 +107,8 @@ $user_id = unserialize($_SESSION['customer_login'])->user_id;
                                 <label class="label">
                                     <span class="label-text">Pembayaran</span>
                                 </label>
-                                <input type="number" name="uang_bayar" id="uang_bayar" class="input input-bordered">
+                                <input type="number" name="uang_bayar" id="uang_bayar" class="input input-bordered"
+                                    value="Rp 0">
                             </div>
                             <div class="form-control mt-4">
                                 <label class="label">
@@ -114,8 +116,8 @@ $user_id = unserialize($_SESSION['customer_login'])->user_id;
                                 </label>
                                 <input type="text" id="uang_kembali" class="input input-bordered" readonly value="Rp 0">
                             </div>
-                            <button type="submit" class="btn btn-primary mt-6 w-full">Bayar</button>
-                            <button type="button" id="cancelButton" class="btn btn-error mt-2 w-full">Batal</button>
+                            <button type="submit" class="btn btn-primary mt-6 w-full bg-blue-600">Bayar</button>
+                            <button type="button" id="cancelButton" class="btn bg-red-600 mt-2 w-full">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -149,25 +151,25 @@ $user_id = unserialize($_SESSION['customer_login'])->user_id;
 
     });
 
-    document.getElementById('reservasiForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Mencegah form dikirim langsung agar bisa diproses dulu
-        const formData = new FormData(event.target); // Mengambil semua data form
-        const formObject = {}; // Objek untuk menyimpan data form
+    // document.getElementById('reservasiForm').addEventListener('submit', function(event) {
+    //     event.preventDefault(); // Mencegah form dikirim langsung agar bisa diproses dulu
+    //     const formData = new FormData(event.target); // Mengambil semua data form
+    //     const formObject = {}; // Objek untuk menyimpan data form
 
-        // Iterasi melalui FormData untuk membuat objek
-        formData.forEach((value, key) => {
-            formObject[key] = value;
-        });
+    //     // Iterasi melalui FormData untuk membuat objek
+    //     formData.forEach((value, key) => {
+    //         formObject[key] = value;
+    //     });
 
-        // Tampilkan data di console.log
-        console.log('Data yang akan dikirim:', formObject);
+    //     // Tampilkan data di console.log
+    //     console.log('Data yang akan dikirim:', formObject);
 
-        // Untuk debug dalam format JSON
-        console.log('Data JSON:', JSON.stringify(formObject));
+    //     // Untuk debug dalam format JSON
+    //     console.log('Data JSON:', JSON.stringify(formObject));
 
-        // Jika sudah benar, bisa lanjutkan dengan submit form
-        event.target.submit();
-    });
+    //     // Jika sudah benar, bisa lanjutkan dengan submit form
+    //     event.target.submit();
+    // });
 
 
     // Add layanan event

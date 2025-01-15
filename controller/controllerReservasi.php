@@ -11,6 +11,10 @@ class ControllerReservasi {
 
     public function handleAction($action) {
         switch ($action) {
+            // echo "<pre>";
+            // print_r($_POST);
+            // echo "</pre>";
+            // die();
             case 'add':
                 // Validasi data POST
                

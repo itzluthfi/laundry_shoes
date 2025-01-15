@@ -54,7 +54,7 @@ foreach ($obj_reservasi as $reservasi) {
         <!-- Main Content -->
         <div class="flex-1 p-8 overflow-y-auto h-[calc(100vh-4rem)] bg-white rounded-lg shadow-xl">
             <div class="container mx-auto">
-                <h1 class="text-4xl font-extrabold text-gray-800 mb-6 pb-2 text-center">Dashboard Cuci Sepatu</h1>
+                <h1 class="text-4xl font-bold text-gray-800 mb-6 pb-2 text-center italic">Dashboard Cuci Sepatu</h1>
                 <!-- Cards Section -->
                 <div class="mx-6 mb-6 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 xl:grid-cols-4">
                     <!-- obj_layanan Card -->

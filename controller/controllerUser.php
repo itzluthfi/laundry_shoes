@@ -13,13 +13,13 @@ class ControllerUser {
 
         switch ($action) {
             case 'add':
-                if (isset($_POST['user_username'], $_POST['user_password'], $_POST['id_role'])) {
+                if (isset($_POST['user_username'], $_POST['user_password'], $_POST['role_id'])) {
                     $user_username = trim($_POST['user_username']);
                     $user_password = trim($_POST['user_password']);
                     $no_telp = trim($_POST['no_telp']);
-                    $id_role = intval($_POST['id_role']);
+                    $role_id = intval($_POST['role_id']);
 
-                    if ($this->modelUser->addUser($user_username, $user_password, $id_role,$no_telp)) {
+                    if ($this->modelUser->addUser($user_username, $user_password, $role_id,$no_telp)) {
                         $message = "User added successfully!";
                     } else {
                         $message = "Failed to add user.";
@@ -30,14 +30,14 @@ class ControllerUser {
                 break;
 
             case 'update':
-                if (isset($_GET['id'], $_POST['user_username'], $_POST['user_password'], $_POST['id_role'], $_POST['no_telp'])) {
+                if (isset($_GET['id'], $_POST['user_username'], $_POST['user_password'], $_POST['role_id'], $_POST['no_telp'])) {
                     $user_id = intval($_GET['id']);
                     $user_username = trim($_POST['user_username']);
                     $user_password = trim($_POST['user_password']);
                     $no_telp = $_POST['no_telp'];
-                    $id_role = intval($_POST['id_role']);
+                    $role_id = intval($_POST['role_id']);
 
-                    if ($this->modelUser->updateUser($user_id, $user_username, $user_password, $id_role, $no_telp)) {
+                    if ($this->modelUser->updateUser($user_id, $user_username, $user_password, $role_id, $no_telp)) {
                         $message = "User updated successfully!";
                     } else {
                         $message = "Failed to update user.";

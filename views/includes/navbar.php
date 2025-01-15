@@ -10,9 +10,11 @@ $user_role = $modelRole->getRoleById(unserialize($_SESSION['user_login'])->role_
 
 <nav class="bg-blue-600 p-4 shadow-lg rounded-lg">
     <div class="container mx-auto flex justify-between items-center">
-        <div class="ml-1 text-white font-bold text-2xl italic">
+        <div class="ml-1 text-white font-bold text-2xl italic flex items-center">
+            <i class="fas fa-shoe-prints text-yellow-300 mr-2"></i>
             <span class="text-yellow-300">laundry</span>_shoes
         </div>
+
         <div class="relative flex items-center text-white mr-3">
 
             <!-- Tempat untuk foto berbentuk lingkaran -->

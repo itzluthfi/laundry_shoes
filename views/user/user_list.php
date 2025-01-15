@@ -54,7 +54,7 @@ $obj_user = $modelUser->getAllUser();
                 <!-- Users Table -->
                 <div class="bg-white shadow-md rounded my-6">
                     <table class="min-w-full bg-white">
-                        <thead class="bg-gray-800 text-white">
+                        <thead class="bg-yellow-500 text-white">
                             <tr>
                                 <th class="w-1/12 py-3 px-4 uppercase font-semibold text-sm">User ID</th>
                                 <th class="w-1/6 py-3 px-4 uppercase font-semibold text-sm">Username</th>

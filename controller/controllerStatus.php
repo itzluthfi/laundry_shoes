@@ -28,8 +28,8 @@ class ControllerStatus {
                 break;
 
             case 'update':
-                if (isset($_GET['id'], $_POST['status_nama'], $_POST['status_color'])) {
-                    $id = intval($_GET['id']);
+                if (isset($_POST['id'], $_POST['status_nama'], $_POST['status_color'])) {
+                    $id = intval($_POST['id']);
                     $status_nama = trim($_POST['status_nama']);
                     $status_color = trim($_POST['status_color']);
 

@@ -29,7 +29,7 @@
                         </div>
 
                         <!-- Form Register -->
-                        <form action="../../response_input.php?modul=auth&fitur=registrasi" method="POST"
+                        <form action="../response_input.php?modul=auth&fitur=registrasi" method="POST"
                             class="mx-auto max-w-xs">
 
                             <input

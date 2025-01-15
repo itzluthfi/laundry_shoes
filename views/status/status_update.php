@@ -32,12 +32,12 @@ $obj_status = $modelStatus->getStatusById($_GET['id']);
             <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Update Status</h2>
                 <form action="../../response_input.php?modul=status&fitur=update" method="POST">
-                    <input type="hidden" name="status_id" value="<?= $obj_status->status_id ?>">
+                    <input type="hidden" name="id" value="<?= $obj_status->status_id ?>">
 
                     <!-- Nama Status -->
                     <div class="mb-4">
-                        <label for="status_name" class="block text-gray-700 text-sm font-bold mb-2">Nama Status:</label>
-                        <input type="text" id="status_name" name="status_name"
+                        <label for="status_nama" class="block text-gray-700 text-sm font-bold mb-2">Nama Status:</label>
+                        <input type="text" id="status_nama" name="status_nama"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Masukkan Nama Status" required value="<?= $obj_status->status_nama ?>">
                     </div>
